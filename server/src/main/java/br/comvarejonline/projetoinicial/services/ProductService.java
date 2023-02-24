@@ -4,14 +4,16 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.comvarejonline.projetoinicial.dtos.ProductCreateDTO;
 import br.comvarejonline.projetoinicial.dtos.ProductDTO;
+import br.comvarejonline.projetoinicial.dtos.ProductUpdateDTO;
 import br.comvarejonline.projetoinicial.entities.Product;
 import br.comvarejonline.projetoinicial.repositories.ProductRepository;
-import br.comvarejonline.projetoinicial.services.exceptions.HexCodeViolationException;
-import br.comvarejonline.projetoinicial.services.exceptions.InitialBalanceViolationException;
 import br.comvarejonline.projetoinicial.services.exceptions.ResourceNotFoundException;
 
 @Service
@@ -37,20 +39,24 @@ public class ProductService {
     }
 
     @Transactional
-    public ProductDTO create(ProductDTO productDTO) {
-        Product product = productRepository.findByHexCode(productDTO.getHexCode());
-        if (product != null) {
-            throw new HexCodeViolationException(
-                    "Código de barras já cadastrado para o produto id = " + product.getId() + "!");
-        }
-        if (productDTO.getBalance() < productDTO.getMinQuantity()) {
-            throw new InitialBalanceViolationException(
-                    "Saldo inicial não pode ser menor que a quantidade mínima!");
-        }
-        product = new Product();
+    public ProductCreateDTO create(ProductCreateDTO productDTO) {
+        Product product = new Product();
         copyDtoToEntity(product, productDTO);
         product = productRepository.save(product);
-        return new ProductDTO(product);
+        return new ProductCreateDTO(product);
+    }
+
+    @Transactional
+    public ProductUpdateDTO update(Long id, ProductUpdateDTO productDTO) {
+        try {
+            Product product = productRepository.getById(id);
+            product.setName(productDTO.getName());
+            product.setHexCode(productDTO.getHexCode());
+            product = productRepository.save(product);
+            return new ProductUpdateDTO(product);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException("Produto não encontrado = " + id);
+        }
     }
 
     public void copyDtoToEntity(Product product, ProductDTO productDTO) {

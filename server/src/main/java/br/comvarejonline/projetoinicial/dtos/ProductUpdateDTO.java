@@ -4,11 +4,12 @@ import java.io.Serializable;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Positive;
 
 import br.comvarejonline.projetoinicial.entities.Product;
+import br.comvarejonline.projetoinicial.services.validation.ProductUpdateValid;
 
-public class ProductDTO implements Serializable {
+@ProductUpdateValid
+public class ProductUpdateDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -21,30 +22,13 @@ public class ProductDTO implements Serializable {
     @NotBlank(message = "Campo obrigatório")
     protected String hexCode;
 
-    @Positive(message = "Digite um valor positivo!")
-    protected Integer minQuantity;
-
-    @Positive(message = "Digite um valor positivo!")
-    protected Integer balance;
-
-    public ProductDTO() {
+    public ProductUpdateDTO() {
     }
 
-    public ProductDTO(Long id, String name, String hexCode,
-            Integer minQuantity, Integer balance) {
-        this.id = id;
-        this.name = name;
-        this.hexCode = hexCode;
-        this.minQuantity = minQuantity;
-        this.balance = balance;
-    }
-
-    public ProductDTO(Product product) {
+    public ProductUpdateDTO(Product product) {
         this.id = product.getId();
         this.name = product.getName();
         this.hexCode = product.getHexCode();
-        this.minQuantity = product.getMinQuantity();
-        this.balance = product.getBalance();
     }
 
     public Long getId() {
@@ -69,22 +53,6 @@ public class ProductDTO implements Serializable {
 
     public void setHexCode(String hexCode) {
         this.hexCode = hexCode;
-    }
-
-    public Integer getMinQuantity() {
-        return minQuantity;
-    }
-
-    public void setMinQuantity(Integer minQuantity) {
-        this.minQuantity = minQuantity;
-    }
-
-    public Integer getBalance() {
-        return balance;
-    }
-
-    public void setBalance(Integer balance) {
-        this.balance = balance;
     }
 
 }

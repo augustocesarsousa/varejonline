@@ -9,12 +9,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import br.comvarejonline.projetoinicial.dtos.ProductCreateDTO;
 import br.comvarejonline.projetoinicial.dtos.ProductDTO;
+import br.comvarejonline.projetoinicial.dtos.ProductUpdateDTO;
 import br.comvarejonline.projetoinicial.services.ProductService;
 
 /**
@@ -43,10 +46,17 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<ProductDTO> create(@Valid @RequestBody ProductDTO productDTO) {
+    public ResponseEntity<ProductCreateDTO> create(@Valid @RequestBody ProductCreateDTO productDTO) {
         productDTO = productService.create(productDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(productDTO.getId())
                 .toUri();
         return ResponseEntity.created(uri).body(productDTO);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ProductUpdateDTO> update(@PathVariable Long id,
+            @Valid @RequestBody ProductUpdateDTO productDTO) {
+        productDTO = productService.update(id, productDTO);
+        return ResponseEntity.ok().body(productDTO);
     }
 }
