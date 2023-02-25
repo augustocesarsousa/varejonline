@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  API_URL: 'http://172.27.125.190:8081/server',
+  CLIENT_ID: 'varejonline',
+  CLIENT_SECRET: 'varejonline123'
 };
 
 /*

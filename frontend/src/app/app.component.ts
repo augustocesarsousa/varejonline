@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { LoginServiceService } from './services/login-service.service';
 
 @Component({
   selector: 'app-root',
@@ -9,25 +10,18 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class AppComponent {
   title = 'frontend';
 
-  loginForm: FormGroup;
+  user = {username: '', password: ''};
 
-  constructor() { }
+  constructor(private loginService: LoginServiceService){}
 
   ngOnInit() {
     this.createForm();
   }
 
+  login() {
+    this.loginService.login(this.user);
+  }
+
   createForm() {
-
-
-
-  }
-
-  onKeepSigned() {
-
-  }
-
-  onSubmit() {
-
   }
 }
