@@ -25,8 +25,15 @@ export class LoginServiceService {
                 "&password=" + user.password +
                 "&grant_type=password&"
 
-    return this.http.post(baseUrl + "/oauth/token",body,options).subscribe(data => {
-      console.info(JSON.parse(JSON.stringify(data)));
-    })
+    return this.http.post(baseUrl + "/oauth/token",body,options).subscribe(
+      data => {
+        const token = JSON.parse(JSON.stringify(data)).access_token;
+        localStorage.setItem("token", token);
+        alert("Login efetuado com sucesso!")
+      },
+      error => {
+        alert("Erro ao fazer login!");
+      }
+    );
   }
 }
