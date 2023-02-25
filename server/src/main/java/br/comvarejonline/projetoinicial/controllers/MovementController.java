@@ -1,10 +1,17 @@
 package br.comvarejonline.projetoinicial.controllers;
 
 import java.net.URI;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +29,13 @@ import br.comvarejonline.projetoinicial.services.MovementService;
 @RequestMapping(value = "/movement")
 public class MovementController {
 
+    private static Logger logger = LoggerFactory.getLogger(MovementController.class);
+
     private MovementService movementService;
+
+    private LocalDateTime now = LocalDateTime.now();
+    private ZoneId zone = ZoneId.of("America/Sao_Paulo");
+    private ZoneOffset zoneOffSet = zone.getRules().getOffset(now);
 
     public MovementController(MovementService movementService) {
         this.movementService = movementService;
@@ -48,7 +61,28 @@ public class MovementController {
 
     @GetMapping(value = "/type_movement/{id}")
     public ResponseEntity<List<MovementDTO>> findByTypeMovementId(@PathVariable Long id) {
+        logger.warn("id: " + id);
         List<MovementDTO> movementList = movementService.findByTypeMovementId(id);
+        return ResponseEntity.ok().body(movementList);
+    }
+
+    @GetMapping(value = "/date/{startDate}/{endDate}")
+    public ResponseEntity<List<MovementDTO>> findByDateBetween(
+            @PathVariable(value = "startDate") String startDate,
+            @PathVariable(value = "endDate") String endDate) {
+
+        // Ajustar melhor forma
+        LocalDate localDate = LocalDate.parse(startDate);
+        LocalDateTime localDateTime = localDate.atStartOfDay();
+        Instant startDateInstant = localDateTime.toInstant(zoneOffSet);
+
+        localDate = LocalDate.parse(endDate);
+        localDateTime = localDate.atStartOfDay();
+        Instant endDateInstant = localDateTime.toInstant(zoneOffSet);
+
+        List<MovementDTO> movementList = movementService.findByDateBetween(
+                startDateInstant,
+                endDateInstant);
         return ResponseEntity.ok().body(movementList);
     }
 

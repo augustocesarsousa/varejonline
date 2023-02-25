@@ -17,6 +17,6 @@ INSERT INTO tb_type_movement (description, type, role_id) VALUES ('SAÍDA', 'S',
 INSERT INTO tb_type_movement (description, type, role_id) VALUES ('AJUSTE_ENTRADA', 'E', 2);
 INSERT INTO tb_type_movement (description, type, role_id) VALUES ('AJUSTE_SAÍDA', 'E', 2);
 
-INSERT INTO tb_movement (product_id, type_movement_id, user_id, date, reason, document, quantity) VALUES (1, 1, 2, TIMESTAMP WITH TIME ZONE '2023-01-10T00:00:00.00000Z', 'Teste', NULL, 1);
-INSERT INTO tb_movement (product_id, type_movement_id, user_id, date, reason, document, quantity) VALUES (2, 1, 2, TIMESTAMP WITH TIME ZONE '2023-01-15T00:00:00.00000Z', 'Teste', NULL, 1);
-INSERT INTO tb_movement (product_id, type_movement_id, user_id, date, reason, document, quantity) VALUES (3, 2, 2, TIMESTAMP WITH TIME ZONE '2023-02-05T00:00:00.00000Z', 'Teste', NULL, 1);
+INSERT INTO tb_movement (product_id, type_movement_id, user_id, date, reason, document, quantity) VALUES (1, 1, 2, TIMESTAMP WITH TIME ZONE '2023-01-10T03:00:00.00000Z', 'Teste', NULL, 1);
+INSERT INTO tb_movement (product_id, type_movement_id, user_id, date, reason, document, quantity) VALUES (2, 1, 2, TIMESTAMP WITH TIME ZONE '2023-01-15T03:00:00.00000Z', 'Teste', NULL, 1);
+INSERT INTO tb_movement (product_id, type_movement_id, user_id, date, reason, document, quantity) VALUES (3, 2, 2, TIMESTAMP WITH TIME ZONE '2023-02-05T03:00:00.00000Z', 'Teste', NULL, 1);

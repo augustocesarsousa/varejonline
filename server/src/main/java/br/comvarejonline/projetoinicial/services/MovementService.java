@@ -1,9 +1,12 @@
 package br.comvarejonline.projetoinicial.services;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +21,8 @@ import br.comvarejonline.projetoinicial.utils.CopyDtoToEntity;
 
 @Service
 public class MovementService {
+
+    private static Logger logger = LoggerFactory.getLogger(MovementService.class);
 
     private MovementRepository movementRepository;
 
@@ -51,6 +56,14 @@ public class MovementService {
     @Transactional(readOnly = true)
     public List<MovementDTO> findByTypeMovementId(Long id) {
         List<Movement> movementList = movementRepository.findByTypeMovementId(id);
+        return movementList.stream().map(movement -> new MovementDTO(movement)).collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<MovementDTO> findByDateBetween(Instant startDate, Instant endDate) {
+        logger.warn("startDate: " + startDate);
+        logger.warn("endDate: " + endDate);
+        List<Movement> movementList = movementRepository.findByDateBetween(startDate, endDate);
         return movementList.stream().map(movement -> new MovementDTO(movement)).collect(Collectors.toList());
     }
 
