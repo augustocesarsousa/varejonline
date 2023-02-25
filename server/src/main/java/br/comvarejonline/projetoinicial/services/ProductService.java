@@ -1,5 +1,6 @@
 package br.comvarejonline.projetoinicial.services;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -15,6 +16,7 @@ import br.comvarejonline.projetoinicial.dtos.ProductUpdateDTO;
 import br.comvarejonline.projetoinicial.entities.Product;
 import br.comvarejonline.projetoinicial.repositories.ProductRepository;
 import br.comvarejonline.projetoinicial.services.exceptions.ResourceNotFoundException;
+import br.comvarejonline.projetoinicial.utils.CopyDtoToEntity;
 
 @Service
 public class ProductService {
@@ -41,7 +43,9 @@ public class ProductService {
     @Transactional
     public ProductCreateDTO create(ProductCreateDTO productDTO) {
         Product product = new Product();
-        copyDtoToEntity(product, productDTO);
+        CopyDtoToEntity.copyProductDtoToProduct(productDTO, product);
+        // copyDtoToEntity(product, productDTO);
+        product.setCreatedAt(Instant.now());
         product = productRepository.save(product);
         return new ProductCreateDTO(product);
     }

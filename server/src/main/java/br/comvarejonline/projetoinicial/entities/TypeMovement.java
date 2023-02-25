@@ -8,32 +8,38 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "tb_role")
-public class Role implements Serializable {
+@Table(name = "tb_type_movement")
+public class TypeMovement implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String authority;
+    private String description;
+    private Character type;
 
-    @OneToMany(mappedBy = "role")
-    private Set<User> users = new HashSet<>();
+    @ManyToOne
+    @JoinColumn(name = "role_id", nullable = false)
+    private Role role;
 
-    @OneToMany(mappedBy = "role")
-    private Set<TypeMovement> types = new HashSet<>();
+    @OneToMany(mappedBy = "typeMovement")
+    private Set<Movement> movements = new HashSet<>();
 
-    public Role() {
+    public TypeMovement() {
     }
 
-    public Role(Long id, String authority) {
+    public TypeMovement(Long id, String description, Character type, Role role) {
         this.id = id;
-        this.authority = authority;
+        this.description = description;
+        this.type = type;
+        this.role = role;
     }
 
     public Long getId() {
@@ -44,12 +50,28 @@ public class Role implements Serializable {
         this.id = id;
     }
 
-    public String getAuthority() {
-        return authority;
+    public String getDescription() {
+        return description;
     }
 
-    public void setAuthority(String authority) {
-        this.authority = authority;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Character getType() {
+        return type;
+    }
+
+    public void setType(Character type) {
+        this.type = type;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 
     @Override
@@ -68,7 +90,7 @@ public class Role implements Serializable {
             return false;
         if (getClass() != obj.getClass())
             return false;
-        Role other = (Role) obj;
+        TypeMovement other = (TypeMovement) obj;
         if (id == null) {
             if (other.id != null)
                 return false;

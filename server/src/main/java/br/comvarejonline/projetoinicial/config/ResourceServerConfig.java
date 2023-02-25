@@ -37,7 +37,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     private static final String[] OPERATOR_OR_MANAGER = {
             "/user/**",
-            "/product/**"
+            "/product/**",
+            "/movement/**"
     };
 
     private static final String[] MANAGER = {
