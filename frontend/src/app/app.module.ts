@@ -14,6 +14,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { MovementsListComponent } from './shared/components/movements-list/movements-list.component';
 import { AuthGuard } from './core/guard/auth.guard';
+import { ProductsCreateComponent } from './shared/components/products/products-create/products-create.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { AuthGuard } from './core/guard/auth.guard';
     LoginComponent,
     LayoutComponent,
     HomeComponent,
-    MovementsListComponent
+    MovementsListComponent,
+    ProductsCreateComponent
   ],
   imports: [
     BrowserModule,

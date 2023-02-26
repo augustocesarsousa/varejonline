@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 
 import br.comvarejonline.projetoinicial.entities.Product;
 
@@ -21,10 +21,10 @@ public class ProductDTO implements Serializable {
     @NotBlank(message = "Campo obrigatório")
     protected String hexCode;
 
-    @Positive(message = "Digite um valor positivo!")
+    @PositiveOrZero(message = "Digite um valor positivo!")
     protected Integer minQuantity;
 
-    @Positive(message = "Digite um valor positivo!")
+    @PositiveOrZero(message = "Digite um valor positivo!")
     protected Integer balance;
 
     public ProductDTO() {
