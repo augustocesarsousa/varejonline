@@ -15,26 +15,19 @@ const baseUrl = environment.API_URL + "/product";
 
 export class ProductsService{
 
-
-  product: IProduct = {
-    id: 0,
-    name: '',
-    hexCode: '',
-    minQuantity: 0,
-    balance: 0
-  }
-
   constructor(
     private http:HttpClient,
     private tokenService:TokenService
-  ){
-
-  }
+  ){ }
 
   public findAll():Observable<IProduct[]>{
     return this.http.get(baseUrl).pipe(
       map(this.mapToProducts)
     )
+  }
+
+  public findById(productId:number):Observable<any>{
+    return this.http.get(baseUrl + `/${productId}`);
   }
 
   public create(product:IProductCreate):Observable<any>{
@@ -44,11 +37,17 @@ export class ProductsService{
     const options = ({ headers: headers });
     const body = JSON.stringify(product);
 
-    return this.http.post(baseUrl,body,options).pipe(
-      catchError((err) => {
-        throw err
-      })
-    )
+    return this.http.post(baseUrl,body,options);
+  }
+
+  public save(product:IProduct):Observable<any>{
+    const headers = new HttpHeaders({
+      "Content-Type": "application/json"
+    });
+    const options = ({ headers: headers });
+    const body = JSON.stringify(product);
+
+    return this.http.put(baseUrl + `/${product.id}`,body,options);
   }
 
   private mapToProducts(data: IProduct[]):Array<IProduct>{

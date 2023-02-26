@@ -22,7 +22,7 @@
           <td>{{product.hexCode}}</td>
           <td>{{product.minQuantity}}</td>
           <td>{{product.balance}}</td>
-          <td  *ngIf="hasRole('ROLE_MANAGER')"><button class="btn btn-warning" >Editar</button></td>
+          <td  *ngIf="hasRole('ROLE_MANAGER')"><button class="btn btn-warning" routerLink="edit/{{product.id}}">Editar</button></td>
         </tr>
       </tbody>
     </table>

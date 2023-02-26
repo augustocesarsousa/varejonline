@@ -1,0 +1,73 @@
+<div class="container">
+  <h2 class="title">Edição de produto</h2>
+  <form [formGroup]="form">
+    <div class="row g-2 my-1">
+      <div class="col-md-2 form-group">
+        <label for="id">Id</label>
+        <input
+          class="form-control"
+          type="text"
+          id="id"
+          formControlName="id"
+          readonly
+        />
+        <small *ngIf="isFormControlInvalid('name')" class="text-danger">Infome o nome do produto</small>
+      </div>
+      <div class="col-md-8 form-group">
+        <label for="name">Nome</label>
+        <input
+          class="form-control"
+          type="text"
+          id="name"
+          formControlName="name"
+        />
+        <small *ngIf="isFormControlInvalid('name')" class="text-danger">Infome o nome do produto</small>
+      </div>
+    </div>
+    <div class="row g-2 my-1">
+      <div class="col-md-2">
+        <label for="hexCode">Código de barras</label>
+        <input
+          class="form-control"
+          type="text"
+          id="hexCode"
+          formControlName="hexCode"
+        />
+        <small *ngIf="isFormControlInvalid('hexCode')" class="text-danger">Informe um código de barras válido (13 dígitos)</small>
+      </div>
+      <div class="col-md-2">
+        <label for="minQuantity">Quantidade mínima</label>
+        <input
+          class="form-control"
+          type="number"
+          min="0"
+          id="minQuantity"
+          formControlName="minQuantity"
+          readonly
+        />
+        <small *ngIf="isFormControlInvalid('minQuantity')" class="text-danger">Informe uma quantidade válida</small>
+      </div>
+      <div class="col-md-2">
+        <label for="balance">Saldo inicial</label>
+        <input
+          class="form-control"
+          type="number"
+          min="0"
+          id="balance"
+          formControlName="balance"
+          readonly
+        />
+        <small *ngIf="isFormControlInvalid('balance')" class="text-danger">Informe um saldo válido</small>
+      </div>
+    </div>
+    <div class="my-2">
+      <button
+        [disabled]="form.invalid"
+        class="btn buttons btn-primary"
+        type="submit"
+        (click)="save()"
+      >Salvar</button>
+      <button routerLink="/products" class="btn buttons btn-danger">Cancelar</button>
+    </div>
+  </form>
+</div>

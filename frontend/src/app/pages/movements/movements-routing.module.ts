@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { MovementsListComponent } from 'src/app/shared/components/movements-list/movements-list.component';
+import { MovementsListComponent } from 'src/app/shared/components/movements/movements-list/movements-list.component';
 
 
 const routes: Routes = [
