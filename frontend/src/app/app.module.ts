@@ -12,13 +12,15 @@ import { LoginComponent } from './shared/components/login/login.component';
 import { LayoutComponent } from './shared/components/layout/layout.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { MovementsListComponent } from './shared/components/movements-list/movements-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     LayoutComponent,
-    HomeComponent
+    HomeComponent,
+    MovementsListComponent
   ],
   imports: [
     BrowserModule,

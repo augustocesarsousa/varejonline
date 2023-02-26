@@ -1,15 +1,18 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light px-2">
-  <a class="navbar-brand logo" href="#"><img src="./assets/images/logo-varejo-nome.png" /></a>
+  <a class="navbar-brand logo" routerLink=""><img src="./assets/images/logo-varejo-nome.png" /></a>
   <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
     <ul class="navbar-nav">
       <li class="nav-item active">
         <a class="nav-link h5" routerLink="">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link h5" routerLink="products">Produtos</a>
+        <a class="nav-link h5" routerLink="/products">Produtos</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link h5" routerLink="movements">Movimentos</a>
+        <a class="nav-link h5" routerLink="/movements">Movimentos</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link h5" (click)="logOff()" routerLink="/login">Sair</a>
       </li>
     </ul>
   </div>

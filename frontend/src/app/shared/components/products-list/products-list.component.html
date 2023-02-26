@@ -1,6 +1,6 @@
 <div class="header justify-content-between row">
   <h2 class="title text-center">Lista de produtos</h2>
-  <button class="btn btn-sm btn-success new-product">Novo produto</button>
+  <button class="btn btn-sm btn-success new-product" *ngIf="hasRole('ROLE_MANAGER')">Novo produto</button>
 </div>
 
 <div class="table-responsive">
@@ -21,7 +21,7 @@
         <td>{{product.hexCode}}</td>
         <td>{{product.minQuantity}}</td>
         <td>{{product.balance}}</td>
-        <td><button class="btn btn-warning">Editar</button></td>
+        <td  *ngIf="hasRole('ROLE_MANAGER')"><button class="btn btn-warning" >Editar</button></td>
       </tr>
     </tbody>
   </table>

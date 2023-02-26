@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
+import { AuthTokenService } from './auth-token.service';
 
 const baseUrl = environment.API_URL + "/oauth/token";
 const clientId = environment.CLIENT_ID;
@@ -13,7 +14,10 @@ const clientSecret = environment.CLIENT_SECRET;
 })
 export class LoginService {
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private tokenService:AuthTokenService
+  ) { }
 
   login(user):Observable<any>{
     const headers = new HttpHeaders({
@@ -30,24 +34,11 @@ export class LoginService {
     return this.http.post(baseUrl,body,options).pipe(
       map((data) => {
         const token = JSON.parse(JSON.stringify(data)).access_token;
-        console.info(token);
-        this.setTokenLocalStorage(token)}),
+        this.tokenService.setToken(token)}),
       catchError((err) => {
-        this.removeTokenLocalStorage();
+        this.tokenService.removeToken();
         throw err.status
       })
     );
-  }
-
-  public getToken():string | null{
-    return localStorage.getItem("token");
-  }
-
-  private setTokenLocalStorage(token:string):void{
-    localStorage.setItem("token", token);
-  }
-
-  private removeTokenLocalStorage():void{
-    localStorage.removeItem("token");
   }
 }

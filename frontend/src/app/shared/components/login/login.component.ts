@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit {
   login() {
     this.loginService.login(this.user).subscribe(
       res => {
-        this.toast.success("Login efetuado com sucesso.");
         this.route.navigate(['']);
       },
       err => {

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthTokenService } from 'src/app/core/services/auth-token.service';
 import { ProductsService } from 'src/app/core/services/product.service';
 import { IProduct } from 'src/app/shared/models/product.model';
 
@@ -10,15 +11,23 @@ import { IProduct } from 'src/app/shared/models/product.model';
 export class ProductsListComponent implements OnInit {
 
   public listProduct:Array<IProduct> = [];
+  private userRoles:string[];
 
-  constructor(private productService:ProductsService) { }
+  constructor(
+    private productService:ProductsService,
+    private tokenService:AuthTokenService
+  ) {
+    this.userRoles = tokenService.getTokenDecoded().authorities;
+  }
 
   ngOnInit(): void {
-
     this.productService.findAll().subscribe(
       res => {this.listProduct = res}
     );
+  }
 
+  public hasRole(role:string):boolean{
+    return this.userRoles.includes(role);
   }
 
 }
