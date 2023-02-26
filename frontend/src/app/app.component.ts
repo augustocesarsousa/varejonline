@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators} from '@angular/forms';
-import { LoginServiceService } from './services/login-service.service';
 
 @Component({
   selector: 'app-root',
@@ -8,20 +6,9 @@ import { LoginServiceService } from './services/login-service.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'frontend';
 
-  user = {username: '', password: ''};
-
-  constructor(private loginService: LoginServiceService){}
+  constructor(){}
 
   ngOnInit() {
-    this.createForm();
-  }
-
-  login() {
-    this.loginService.login(this.user);
-  }
-
-  createForm() {
   }
 }
