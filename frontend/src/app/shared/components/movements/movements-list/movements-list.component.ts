@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MovementService } from 'src/app/core/services/movement.service';
+import { TokenService } from 'src/app/core/services/token.service';
+import { IMovement } from 'src/app/shared/models/movement.model';
 
 @Component({
   selector: 'app-movements-list',
@@ -7,8 +10,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MovementsListComponent implements OnInit {
 
-  constructor() { }
+  public listMovements:Array<IMovement> = [];
+  private userRoles:string[];
 
-  ngOnInit(): void {}
+  constructor(
+    private movementService:MovementService,
+    private tokenService:TokenService) {
+      this.userRoles = tokenService.getTokenDecoded().authorities;
+    }
+
+  ngOnInit(): void {
+    this.movementService.findAll().subscribe(
+      res => {
+        this.listMovements = res;
+        console.info(this.listMovements);
+      }
+    )
+  }
+
+  public hasRole(role:string):boolean{
+    return this.userRoles.includes(role);
+  }
 
 }

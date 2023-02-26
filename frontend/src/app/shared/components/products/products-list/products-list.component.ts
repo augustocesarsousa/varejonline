@@ -10,7 +10,7 @@ import { IProduct } from 'src/app/shared/models/product.model';
 })
 export class ProductsListComponent implements OnInit {
 
-  public listProduct:Array<IProduct> = [];
+  public listProducts:Array<IProduct> = [];
   private userRoles:string[];
 
   constructor(
@@ -22,7 +22,7 @@ export class ProductsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.productService.findAll().subscribe(
-      res => {this.listProduct = res}
+      res => {this.listProducts = res}
     );
   }
 

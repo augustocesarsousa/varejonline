@@ -1,1 +1,32 @@
-<p>movements-list works!</p>
+<div class="container">
+  <div class="header justify-content-between row">
+    <h2 class="title text-center">Lista de Movimentações</h2>
+    <button class="btn btn-sm btn-success new-movement" routerLink="create">Nova movimentação</button>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <th>Data do Movimento</th>
+        <th>Produto</th>
+        <th>Tipo de Movimento</th>
+        <th>Documento</th>
+        <th>Motivo</th>
+        <th>Saldo</th>
+        <th>Situação</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let movement of listMovements">
+          <td>{{movement.date | date:'dd-MM-yyyy'}}</td>
+          <td>{{movement.product.name}}</td>
+          <td>{{movement.typeMovement.description}}</td>
+          <td>{{movement.document}}</td>
+          <td>{{movement.reason}}</td>
+          <td>{{movement.product.balance}}</td>
+          <td>{{movement.situation}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>

@@ -1,6 +1,6 @@
 <div class="container">
   <div class="header justify-content-between row">
-    <h2 class="title text-center">Lista de produtos</h2>
+    <h2 class="title text-center">Lista de Produtos</h2>
     <button class="btn btn-sm btn-success new-product" *ngIf="hasRole('ROLE_MANAGER')" routerLink="create">Novo produto</button>
   </div>
 
@@ -16,7 +16,7 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let product of listProduct">
+        <tr *ngFor="let product of listProducts">
           <td>{{product.id}}</td>
           <td>{{product.name}}</td>
           <td>{{product.hexCode}}</td>
