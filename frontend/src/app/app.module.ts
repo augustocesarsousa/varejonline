@@ -13,6 +13,7 @@ import { LayoutComponent } from './shared/components/layout/layout.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 import { MovementsListComponent } from './shared/components/movements-list/movements-list.component';
+import { AuthGuard } from './core/guard/auth.guard';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { MovementsListComponent } from './shared/components/movements-list/movem
     ToastrModule.forRoot(),
   ],
   providers: [
+    AuthGuard,
     {
       provide:HTTP_INTERCEPTORS,
       useClass:AuthInterceptor,

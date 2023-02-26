@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthTokenService } from 'src/app/core/services/auth-token.service';
+import { TokenService } from 'src/app/core/services/token.service';
 
 @Component({
   selector: 'app-layout',
@@ -9,7 +9,7 @@ import { AuthTokenService } from 'src/app/core/services/auth-token.service';
 export class LayoutComponent implements OnInit {
 
   constructor(
-    private tokenService:AuthTokenService
+    private tokenService:TokenService
   ) { }
 
   ngOnInit(): void {

@@ -5,7 +5,7 @@ import { IToken } from 'src/app/shared/models/token.model';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthTokenService {
+export class TokenService {
 
   constructor() { }
 
@@ -13,13 +13,13 @@ export class AuthTokenService {
     localStorage.setItem("token", token);
   }
 
-  public getTokenIncoded():string | null{
+  public getTokenEncoded():string | null{
     return localStorage.getItem('token');
   }
 
   public getTokenDecoded():IToken | null{
     try {
-      return jwt_decode(this.getTokenIncoded());
+      return jwt_decode(this.getTokenEncoded());
     } catch (error) {
       return null;
     }

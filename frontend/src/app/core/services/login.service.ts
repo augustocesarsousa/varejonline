@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
-import { AuthTokenService } from './auth-token.service';
+import { TokenService } from './token.service';
 
 const baseUrl = environment.API_URL + "/oauth/token";
 const clientId = environment.CLIENT_ID;
@@ -16,7 +16,7 @@ export class LoginService {
 
   constructor(
     private http: HttpClient,
-    private tokenService:AuthTokenService
+    private tokenService:TokenService
   ) { }
 
   login(user):Observable<any>{

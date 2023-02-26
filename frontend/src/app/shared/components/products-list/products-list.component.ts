@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthTokenService } from 'src/app/core/services/auth-token.service';
+import { TokenService } from 'src/app/core/services/token.service';
 import { ProductsService } from 'src/app/core/services/product.service';
 import { IProduct } from 'src/app/shared/models/product.model';
 
@@ -15,7 +15,7 @@ export class ProductsListComponent implements OnInit {
 
   constructor(
     private productService:ProductsService,
-    private tokenService:AuthTokenService
+    private tokenService:TokenService
   ) {
     this.userRoles = tokenService.getTokenDecoded().authorities;
   }
