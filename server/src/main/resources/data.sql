@@ -8,8 +8,8 @@ INSERT INTO tb_product (name, hex_code, min_quantity, balance, created_at) VALUE
 INSERT INTO tb_role (authority) VALUES ('ROLE_OPERATOR');
 INSERT INTO tb_role (authority) VALUES ('ROLE_MANAGER');
 
-INSERT INTO tb_user (name, email, password, role_id) VALUES ('João', 'joao@email.com', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG', 1);
-INSERT INTO tb_user (name, email, password, role_id) VALUES ('Maria', 'maria@email.com', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG', 2);
+INSERT INTO tb_user (name, email, password, role_id) VALUES ('Operador', 'operador@email.com', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG', 1);
+INSERT INTO tb_user (name, email, password, role_id) VALUES ('Gerente', 'gerente@email.com', '$2a$10$eACCYoNOHEqXve8aIWT8Nu3PkMXWBaOxJ9aORUYzfMQCbVBIhZ8tG', 2);
 
 INSERT INTO tb_type_movement (description, type, role_id) VALUES ('SALDO_INICIAL', 'E', 2);
 INSERT INTO tb_type_movement (description, type, role_id) VALUES ('ENTRADA', 'E', 1);

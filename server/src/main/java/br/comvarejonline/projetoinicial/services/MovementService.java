@@ -83,7 +83,7 @@ public class MovementService {
         return new MovementCreateDTO(movement);
     }
 
-    public void adjustProductBalance(Character type, Integer quantity, Product product) {
+    private void adjustProductBalance(Character type, Integer quantity, Product product) {
         if (type == 'E') {
             product.setBalance(product.getBalance() + quantity);
         } else {
@@ -91,7 +91,7 @@ public class MovementService {
         }
     }
 
-    public void adjustMovementSituation(Movement movement, Product product) {
+    private void adjustMovementSituation(Movement movement, Product product) {
         if (movement.getProduct().getMinQuantity() > 0
                 && movement.getProduct().getMinQuantity() > product.getBalance()) {
             movement.setSituation("Inferior ao Mínimo");
