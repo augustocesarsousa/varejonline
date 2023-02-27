@@ -3,7 +3,69 @@
     <h2 class="title text-center">Lista de Movimentações</h2>
     <button class="btn btn-sm btn-success new-movement" routerLink="create">Nova movimentação</button>
   </div>
-
+  <form [formGroup]="form" class="my-3">
+    <div class="container row form-container">
+      <div class="col-md-3">
+        <select
+          id="selectInput"
+          name="selectInput"
+          type="number"
+          class="form-select custom-form"
+          formControlName="filterOptions"
+          (change)="changeSelect()"
+          [(ngModel)]="inputSelected"
+        >
+          <option *ngFor="let a of filterOptions" [ngValue]="a.id">{{a.name}}</option>
+        </select>
+      </div>
+      <div class="col-md-6 row" *ngIf="inputSelected == 1">
+        <div class="col-md-6">
+          <input
+            class="date-control custom-form"
+            type="date"
+            (change)="changeSelect()"
+            formControlName="startDate"
+            [(ngModel)]="startDate"
+          />
+        </div>
+        <div class="col-md-6">
+          <input
+            class="date-control custom-form"
+            type="date"
+            (change)="changeSelect()"
+            formControlName="endDate"
+            [(ngModel)]="endDate"
+          />
+        </div>
+      </div>
+      <div class="col-md-6" *ngIf="inputSelected == 2">
+        <input
+          class="form-control custom-form"
+          type="number"
+          id="productId"
+          (change)="changeSelect()"
+          formControlName="productId"
+          [(ngModel)]="productId"
+        />
+      </div>
+      <div class="col-md-6" *ngIf="inputSelected == 3">
+        <select
+          id="typeMovementSelect"
+          name="typeMovementSelect"
+          type="number"
+          class="form-select custom-form"
+          formControlName="typeMovement"
+          (change)="changeSelect()"
+          [(ngModel)]="typeMovementId"
+        >
+          <option *ngFor="let type of listTypeMovements" [ngValue]="type.id">{{type.description}}</option>
+        </select>
+      </div>
+      <div class="col-md-3 flex-end">
+        <button class="btn new-movement btn-info" (click)="find()">Perquisar</button>
+      </div>
+    </div>
+  </form>
   <div class="table-responsive">
     <table class="table">
       <thead>

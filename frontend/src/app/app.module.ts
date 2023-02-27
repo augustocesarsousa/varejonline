@@ -16,6 +16,7 @@ import { MovementsListComponent } from './shared/components/movements/movements-
 import { AuthGuard } from './core/guard/auth.guard';
 import { ProductsCreateComponent } from './shared/components/products/products-create/products-create.component';
 import { ProductsEditComponent } from './shared/components/products/products-edit/products-edit.component';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { ProductsEditComponent } from './shared/components/products/products-edi
       provide:HTTP_INTERCEPTORS,
       useClass:AuthInterceptor,
       multi:true
-    }
+    },
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

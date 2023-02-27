@@ -1,3 +1,7 @@
+.form-container{
+  width: 100%;
+}
+
 .header {
   width: 100%;
 }
@@ -5,6 +9,11 @@
 .new-movement{
   height: 40px;
   width: 200px;
+}
+
+.custom-form{
+  height: 40px;
+  width: 180px;
 }
 
 .title {

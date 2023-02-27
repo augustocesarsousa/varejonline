@@ -13,7 +13,7 @@ import { IProductCreate } from 'src/app/shared/models/product-create.model';
 export class ProductsCreateComponent implements OnInit {
 
   form: FormGroup;
-  product: IProductCreate = {
+  public product: IProductCreate = {
     name: '',
     hexCode: '',
     minQuantity: 0,

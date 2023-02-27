@@ -14,6 +14,7 @@ import br.comvarejonline.projetoinicial.dtos.MovementCreateDTO;
 import br.comvarejonline.projetoinicial.dtos.MovementDTO;
 import br.comvarejonline.projetoinicial.entities.Movement;
 import br.comvarejonline.projetoinicial.entities.Product;
+import br.comvarejonline.projetoinicial.repositories.MovementCustomRepository;
 import br.comvarejonline.projetoinicial.repositories.MovementRepository;
 import br.comvarejonline.projetoinicial.repositories.ProductRepository;
 import br.comvarejonline.projetoinicial.services.exceptions.ResourceNotFoundException;
@@ -23,9 +24,8 @@ import br.comvarejonline.projetoinicial.utils.CopyDtoToEntity;
 public class MovementService {
 
     private static Logger logger = LoggerFactory.getLogger(MovementService.class);
-
     private MovementRepository movementRepository;
-
+    private MovementCustomRepository movementCustomRepository;
     private ProductRepository productRepository;
 
     public MovementService(MovementRepository movementRepository, ProductRepository productRepository) {
@@ -61,9 +61,24 @@ public class MovementService {
 
     @Transactional(readOnly = true)
     public List<MovementDTO> findByDateBetween(Instant startDate, Instant endDate) {
-        logger.warn("startDate: " + startDate);
-        logger.warn("endDate: " + endDate);
         List<Movement> movementList = movementRepository.findByDateBetween(startDate, endDate);
+        return movementList.stream().map(movement -> new MovementDTO(movement)).collect(Collectors.toList());
+    }
+
+    // pesquisar como fazer query dinâmica
+    @Transactional(readOnly = true)
+    public List<MovementDTO> findByFilter(
+            Long productId,
+            Instant startDate,
+            Instant endDate,
+            Long typeMovementId) {
+        logger.warn("FILTRO: productId: " + productId + " startDate: " + startDate + " endDate: " + endDate
+                + " typeMovementId " + typeMovementId);
+        List<Movement> movementList = movementCustomRepository.findByFilter(
+                productId,
+                startDate,
+                endDate,
+                typeMovementId);
         return movementList.stream().map(movement -> new MovementDTO(movement)).collect(Collectors.toList());
     }
 
