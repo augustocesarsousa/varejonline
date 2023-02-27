@@ -12,10 +12,9 @@
           type="number"
           class="form-select custom-form"
           formControlName="filterOptions"
-          (change)="changeSelect()"
           [(ngModel)]="inputSelected"
         >
-          <option *ngFor="let a of filterOptions" [ngValue]="a.id">{{a.name}}</option>
+          <option *ngFor="let filter of filterOptions" [ngValue]="filter.id">{{filter.name}}</option>
         </select>
       </div>
       <div class="col-md-6 row" *ngIf="inputSelected == 1">
@@ -23,7 +22,6 @@
           <input
             class="date-control custom-form"
             type="date"
-            (change)="changeSelect()"
             formControlName="startDate"
             [(ngModel)]="startDate"
           />
@@ -32,7 +30,6 @@
           <input
             class="date-control custom-form"
             type="date"
-            (change)="changeSelect()"
             formControlName="endDate"
             [(ngModel)]="endDate"
           />
@@ -43,7 +40,6 @@
           class="form-control custom-form"
           type="number"
           id="productId"
-          (change)="changeSelect()"
           formControlName="productId"
           [(ngModel)]="productId"
         />
@@ -55,7 +51,6 @@
           type="number"
           class="form-select custom-form"
           formControlName="typeMovement"
-          (change)="changeSelect()"
           [(ngModel)]="typeMovementId"
         >
           <option *ngFor="let type of listTypeMovements" [ngValue]="type.id">{{type.description}}</option>
@@ -65,7 +60,22 @@
         <button class="btn new-movement btn-info" (click)="find()">Perquisar</button>
       </div>
     </div>
+    <div id="movement-select-content">
+      <label for="inputSortSelect" id="lb-movement-select">Ordernar por:</label>
+      <select
+        id="inputSortSelect"
+        name="inputSortSelect"
+        type="number"
+        class="custom-form"
+        formControlName="sortOptions"
+        (change)="sortMovement()"
+        [(ngModel)]="inputSelectedSort"
+      >
+      <option *ngFor="let filter of sortOptions" [ngValue]="filter.id">{{filter.name}}</option>
+      </select>
+    </div>
   </form>
+
   <div class="table-responsive">
     <table class="table">
       <thead>

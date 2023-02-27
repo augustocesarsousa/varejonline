@@ -7,6 +7,8 @@ import { IFilterOptions } from 'src/app/shared/models/filter-options.model';
 import { ITypeMovement } from 'src/app/shared/models/type-movement.model';
 import { TypeMovementService } from 'src/app/core/services/type-movement.service';
 import { DatePipe } from '@angular/common';
+import { SortMovementEnum } from '../../enums/sort-movement.enum';
+import { ISortModel } from 'src/app/shared/models/sort-options.model';
 
 @Component({
   selector: 'app-movements-list',
@@ -20,29 +22,38 @@ export class MovementsListComponent implements OnInit {
   public listMovements:Array<IMovement> = [];
   public listTypeMovements:Array<ITypeMovement> = [];
   private userRoles:string[];
-  public filterOptions:IFilterOptions[] = [
-    {id: 1, name: 'Por data'},
-    {id: 2, name: 'Por id do Produto'},
-    {id: 3, name: 'Por tipo de Movimentação'},
-  ]
-  public inputSelected:number = 1;
   public typeMovementSelected:number = 1;
   public startDate:string;
   public endDate:string;;
   public productId:number;
   public typeMovementId:number = 1;
+  public filterOptions:IFilterOptions[] = [
+    {id: 1, name: 'Por data'},
+    {id: 2, name: 'Por id do Produto'},
+    {id: 3, name: 'Por tipo de Movimentação'},
+  ];
+  public inputSelected:number = 1;
+  public sortOptions:ISortModel[] = [
+    {id: 1, name: 'Selecione'},
+    {id: 2, name: 'Data ->'},
+    {id: 3, name: 'Data <-'},
+    {id: 4, name: 'Produto ->'},
+    {id: 5, name: 'Produto <-'}
+  ];
+  public inputSelectedSort:number = 1;
 
   constructor(
     private formBuilder:FormBuilder,
     private movementService:MovementService,
     private typeMovementService:TypeMovementService,
     private tokenService:TokenService,
-    public datepipe: DatePipe) {
+    public datepipe: DatePipe
+  ) {
       this.form = this.createForm();
       this.userRoles = tokenService.getTokenDecoded().authorities;
       this.startDate = this.datepipe.transform(new Date(), 'yyyy-MM-dd');
       this.endDate = this.datepipe.transform(new Date(), 'yyyy-MM-dd');
-    }
+  }
 
   ngOnInit(): void {
     this.movementService.findAll().subscribe(
@@ -60,10 +71,11 @@ export class MovementsListComponent implements OnInit {
   private createForm() {
     return this.formBuilder.group({
       filterOptions:[null, ],
+      sortOptions:[null, ],
       startDate:[null, ],
       endDate:[null, ],
       productId:[null, ],
-      typeMovement:[null, ],
+      typeMovement:[null, ]
     })
   }
 
@@ -72,12 +84,23 @@ export class MovementsListComponent implements OnInit {
   }
 
   public changeSelect():void{
-    console.log(this.inputSelected);
-    console.log(this.typeMovementSelected);
-    console.log(this.productId);
-    console.log(this.typeMovementId);
-    console.log(this.startDate);
-    console.log(this.endDate);
+    console.info(this.inputSelectedSort);
+  }
+
+  public sortMovement() {
+
+    if (this.inputSelectedSort === 2) {
+      this.listMovements.sort((a: IMovement, b: IMovement) => (a.date > b.date ? 1 : -1));
+    }
+    if (this.inputSelectedSort === 3) {
+      this.listMovements.sort((a: IMovement, b: IMovement) => (a.date < b.date ? 1 : -1));
+    }
+    if (this.inputSelectedSort === 4) {
+      this.listMovements.sort((a: IMovement, b: IMovement) => (a.product.name > b.product.name ? 1 : -1));
+    }
+    if (this.inputSelectedSort === 5) {
+      this.listMovements.sort((a: IMovement, b: IMovement) => (a.product.name < b.product.name ? 1 : -1));
+    }
   }
 
   public find():void{

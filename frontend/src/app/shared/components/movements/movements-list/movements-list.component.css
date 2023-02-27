@@ -20,3 +20,11 @@
   width: 258px;
   vertical-align: middle;
 }
+
+#movement-select-content{
+  height: 35px;
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
