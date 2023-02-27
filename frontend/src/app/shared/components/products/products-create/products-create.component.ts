@@ -17,7 +17,8 @@ export class ProductsCreateComponent implements OnInit {
     name: '',
     hexCode: '',
     minQuantity: 0,
-    balance: 0
+    balance: 0,
+    userId: 0
   }
 
   constructor(
@@ -57,6 +58,7 @@ export class ProductsCreateComponent implements OnInit {
   }
 
   save(){
+    this.product.userId = Number(localStorage.getItem("userId"));
     this.productService.create(this.product).subscribe(
       res => {
         this.route.navigate(['/products']);

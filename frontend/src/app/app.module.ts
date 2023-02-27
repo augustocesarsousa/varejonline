@@ -17,6 +17,7 @@ import { AuthGuard } from './core/guard/auth.guard';
 import { ProductsCreateComponent } from './shared/components/products/products-create/products-create.component';
 import { ProductsEditComponent } from './shared/components/products/products-edit/products-edit.component';
 import { DatePipe } from '@angular/common';
+import { MovementsCreateComponent } from './shared/components/movements/movements-create/movements-create.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { DatePipe } from '@angular/common';
     HomeComponent,
     MovementsListComponent,
     ProductsCreateComponent,
-    ProductsEditComponent
+    ProductsEditComponent,
+    MovementsCreateComponent
   ],
   imports: [
     BrowserModule,

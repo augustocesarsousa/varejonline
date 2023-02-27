@@ -34,6 +34,8 @@ export class LoginService {
     return this.http.post(baseUrl,body,options).pipe(
       map((data) => {
         const token = JSON.parse(JSON.stringify(data)).access_token;
+        const userId = JSON.parse(JSON.stringify(data)).userId;
+        localStorage.setItem("userId", userId)
         this.tokenService.setToken(token)}),
       catchError((err) => {
         this.tokenService.removeToken();

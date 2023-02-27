@@ -4,4 +4,5 @@ export interface IProductCreate{
   hexCode: string;
   minQuantity: number;
   balance: number;
+  userId: number
 }
