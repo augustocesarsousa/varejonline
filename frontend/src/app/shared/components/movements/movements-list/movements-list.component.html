@@ -1,72 +1,95 @@
 <div class="container">
-  <div class="header justify-content-between row">
-    <h2 class="title text-center">Lista de Movimentações</h2>
+  <div class="header-content">
+    <h2>Lista de Movimentações</h2>
     <button class="btn btn-sm btn-success new-movement" routerLink="create">Nova movimentação</button>
   </div>
-  <form [formGroup]="form" class="my-3">
-    <div class="container row form-container">
-      <div class="col-md-3">
-        <select
-          id="selectInput"
-          name="selectInput"
+  <form [formGroup]="form">
+    <div class="filter-content d-flex align-items-center justify-content-between mt-2">
+      <div class="d-flex align-items-center justify-content-start">
+        <div class="">
+          <label class="me-1" for="inputSelectFilter">Filtro:</label>
+        </div>
+        <select 
+          class="form-select form-control" 
+          id="inputSelectFilter"
+          name="filter-input"
           type="number"
-          class="form-select custom-form"
           formControlName="filterOptions"
           [(ngModel)]="inputSelected"
         >
           <option *ngFor="let filter of filterOptions" [ngValue]="filter.id">{{filter.name}}</option>
         </select>
       </div>
-      <div class="col-md-6 row" *ngIf="inputSelected == 1">
-        <div class="col-md-6">
+      <div class="inputs-content d-flex flex-start flex-grow-1 ms-1">
+        <div class="input-date-content d-flex" *ngIf="inputSelected == 1">
+          <div class="d-flex align-items-center">
+            <div class="">
+              <label  class="me-1" for="inputStartDate">De:</label>
+            </div>
+            <input
+              class="form-control"
+              id="inputStartDate"
+              type="date"
+              name="start-date"
+              formControlName="startDate"
+              [(ngModel)]="startDate"
+            />
+          </div>
+          <div class="d-flex align-items-center ms-1">
+            <div class="">
+              <label  class="me-1" for="inputEndDate">Até:</label>
+            </div>
+            <input
+              class="form-control"
+              id="inputEndDate"
+              type="date"
+              name="end-date"
+              formControlName="endDate"
+              [(ngModel)]="endDate"
+            />
+          </div>
+        </div>
+        <div class="d-flex align-items-center" *ngIf="inputSelected == 2">
+          <div class="">
+            <label class="me-1" for="inputIdProduct">Id:</label>
+          </div>
           <input
-            class="date-control custom-form"
-            type="date"
-            formControlName="startDate"
-            [(ngModel)]="startDate"
+            class="form-control"
+            id="inputIdProduct"
+            type="number"
+            formControlName="productId"
+            [(ngModel)]="productId"
           />
         </div>
-        <div class="col-md-6">
-          <input
-            class="date-control custom-form"
-            type="date"
-            formControlName="endDate"
-            [(ngModel)]="endDate"
-          />
+        <div class="d-flex align-items-center"  *ngIf="inputSelected == 3">
+          <div class="">
+            <label class="me-1" for="inputSelectTypeMovement">Tipo:</label>
+          </div>
+          <select
+            class="form-select"
+            id="inputSelectTypeMovement"
+            name="typeMovementSelect"
+            type="number"
+            formControlName="typeMovement"
+            [(ngModel)]="typeMovementId"
+          >
+            <option *ngFor="let type of listTypeMovements" [ngValue]="type.id">{{type.description}}</option>
+          </select>
         </div>
       </div>
-      <div class="col-md-6" *ngIf="inputSelected == 2">
-        <input
-          class="form-control custom-form"
-          type="number"
-          id="productId"
-          formControlName="productId"
-          [(ngModel)]="productId"
-        />
-      </div>
-      <div class="col-md-6" *ngIf="inputSelected == 3">
-        <select
-          id="typeMovementSelect"
-          name="typeMovementSelect"
-          type="number"
-          class="form-select custom-form"
-          formControlName="typeMovement"
-          [(ngModel)]="typeMovementId"
-        >
-          <option *ngFor="let type of listTypeMovements" [ngValue]="type.id">{{type.description}}</option>
-        </select>
-      </div>
-      <div class="col-md-3 flex-end">
+      <div class="botton-content">
         <button class="btn new-movement btn-info" (click)="find()">Perquisar</button>
       </div>
     </div>
-    <div id="movement-select-content">
-      <label for="inputSortSelect" id="lb-movement-select">Ordernar por:</label>
+    <div class="select-sort-content d-flex align-items-center flex-end mt-2">
+      <div class="">
+        <label class="me-1" for="inputSelectSort">Ordenar por:</label>
+      </div>
       <select
-        id="inputSortSelect"
-        name="inputSortSelect"
+        id="inputSelectSort"
+        name="inputSelectSort"
+        class="form-select form-control input-select-sort"
         type="number"
-        class="custom-form"
         formControlName="sortOptions"
         (change)="sortMovement()"
         [(ngModel)]="inputSelectedSort"

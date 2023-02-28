@@ -17,7 +17,7 @@ import { ISortModel } from 'src/app/shared/models/sort-options.model';
 })
 export class MovementsListComponent implements OnInit {
 
-  form: FormGroup;
+  public form: FormGroup;
 
   public listMovements:Array<IMovement> = [];
   public listTypeMovements:Array<ITypeMovement> = [];
@@ -35,10 +35,10 @@ export class MovementsListComponent implements OnInit {
   public inputSelected:number = 1;
   public sortOptions:ISortModel[] = [
     {id: 1, name: 'Selecione'},
-    {id: 2, name: 'Data ->'},
-    {id: 3, name: 'Data <-'},
-    {id: 4, name: 'Produto ->'},
-    {id: 5, name: 'Produto <-'}
+    {id: 2, name: 'Data maior'},
+    {id: 3, name: 'Data menor'},
+    {id: 4, name: 'Produto maior'},
+    {id: 5, name: 'Produto menor'}
   ];
   public inputSelectedSort:number = 1;
 
@@ -110,7 +110,8 @@ export class MovementsListComponent implements OnInit {
           this.listMovements = res;
         }
       )
-      console.log(this.listMovements);
+      console.log("startDate: " + this.startDate);
+      console.log("endDate: " + this.endDate);
     }
     if(this.inputSelected === 2){
       this.movementService.findByProductId(this.productId).subscribe(

@@ -2,8 +2,12 @@
   width: 100%;
 }
 
-.header {
+.header-content {
   width: 100%;
+  margin: 0;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .new-movement{
@@ -16,15 +20,14 @@
   width: 180px;
 }
 
-.title {
-  width: 258px;
-  vertical-align: middle;
-}
-
-#movement-select-content{
+.select-sort-content{
   height: 35px;
   margin-top: 10px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
+}
+
+.input-select-sort {
+  width: 200px;
 }

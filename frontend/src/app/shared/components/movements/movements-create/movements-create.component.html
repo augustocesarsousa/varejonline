@@ -1,1 +1,83 @@
-<p>movements-create works!</p>
+<div class="container">
+    <div class="header-content">
+        <h2>Cadastro de Movimentação</h2>
+    </div>
+    <form [formGroup]="form">
+        <div class="product-container">
+            <div class="input-id-product-content">
+                <label for="inputIdProduct">Id do produto:</label>
+                <input type="number" name="inputIdProduct" id="inputIdProduct">
+            </div>
+            <div class="product-content">
+                <input type="text" name="inputProduct" id="inputProduct" readonly>
+            </div>            
+        </div>
+        <div class="d-flex align-items-center">
+          <div class="">
+            <label class="me-1" for="inputSelectTypeMovement">Tipo:</label>
+          </div>
+          <select
+            class="form-select"
+            id="inputSelectTypeMovement"
+            name="typeMovementSelect"
+            type="number"
+            formControlName="typeMovement"
+            [(ngModel)]="typeMovementId"
+          >
+            <option *ngFor="let type of listTypeMovements" [ngValue]="type.id">{{type.description}}</option>
+          </select>
+        </div>
+        <div class="input-quantity-movement">
+            <label for="inputIdProduct">Quantidade:</label>
+            <input 
+                type="number" 
+                name="inputIdProduct" 
+                id="inputIdProduct"
+                formControlName="quantityMovement"
+                [(ngModel)]="quantityMovement"
+            >
+        </div>
+        <div class="d-flex align-items-center ms-1">
+            <div class="">
+                <label  class="me-1" for="inputDateMovement">Até:</label>
+            </div>
+            <input
+                class="form-control"
+                id="inputDateMovement"
+                type="date"
+                name="date-movement"
+                formControlName="dateMovement"
+                [(ngModel)]="dateMovement"
+            />
+        </div>
+        <div class="input-reason-content">
+            <label for="inputReason">Motivo:</label>
+            <input 
+                type="text" 
+                name="inputReason" 
+                id="inputReason"
+                formControlName="reasonMovement"
+                [(ngModel)]="reasonMovement"
+            >
+        </div>
+        <div class="input-document-content">
+            <label for="inputDocument">Documento:</label>
+            <input 
+                type="number" 
+                name="inputDocument" 
+                id="inputDocument"
+                formControlName="documentMovement"
+                [(ngModel)]="documentMovement"
+            >
+        </div>
+        <div class="my-2">
+            <button
+              [disabled]="form.invalid"
+              class="btn buttons btn-primary"
+              type="submit"
+              (click)="save()"
+            >Salvar</button>
+            <button routerLink="/movements" class="btn buttons btn-danger">Cancelar</button>
+          </div>
+    </form>
+</div>
