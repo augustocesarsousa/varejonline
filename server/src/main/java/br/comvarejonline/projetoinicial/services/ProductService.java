@@ -95,7 +95,7 @@ public class ProductService {
         movement.setTypeMovement(typeMovement);
         movement.setUser(user);
         movement.setDate(Instant.now());
-        movement.setReason("");
+        movement.setReason("Movimentação de cadastro");
         movement.setDocument(0L);
         movement.setQuantity(quantity);
 

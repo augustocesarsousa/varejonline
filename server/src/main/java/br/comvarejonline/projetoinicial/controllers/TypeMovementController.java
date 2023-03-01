@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,6 +24,18 @@ public class TypeMovementController {
     @GetMapping
     public ResponseEntity<List<TypeMovementDTO>> findAll() {
         List<TypeMovementDTO> listTypeMovement = typeMovementService.findAll();
+        return ResponseEntity.ok().body(listTypeMovement);
+    }
+
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<TypeMovementDTO> findById(@PathVariable Long id){
+        TypeMovementDTO typeMovementDTO = typeMovementService.findById(id);
+        return ResponseEntity.ok().body(typeMovementDTO);
+    }
+
+    @GetMapping(value = "/authority/{roleAuthority}")
+    public ResponseEntity<List<TypeMovementDTO>> findByRoleAuthority(@PathVariable String roleAuthority) {
+        List<TypeMovementDTO> listTypeMovement = typeMovementService.findByRoleAuthority(roleAuthority);
         return ResponseEntity.ok().body(listTypeMovement);
     }
 

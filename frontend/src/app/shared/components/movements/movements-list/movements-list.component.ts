@@ -35,10 +35,10 @@ export class MovementsListComponent implements OnInit {
   public inputSelected:number = 1;
   public sortOptions:ISortModel[] = [
     {id: 1, name: 'Selecione'},
-    {id: 2, name: 'Data maior'},
-    {id: 3, name: 'Data menor'},
-    {id: 4, name: 'Produto maior'},
-    {id: 5, name: 'Produto menor'}
+    {id: 2, name: 'Data ->'},
+    {id: 3, name: 'Data <-'},
+    {id: 4, name: 'Produto ->'},
+    {id: 5, name: 'Produto <-'}
   ];
   public inputSelectedSort:number = 1;
 

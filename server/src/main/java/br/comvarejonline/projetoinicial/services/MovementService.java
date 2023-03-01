@@ -65,6 +65,12 @@ public class MovementService {
         return movementList.stream().map(movement -> new MovementDTO(movement)).collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public List<MovementDTO> findByTypeMovementIdAndProductId(Long typeMovementId, Long productId){
+        List<Movement> movementList = movementRepository.findByTypeMovementIdAndProductId(typeMovementId,productId);
+        return movementList.stream().map(movement -> new MovementDTO(movement)).collect(Collectors.toList());
+    }
+
     // pesquisar como fazer query dinâmica
     @Transactional(readOnly = true)
     public List<MovementDTO> findByFilter(

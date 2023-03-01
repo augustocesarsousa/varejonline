@@ -25,6 +25,16 @@ export class TypeMovementService{
     )
   }
 
+  public findByRole(role:string):Observable<ITypeMovement[]>{
+    if(role === 'ROLE_OPERATOR'){
+      return this.http.get(baseUrl + '/authority/ROLE_OPERATOR').pipe(
+        map(this.mapToTypeMovements)
+      );
+    }else{
+      return this.findAll();
+    }
+  }
+
   private mapToTypeMovements(data: ITypeMovement[]):Array<ITypeMovement>{
     const listTypeMovements: ITypeMovement[] = [];
     data.forEach((product:ITypeMovement) => listTypeMovements.push(product));

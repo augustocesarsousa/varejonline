@@ -1,0 +1,35 @@
+.product-container {
+    display: flex;
+    width: 100%;
+}
+
+.input-id-product-content{
+    display: flex;
+    align-items: center;
+}
+
+.input-id-product-label{
+    width: 85px;
+}
+
+.input-id-product{
+    width: 100px;
+}
+
+.input-product-content{
+    width: 100%;
+
+}
+
+.input-product{
+    width: 100%;
+}
+
+.input-balance-product-content{
+    width: 200px;
+}
+
+.buttons {
+    margin-right: 10px;
+    width: 150px;
+  }

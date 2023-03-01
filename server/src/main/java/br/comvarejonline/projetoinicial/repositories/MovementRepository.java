@@ -15,7 +15,6 @@ public interface MovementRepository extends JpaRepository<Movement, Long> {
 
     List<Movement> findByDateBetween(Instant startDate, Instant endDate);
 
-    List<Movement> findByProductIdOrDateBetweenOrTypeMovementId(Long productId, Instant startDate, Instant endDate,
-            Long typeMovementId);
+    List<Movement> findByTypeMovementIdAndProductId(Long typeMovementId, Long productId);
 
 }

@@ -35,4 +35,11 @@ public class TypeMovementService {
         return listTypeMovement.stream().map(typeMomente -> new TypeMovementDTO(typeMomente))
                 .collect(Collectors.toList());
     }
+
+    @Transactional(readOnly = true)
+    public List<TypeMovementDTO> findByRoleAuthority(String roleAuthority) {
+        List<TypeMovement> listTypeMovement = typeMovementRepository.findByRoleAuthority(roleAuthority);
+        return listTypeMovement.stream().map(typeMomente -> new TypeMovementDTO(typeMomente))
+                .collect(Collectors.toList());
+    }
 }

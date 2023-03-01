@@ -90,6 +90,15 @@ public class MovementController {
         return ResponseEntity.ok().body(movementList);
     }
 
+    @GetMapping(value = "/{typeMovementId}/{productId}")
+    public ResponseEntity<List<MovementDTO>> findByTypeMovementIdAndProductId(
+            @PathVariable(value = "typeMovementId") Long typeMovementId,
+            @PathVariable(value = "productId") Long productId
+    ){
+        List<MovementDTO> movementList = movementService.findByTypeMovementIdAndProductId(typeMovementId, productId);
+        return ResponseEntity.ok().body(movementList);
+    }
+
     @GetMapping(value = "/filter")
     public ResponseEntity<List<MovementDTO>> findByFilter(
             @RequestParam(value = "productId", required = false) Long productId,
@@ -105,8 +114,8 @@ public class MovementController {
         localDate = LocalDate.parse(endDate);
         localDateTime = localDate.atStartOfDay();
         Instant endDateInstant = localDateTime.toInstant(zoneOffSet);
-        logger.warn("FILTRO: productId: " + productId + " startDate: " + startDate + " endDate: " + endDate
-                + " typeMovementId " + typeMovementId);
+//        logger.warn("FILTRO: productId: " + productId + " startDate: " + startDate + " endDate: " + endDate
+//                + " typeMovementId " + typeMovementId);
 
         movementCustomRepository.findByFilter(
                 productId,

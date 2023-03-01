@@ -1,11 +1,15 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { MovementService } from 'src/app/core/services/movement.service';
+import { ProductsService } from 'src/app/core/services/product.service';
 import { TokenService } from 'src/app/core/services/token.service';
 import { TypeMovementService } from 'src/app/core/services/type-movement.service';
-import { IMovement } from 'src/app/shared/models/movement.model';
+import { IToken } from 'src/app/shared/models/token.model';
+import { IProduct } from 'src/app/shared/models/product.model';
 import { ITypeMovement } from 'src/app/shared/models/type-movement.model';
+import { IMovement } from 'src/app/shared/models/movement.model';
 
 @Component({
   selector: 'app-movements-create',
@@ -16,34 +20,44 @@ export class MovementsCreateComponent implements OnInit {
   
   public form: FormGroup;
   public listTypeMovements:Array<ITypeMovement> = [];
+  public listMovements:Array<IMovement> = [];
   public dateMovement:string;
   public typeMovementId:number;
   public quantityMovement:number;
   public reasonMovement:string;
   public documentMovement:number;
+  public hasProduct:boolean = false;
+  public userRole:string = "";
+  public tokenDecoded:IToken;
+  public product:IProduct;
+  public productId:number;
+  public productName:string;
+  public productBalance:number;
 
   constructor(
     private formBuilder:FormBuilder,
     private movementService:MovementService,
     private typeMovementService:TypeMovementService,
+    private productService:ProductsService,
     private tokenService:TokenService,
+    private toast:ToastrService,
     public datepipe: DatePipe
     ) { 
       this.form = this.createForm();
+      this.blockImputis(true);
       this.dateMovement = this.datepipe.transform(new Date(), 'yyyy-MM-dd');
     }
 
   ngOnInit(): void {
-    this.typeMovementService.findAll().subscribe(
-      res => {
-        this.listTypeMovements = res;
-      }
-    )
+    this.tokenDecoded = this.tokenService.getTokenDecoded();
+    this.userRole = this.tokenDecoded.authorities[0];
   }
 
   private createForm() {
     return this.formBuilder.group({
-      productId:[null, ],
+      productId:["", Validators.required],
+      productName:[null, ],
+      productBalance:[null, ],
       dateMovement:[null, ],
       typeMovement:[null, ],
       typeMovementId:[null, ],
@@ -53,12 +67,75 @@ export class MovementsCreateComponent implements OnInit {
     })
   }
 
+  private blockImputis(value:boolean){
+    if(!value){
+      this.form.get('typeMovement').enable();
+      this.form.get('dateMovement').enable();
+      this.form.get('quantityMovement').enable();
+      this.form.get('reasonMovement').enable();
+      this.form.get('documentMovement').enable();
+    }else{
+      this.form.get('typeMovement').disable();
+      this.form.get('dateMovement').disable();
+      this.form.get('quantityMovement').disable();
+      this.form.get('reasonMovement').disable();
+      this.form.get('documentMovement').disable();
+    }
+  }
+
+  public findProductById() {
+    this.productService.findById(this.productId).subscribe(
+      res => {
+        this.product = res;
+        this.productBalance = this.product.balance;
+        this.productName = this.product.name;
+        this.productBalance = this.product.balance;
+        this.movementService.findByTypeMovementIdAndProductId(1, this.product.id).subscribe(
+          res => {
+            this.listMovements = res;
+            if(this.listMovements.length === 0 && this.userRole === 'ROLE_OPERATOR'){
+              this.toast.warning("Esse produto não possui saldo inicial, contante um gerente!");
+              this.listTypeMovements = [];
+              this.blockImputis(true);
+              return;
+            }
+
+            this.typeMovementService.findByRole(this.userRole).subscribe(
+              res => {
+                this.listTypeMovements = res;
+
+                if(this.listMovements.length === 0){
+                  this.listTypeMovements = this.listTypeMovements.filter(type => type.id === 1);
+                }else{
+                  this.listTypeMovements = this.listTypeMovements.filter(type => type.id !== 1);
+                }
+              }
+            )
+          }
+        );
+
+        this.blockImputis(false);
+      },
+      err => {
+        this.toast.error(err.error.message);
+        this.blockImputis(true);      
+      }
+    )
+  }
+
+  isFormControlInvalid(controlName:string):boolean{
+    return !!(this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched);
+  }
+
   public save():void{
     console.log(this.dateMovement);
     console.log(this.typeMovementId);
     console.log(this.quantityMovement);
     console.log(this.reasonMovement);
     console.log(this.documentMovement);
+    if(this.product.balance < this.quantityMovement){
+      this.toast.warning("Quantidade não pode ser menor que o saldo!");
+    }
   }
 
 }
