@@ -53,6 +53,7 @@
                 type="number"
                 formControlName="typeMovement"
                 [(ngModel)]="typeMovementId"
+                (change)="checkTypeMovement()"
             >
                 <option *ngFor="let type of listTypeMovements" [ngValue]="type.id">{{type.description}}</option>
             </select>
@@ -67,7 +68,9 @@
                     name="inputIdProduct" 
                     formControlName="quantityMovement"
                     [(ngModel)]="quantityMovement"
+                    (change)="checkQuantity()"
                 >
+                <small  class="text-danger" *ngIf="!isQuantityValid">Quantidade superior ao saldo!</small>
             </div>
             <div class="d-flex align-items-center col-3 d-flex align-items-center">
                 <div class="">
