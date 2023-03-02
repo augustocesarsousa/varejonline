@@ -40,6 +40,7 @@ public class Movement implements Serializable {
     private String reason;
     private Long document;
     private Integer quantity;
+    private Integer currentBalance;
     private String situation;
 
     public Movement() {
@@ -128,6 +129,14 @@ public class Movement implements Serializable {
 
     public void setSituation(String situation) {
         this.situation = situation;
+    }
+
+    public Integer getCurrentBalance() {
+        return currentBalance;
+    }
+
+    public void setCurrentBalance(Integer currentBalance) {
+        this.currentBalance = currentBalance;
     }
 
     @Override

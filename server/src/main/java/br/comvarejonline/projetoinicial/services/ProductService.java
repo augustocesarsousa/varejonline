@@ -58,6 +58,7 @@ public class ProductService {
         Product product = new Product();
         CopyDtoToEntity.copyProductDtoToProduct(productDTO, product);
         product.setCreatedAt(Instant.now());
+        product.setCurrentBalance(product.getBalance());
         product = productRepository.save(product);
         if (product.getBalance() > 0) {
             createInitialBalanceMovement(product, productDTO.getUserId());
@@ -87,8 +88,8 @@ public class ProductService {
         TypeMovement typeMovement = new TypeMovement();
         CopyDtoToEntity.copyTypeMovementDtoToTypeMovement(typeMovementDTO, typeMovement);
 
-        Integer quantity = product.getBalance();
-        product.setBalance(0);
+        //Integer quantity = product.getBalance();
+        //product.setBalance(0);
 
         Movement movement = new Movement();
         movement.setProduct(product);
@@ -96,8 +97,9 @@ public class ProductService {
         movement.setUser(user);
         movement.setDate(Instant.now());
         movement.setReason("Movimentação de cadastro");
-        movement.setDocument(0L);
-        movement.setQuantity(quantity);
+        movement.setDocument(999L);
+        movement.setQuantity(product.getBalance());
+        movement.setCurrentBalance(product.getBalance());
 
         MovementCreateDTO movementDTO = new MovementCreateDTO(movement);
         movementService.create(movementDTO);

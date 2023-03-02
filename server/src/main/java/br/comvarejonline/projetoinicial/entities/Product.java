@@ -34,6 +34,8 @@ public class Product implements Serializable {
     private Integer minQuantity;
     private Integer balance;
 
+    private Integer currentBalance;
+
     @OneToMany(mappedBy = "product")
     private Set<Movement> movements = new HashSet<>();
 
@@ -98,6 +100,14 @@ public class Product implements Serializable {
 
     public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Integer getCurrentBalance() {
+        return currentBalance;
+    }
+
+    public void setCurrentBalance(Integer currentBalance) {
+        this.currentBalance = currentBalance;
     }
 
     @Override

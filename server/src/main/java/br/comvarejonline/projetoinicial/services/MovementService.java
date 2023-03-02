@@ -95,16 +95,16 @@ public class MovementService {
 
         CopyDtoToEntity.copyMovementDtoToMovement(movementCreateDTO, movement);
         CopyDtoToEntity.copyProductDtoToProduct(movementCreateDTO.getProduct(), product);
-        adjustProductBalance(movementCreateDTO.getTypeMovement().getType(), movementCreateDTO.getQuantity(), product);
+        //adjustProductCurrentBalance(movementCreateDTO.getTypeMovement().getType(), movementCreateDTO.getQuantity(), product);
         adjustMovementSituation(movement, product);
 
-        productRepository.save(product);
+        productRepository.updateCurrentBalanceById(product.getId(), product.getCurrentBalance());
         movement = movementRepository.save(movement);
 
         return new MovementCreateDTO(movement);
     }
 
-    private void adjustProductBalance(Character type, Integer quantity, Product product) {
+    private void adjustProductCurrentBalance(Character type, Integer quantity, Product product) {
         if (type == 'E') {
             product.setBalance(product.getBalance() + quantity);
         } else {

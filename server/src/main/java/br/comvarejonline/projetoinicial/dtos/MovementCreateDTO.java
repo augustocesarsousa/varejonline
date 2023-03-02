@@ -21,6 +21,7 @@ public class MovementCreateDTO extends MovementDTO {
         this.reason = movement.getReason();
         this.document = movement.getDocument();
         this.quantity = movement.getQuantity();
+        this.currentBalance = movement.getCurrentBalance();
         this.situation = movement.getSituation();
     }
 }

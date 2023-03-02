@@ -53,7 +53,7 @@ public class MovementCreateValidator implements ConstraintValidator<MovementCrea
         }
 
         if (movementDTO.getTypeMovement().getType() == 'S'
-                && movementDTO.getQuantity() > movementDTO.getProduct().getBalance()) {
+                && movementDTO.getQuantity() > movementDTO.getProduct().getCurrentBalance()) {
             list.add(new FieldMessage("quantity", "Operação não realizada, produto não possui saldo suficiente!"));
         }
 

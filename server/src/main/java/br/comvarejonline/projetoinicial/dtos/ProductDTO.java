@@ -28,19 +28,22 @@ public class ProductDTO implements Serializable {
     @PositiveOrZero(message = "Digite um valor positivo!")
     protected Integer balance;
 
+    protected Integer currentBalance;
+
     protected Instant createdAt;
 
     public ProductDTO() {
     }
 
     public ProductDTO(Long id, String name, String hexCode,
-            Integer minQuantity, Integer balance, Instant createdAt) {
+            Integer minQuantity, Integer balance, Instant createdAt, Integer currentBalance) {
         this.id = id;
         this.name = name;
         this.hexCode = hexCode;
         this.minQuantity = minQuantity;
         this.balance = balance;
         this.createdAt = createdAt;
+        this.currentBalance = currentBalance;
     }
 
     public ProductDTO(Product product) {
@@ -50,6 +53,7 @@ public class ProductDTO implements Serializable {
         this.minQuantity = product.getMinQuantity();
         this.balance = product.getBalance();
         this.createdAt = product.getCreatedAt();
+        this.currentBalance = product.getCurrentBalance();
     }
 
     public Long getId() {
@@ -90,6 +94,13 @@ public class ProductDTO implements Serializable {
 
     public void setBalance(Integer balance) {
         this.balance = balance;
+    }
+
+    public Integer getCurrentBalance() {
+        return currentBalance;
+    }
+    public void setCurrentBalance(Integer currentBalance) {
+        this.currentBalance = currentBalance;
     }
 
     public Instant getCreatedAt() {

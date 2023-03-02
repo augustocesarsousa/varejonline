@@ -31,6 +31,7 @@ public abstract class CopyDtoToEntity {
         movement.setDocument(movementDTO.getDocument());
         movement.setReason(movementDTO.getReason());
         movement.setQuantity(movementDTO.getQuantity());
+        movement.setCurrentBalance(movementDTO.getCurrentBalance());
 
     }
 
@@ -41,6 +42,7 @@ public abstract class CopyDtoToEntity {
         product.setMinQuantity(productDTO.getMinQuantity());
         product.setBalance(productDTO.getBalance());
         product.setCreatedAt(productDTO.getCreatedAt());
+        product.setCurrentBalance(productDTO.getCurrentBalance());
     }
 
     public static void copyTypeMovementDtoToTypeMovement(TypeMovementDTO typeMovementDTO, TypeMovement typeMovement) {

@@ -17,13 +17,14 @@ public class MovementDTO implements Serializable {
     protected String reason;
     protected Long document;
     protected Integer quantity;
+    protected Integer currentBalance;
     protected String situation;
 
     public MovementDTO() {
     }
 
     public MovementDTO(Long id, ProductDTO product, TypeMovementDTO type, UserDTO user, Instant date, String reason,
-            Long document, Integer quantity, String situation) {
+            Long document, Integer quantity, Integer currentBalance, String situation) {
         this.id = id;
         this.product = product;
         this.typeMovement = type;
@@ -32,6 +33,7 @@ public class MovementDTO implements Serializable {
         this.reason = reason;
         this.document = document;
         this.quantity = quantity;
+        this.currentBalance = currentBalance;
         this.situation = situation;
     }
 
@@ -44,6 +46,7 @@ public class MovementDTO implements Serializable {
         this.reason = movement.getReason();
         this.document = movement.getDocument();
         this.quantity = movement.getQuantity();
+        this.currentBalance = movement.getCurrentBalance();
         this.situation = movement.getSituation();
     }
 
@@ -109,6 +112,12 @@ public class MovementDTO implements Serializable {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public Integer getCurrentBalance() {        return currentBalance;    }
+
+    public void setCurrentBalance(Integer currentBalance) {
+        this.currentBalance = currentBalance;
     }
 
     public String getSituation() {

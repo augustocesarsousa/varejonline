@@ -20,6 +20,8 @@ public class ProductCreateDTO extends ProductDTO {
         this.hexCode = product.getHexCode();
         this.minQuantity = product.getMinQuantity();
         this.balance = product.getBalance();
+        this.currentBalance = product.getCurrentBalance();
+        this.createdAt = product.getCreatedAt();
     }
 
     public Long getUserId() {

@@ -11,5 +11,6 @@ export interface IMovementCreate {
   reason: string;
   document: number;
   quantity: number;
+  currentBalance: number;
   situation: string
 }

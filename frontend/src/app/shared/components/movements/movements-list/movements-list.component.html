@@ -107,6 +107,7 @@
         <th>Tipo de Movimento</th>
         <th>Documento</th>
         <th>Motivo</th>
+        <th>Quantidade</th>
         <th>Saldo</th>
         <th>Situação</th>
       </thead>
@@ -117,7 +118,8 @@
           <td>{{movement.typeMovement.description}}</td>
           <td>{{movement.document}}</td>
           <td>{{movement.reason}}</td>
-          <td>{{movement.product.balance}}</td>
+          <td>{{movement.quantity}}</td>
+          <td>{{movement.product.currentBalance}}</td>
           <td>{{movement.situation}}</td>
         </tr>
       </tbody>

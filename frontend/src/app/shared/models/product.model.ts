@@ -5,5 +5,6 @@ export interface IProduct{
   hexCode: string;
   minQuantity: number;
   balance: number;
+  currentBalance: number;
   createdAt:Date;
 }

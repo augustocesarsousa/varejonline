@@ -29,6 +29,7 @@ export class MovementsCreateComponent implements OnInit {
   public dateMovement:string;
   public typeMovementId:number;
   public quantityMovement:number = 1;
+  public currentBalanceMovement:number;
   public reasonMovement:string = 'teste';
   public documentMovement:number = 1;
   public situationMovement:string;
@@ -43,7 +44,7 @@ export class MovementsCreateComponent implements OnInit {
   public productId:number;
   public productName:string;
   public productBalance:number;
-  public productNewBalance:number;
+  public productCurrentBalance:number;
   public productCreatedAt:Date;
 
   constructor(
@@ -72,7 +73,7 @@ export class MovementsCreateComponent implements OnInit {
     return this.formBuilder.group({
       productId:[null,Validators.required],
       productName:[null,],
-      productBalance:[null,],
+      productCurrentBalance:[null,],
       dateMovement:[null,Validators.required],
       typeMovement:[null,Validators.required],
       typeMovementId:[null,],
@@ -104,7 +105,7 @@ export class MovementsCreateComponent implements OnInit {
         this.product = res;
         this.productBalance = this.product.balance;
         this.productName = this.product.name;
-        this.productBalance = this.product.balance;
+        this.productCurrentBalance = this.product.currentBalance;
         this.productCreatedAt = this.product.createdAt;
         console.log(this.productCreatedAt);
         this.movementService.findByTypeMovementIdAndProductId(1, this.product.id).subscribe(
@@ -150,12 +151,12 @@ export class MovementsCreateComponent implements OnInit {
     );
   }
 
-  isFormControlInvalid(controlName:string):boolean{
+  public isFormControlInvalid(controlName:string):boolean{
     return !!(this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched);
   }
 
   public checkQuantity(){
-    if(this.product.balance < this.quantityMovement){
+    if(this.product.currentBalance < this.quantityMovement){
       this.form.controls['quantityMovement'].setErrors({'incorrect': true});
       this.isQuantityValid = false;
     }else{
@@ -197,11 +198,11 @@ export class MovementsCreateComponent implements OnInit {
   public save():void{
     this.getTypeMovement();
     if(this.typeMovement.type === 'E'){
-      this.productNewBalance = this.product.balance + this.quantityMovement;
+      this.currentBalanceMovement = this.product.balance + this.quantityMovement;
     }else{
-      this.productNewBalance = this.product.balance - this.quantityMovement;
+      this.currentBalanceMovement = this.product.balance - this.quantityMovement;
     }
-    if(this.productNewBalance < this.product.minQuantity){
+    if(this.currentBalanceMovement < this.product.minQuantity){
       this.situationMovement = "Inferior ao mínimo";
     }else{
       this.situationMovement = "Ok";
@@ -218,8 +219,10 @@ export class MovementsCreateComponent implements OnInit {
       reason: this.reasonMovement,
       document: this.documentMovement,
       quantity: this.quantityMovement,
+      currentBalance: this.currentBalanceMovement,
       situation: this.situationMovement
     }
+
     this.movementService.create(newMovement).subscribe(
       res => {
         this.route.navigate(['/movements']);
