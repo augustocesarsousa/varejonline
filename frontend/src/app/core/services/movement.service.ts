@@ -1,7 +1,8 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { catchError, map } from "rxjs/operators";
+import { IMovementCreate } from "src/app/shared/models/movement-create.model";
 import { IMovement } from "src/app/shared/models/movement.model";
 import { environment } from "src/environments/environment";
 
@@ -49,5 +50,16 @@ export class MovementService {
     data.forEach((product:IMovement) => listMovements.push(product));
 
     return listMovements;
+  }
+
+  public create(movement:IMovementCreate):Observable<any>{
+    
+    const headers = new HttpHeaders({
+      "Content-Type": "application/json"
+    });
+    const options = ({ headers: headers });
+    const body = JSON.stringify(movement);
+    console.log(movement);
+    return this.http.post(baseUrl,body,options);
   }
 }

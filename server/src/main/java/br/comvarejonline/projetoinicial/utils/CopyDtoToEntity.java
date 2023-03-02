@@ -40,6 +40,7 @@ public abstract class CopyDtoToEntity {
         product.setHexCode(productDTO.getHexCode());
         product.setMinQuantity(productDTO.getMinQuantity());
         product.setBalance(productDTO.getBalance());
+        product.setCreatedAt(productDTO.getCreatedAt());
     }
 
     public static void copyTypeMovementDtoToTypeMovement(TypeMovementDTO typeMovementDTO, TypeMovement typeMovement) {

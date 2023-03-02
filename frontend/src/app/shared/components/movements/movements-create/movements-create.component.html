@@ -83,6 +83,7 @@
                     name="date-movement"
                     formControlName="dateMovement"
                     [(ngModel)]="dateMovement"
+                    (change)="checkProductDate()"
                 />
             </div>
             <div class="input-document-content col-3 d-flex align-items-center">

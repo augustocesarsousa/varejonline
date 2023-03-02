@@ -13,6 +13,8 @@ import { IMovement } from 'src/app/shared/models/movement.model';
 import { IMovementCreate } from 'src/app/shared/models/movement-create.model';
 import { IRole } from 'src/app/shared/models/role.model';
 import { IUser } from 'src/app/shared/models/user.model';
+import { UserService } from 'src/app/core/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-movements-create',
@@ -29,6 +31,7 @@ export class MovementsCreateComponent implements OnInit {
   public quantityMovement:number = 1;
   public reasonMovement:string = 'teste';
   public documentMovement:number = 1;
+  public situationMovement:string;
   public hasProduct:boolean = false;
   public isQuantityValid:boolean = true;
   public userRole:string = "";
@@ -40,16 +43,19 @@ export class MovementsCreateComponent implements OnInit {
   public productId:number;
   public productName:string;
   public productBalance:number;
-  public movementCreate:IMovementCreate = null;
+  public productNewBalance:number;
+  public productCreatedAt:Date;
 
   constructor(
     private formBuilder:FormBuilder,
     private movementService:MovementService,
     private typeMovementService:TypeMovementService,
     private productService:ProductsService,
+    private userService:UserService,
     private tokenService:TokenService,
     private toast:ToastrService,
-    public datepipe: DatePipe
+    public datepipe: DatePipe,
+    private route:Router
     ) { 
       this.form = this.createForm();
       this.blockImputis(true);
@@ -59,6 +65,7 @@ export class MovementsCreateComponent implements OnInit {
   ngOnInit(): void {
     this.tokenDecoded = this.tokenService.getTokenDecoded();
     this.userRole = this.tokenDecoded.authorities[0];
+    this.findUserById();
   }
 
   private createForm() {
@@ -98,6 +105,8 @@ export class MovementsCreateComponent implements OnInit {
         this.productBalance = this.product.balance;
         this.productName = this.product.name;
         this.productBalance = this.product.balance;
+        this.productCreatedAt = this.product.createdAt;
+        console.log(this.productCreatedAt);
         this.movementService.findByTypeMovementIdAndProductId(1, this.product.id).subscribe(
           res => {
             this.listMovements = res;
@@ -133,6 +142,14 @@ export class MovementsCreateComponent implements OnInit {
     )
   }
 
+  public findUserById(){
+    this.userService.findById(Number(localStorage.getItem('userId'))).subscribe(
+      res => {
+        this.user = res
+      }
+    );
+  }
+
   isFormControlInvalid(controlName:string):boolean{
     return !!(this.form.get(controlName)?.invalid && this.form.get(controlName)?.touched);
   }
@@ -150,14 +167,23 @@ export class MovementsCreateComponent implements OnInit {
   public checkTypeMovement(){
     if(this.typeMovementId === 2 || this.typeMovementId === 3){
       this.form.get('documentMovement').enable();
+      this.form.controls['documentMovement'].setValidators(Validators.required);
+      this.form.controls['documentMovement'].updateValueAndValidity();
+      this.documentMovement = null;
     }else{
       this.form.get('documentMovement').disable();
+      this.form.controls['documentMovement'].clearValidators();
+      this.documentMovement = null;
     }
   }
 
-  public createMovement(product:IProduct){
-    this.getTypeMovement();
-    this.movementCreate.typeMovement = this.typeMovement;
+  public checkProductDate(){
+    if(new Date(this.productCreatedAt) > new Date(this.dateMovement)){
+      this.toast.error("A data da movimentação não pode ser menor que a data de criação do produto!");
+      this.form.controls['dateMovement'].setErrors({'incorrect': true});
+    }else{
+      this.form.controls['dateMovement'].setErrors(null);
+    }
   }
 
   public getTypeMovement(){
@@ -169,11 +195,42 @@ export class MovementsCreateComponent implements OnInit {
   }
 
   public save():void{
-    console.log(this.dateMovement);
-    console.log(this.typeMovementId);
-    console.log(this.listTypeMovements);
-    console.log(this.reasonMovement);
-    console.log(this.documentMovement);
+    this.getTypeMovement();
+    if(this.typeMovement.type === 'E'){
+      this.productNewBalance = this.product.balance + this.quantityMovement;
+    }else{
+      this.productNewBalance = this.product.balance - this.quantityMovement;
+    }
+    if(this.productNewBalance < this.product.minQuantity){
+      this.situationMovement = "Inferior ao mínimo";
+    }else{
+      this.situationMovement = "Ok";
+    }
+    if(this.documentMovement === null){
+      this.documentMovement = 999;
+    }
+
+    const newMovement:IMovementCreate = {
+      product: this.product,
+      typeMovement: this.typeMovement,
+      user: this.user,
+      date: this.datepipe.transform(this.dateMovement, 'yyyy-MM-ddTHH:mm:ss') + 'Z',
+      reason: this.reasonMovement,
+      document: this.documentMovement,
+      quantity: this.quantityMovement,
+      situation: this.situationMovement
+    }
+    this.movementService.create(newMovement).subscribe(
+      res => {
+        this.route.navigate(['/movements']);
+        this.toast.success("Movimentação cadastrada com sucesso!");
+      },
+      err => {
+        err.error.errors.map(
+          e => this.toast.error(e.message)
+        );
+      }
+    )
   }
 
 }

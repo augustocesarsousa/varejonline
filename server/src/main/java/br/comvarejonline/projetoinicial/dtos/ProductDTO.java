@@ -1,6 +1,7 @@
 package br.comvarejonline.projetoinicial.dtos;
 
 import java.io.Serializable;
+import java.time.Instant;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
@@ -27,16 +28,19 @@ public class ProductDTO implements Serializable {
     @PositiveOrZero(message = "Digite um valor positivo!")
     protected Integer balance;
 
+    protected Instant createdAt;
+
     public ProductDTO() {
     }
 
     public ProductDTO(Long id, String name, String hexCode,
-            Integer minQuantity, Integer balance) {
+            Integer minQuantity, Integer balance, Instant createdAt) {
         this.id = id;
         this.name = name;
         this.hexCode = hexCode;
         this.minQuantity = minQuantity;
         this.balance = balance;
+        this.createdAt = createdAt;
     }
 
     public ProductDTO(Product product) {
@@ -45,6 +49,7 @@ public class ProductDTO implements Serializable {
         this.hexCode = product.getHexCode();
         this.minQuantity = product.getMinQuantity();
         this.balance = product.getBalance();
+        this.createdAt = product.getCreatedAt();
     }
 
     public Long getId() {
@@ -87,4 +92,11 @@ public class ProductDTO implements Serializable {
         this.balance = balance;
     }
 
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
 }

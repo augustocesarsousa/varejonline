@@ -7,7 +7,7 @@ export interface IMovementCreate {
   product: IProduct;
   typeMovement: ITypeMovement;
   user: IUser;
-  date: Data;
+  date: string;
   reason: string;
   document: number;
   quantity: number;

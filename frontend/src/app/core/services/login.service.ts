@@ -19,7 +19,7 @@ export class LoginService {
     private tokenService:TokenService
   ) { }
 
-  login(user):Observable<any>{
+  public login(user):Observable<any>{
     const headers = new HttpHeaders({
       "Content-Type": "application/x-www-form-urlencoded",
       "Authorization": "Basic " + btoa(clientId + ':' + clientSecret)

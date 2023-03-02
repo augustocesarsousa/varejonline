@@ -15,7 +15,7 @@ INSERT INTO tb_type_movement (description, type, role_id) VALUES ('SALDO_INICIAL
 INSERT INTO tb_type_movement (description, type, role_id) VALUES ('ENTRADA', 'E', 1);
 INSERT INTO tb_type_movement (description, type, role_id) VALUES ('SAÍDA', 'S', 1);
 INSERT INTO tb_type_movement (description, type, role_id) VALUES ('AJUSTE_ENTRADA', 'E', 2);
-INSERT INTO tb_type_movement (description, type, role_id) VALUES ('AJUSTE_SAÍDA', 'E', 2);
+INSERT INTO tb_type_movement (description, type, role_id) VALUES ('AJUSTE_SAÍDA', 'S', 2);
 
 INSERT INTO tb_movement (product_id, type_movement_id, user_id, date, reason, document, quantity, situation) VALUES (1, 1, 2, TIMESTAMP WITH TIME ZONE '2023-01-10T03:00:00.00000Z', 'Teste', 0, 1, 'Ok');
 INSERT INTO tb_movement (product_id, type_movement_id, user_id, date, reason, document, quantity, situation) VALUES (2, 1, 2, TIMESTAMP WITH TIME ZONE '2023-01-15T03:00:00.00000Z', 'Teste', 0, 1, 'Ok');
