@@ -129,6 +129,7 @@ export class MovementsListComponent implements OnInit {
       )
       console.log(this.listMovements);
     }
+    this.inputSelectedSort = 1;
   }
 
 }

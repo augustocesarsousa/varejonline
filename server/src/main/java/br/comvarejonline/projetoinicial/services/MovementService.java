@@ -66,8 +66,8 @@ public class MovementService {
     }
 
     @Transactional(readOnly = true)
-    public List<MovementDTO> findByTypeMovementIdAndProductId(Long typeMovementId, Long productId){
-        List<Movement> movementList = movementRepository.findByTypeMovementIdAndProductId(typeMovementId,productId);
+    public List<MovementDTO> findByTypeMovementIdAndProductId(Long typeMovementId, Long productId) {
+        List<Movement> movementList = movementRepository.findByTypeMovementIdAndProductId(typeMovementId, productId);
         return movementList.stream().map(movement -> new MovementDTO(movement)).collect(Collectors.toList());
     }
 
@@ -95,7 +95,8 @@ public class MovementService {
 
         CopyDtoToEntity.copyMovementDtoToMovement(movementCreateDTO, movement);
         CopyDtoToEntity.copyProductDtoToProduct(movementCreateDTO.getProduct(), product);
-        //adjustProductCurrentBalance(movementCreateDTO.getTypeMovement().getType(), movementCreateDTO.getQuantity(), product);
+        adjustProductCurrentBalance(movementCreateDTO.getTypeMovement().getType(), movementCreateDTO.getQuantity(),
+                product);
         adjustMovementSituation(movement, product);
 
         productRepository.updateCurrentBalanceById(product.getId(), product.getCurrentBalance());
@@ -106,15 +107,15 @@ public class MovementService {
 
     private void adjustProductCurrentBalance(Character type, Integer quantity, Product product) {
         if (type == 'E') {
-            product.setBalance(product.getBalance() + quantity);
+            product.setCurrentBalance(product.getCurrentBalance() + quantity);
         } else {
-            product.setBalance(product.getBalance() - quantity);
+            product.setCurrentBalance(product.getCurrentBalance() - quantity);
         }
     }
 
     private void adjustMovementSituation(Movement movement, Product product) {
         if (movement.getProduct().getMinQuantity() > 0
-                && movement.getProduct().getMinQuantity() > product.getBalance()) {
+                && movement.getProduct().getMinQuantity() > product.getCurrentBalance()) {
             movement.setSituation("Inferior ao Mínimo");
         } else {
             movement.setSituation("Ok");

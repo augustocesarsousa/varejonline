@@ -107,7 +107,6 @@ export class MovementsCreateComponent implements OnInit {
         this.productName = this.product.name;
         this.productCurrentBalance = this.product.currentBalance;
         this.productCreatedAt = this.product.createdAt;
-        console.log(this.productCreatedAt);
         this.movementService.findByTypeMovementIdAndProductId(1, this.product.id).subscribe(
           res => {
             this.listMovements = res;
@@ -156,7 +155,8 @@ export class MovementsCreateComponent implements OnInit {
   }
 
   public checkQuantity(){
-    if(this.product.currentBalance < this.quantityMovement){
+    this.getTypeMovement();
+    if(this.typeMovement.type === 'S' && this.product.currentBalance < this.quantityMovement){
       this.form.controls['quantityMovement'].setErrors({'incorrect': true});
       this.isQuantityValid = false;
     }else{
@@ -195,18 +195,27 @@ export class MovementsCreateComponent implements OnInit {
     )
   }
 
+  public getTime():string{
+    const date:Date = new Date();
+    return `${this.padTo2Digits(date.getHours())}:${this.padTo2Digits(date.getMinutes())}:${this.padTo2Digits(date.getSeconds())}Z`;
+  }
+
+  public padTo2Digits(num: number) {
+    return num.toString().padStart(2, '0');
+  }
+
   public save():void{
     this.getTypeMovement();
     if(this.typeMovement.type === 'E'){
-      this.currentBalanceMovement = this.product.balance + this.quantityMovement;
+      this.currentBalanceMovement = this.product.currentBalance + this.quantityMovement;
     }else{
-      this.currentBalanceMovement = this.product.balance - this.quantityMovement;
+      this.currentBalanceMovement = this.product.currentBalance - this.quantityMovement;
     }
-    if(this.currentBalanceMovement < this.product.minQuantity){
-      this.situationMovement = "Inferior ao mínimo";
-    }else{
-      this.situationMovement = "Ok";
-    }
+    // if(this.currentBalanceMovement < this.product.minQuantity){
+    //   this.situationMovement = "Inferior ao mínimo";
+    // }else{
+    //   this.situationMovement = "Ok";
+    // }
     if(this.documentMovement === null){
       this.documentMovement = 999;
     }
@@ -215,7 +224,7 @@ export class MovementsCreateComponent implements OnInit {
       product: this.product,
       typeMovement: this.typeMovement,
       user: this.user,
-      date: this.datepipe.transform(this.dateMovement, 'yyyy-MM-ddTHH:mm:ss') + 'Z',
+      date: `${this.dateMovement}T${this.getTime()}`,
       reason: this.reasonMovement,
       document: this.documentMovement,
       quantity: this.quantityMovement,

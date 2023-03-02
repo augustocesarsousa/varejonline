@@ -18,6 +18,7 @@ export class ProductsCreateComponent implements OnInit {
     hexCode: '',
     minQuantity: 0,
     balance: 0,
+    currentBalance: 0,
     userId: 0
   }
 

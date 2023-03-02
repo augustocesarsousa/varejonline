@@ -36,7 +36,7 @@ export class ProductsService{
     });
     const options = ({ headers: headers });
     const body = JSON.stringify(product);
-
+    console.log(product);
     return this.http.post(baseUrl,body,options);
   }
 
