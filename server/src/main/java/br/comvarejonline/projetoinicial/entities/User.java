@@ -21,6 +21,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+/*
+ * Entidade Usuário
+ */
 @Entity
 @Table(name = "tb_user")
 public class User implements UserDetails {

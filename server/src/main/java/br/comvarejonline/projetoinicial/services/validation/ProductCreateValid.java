@@ -8,10 +8,12 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
+/*
+ * Interface que defina o contraint validator customizado de criação da entidade Produto
+ */
 @Constraint(validatedBy = ProductCreateValidator.class)
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-
 public @interface ProductCreateValid {
     String message() default "Validation error";
 

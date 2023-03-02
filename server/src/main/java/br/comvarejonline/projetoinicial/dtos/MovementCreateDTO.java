@@ -3,6 +3,11 @@ package br.comvarejonline.projetoinicial.dtos;
 import br.comvarejonline.projetoinicial.entities.Movement;
 import br.comvarejonline.projetoinicial.services.validation.MovementCreateValid;
 
+/*
+ * DTO para criação da entidade Movimento adicioando a costraint validation customizada
+ */
+
+// Anotação da constraint validator customizada
 @MovementCreateValid
 public class MovementCreateDTO extends MovementDTO {
 

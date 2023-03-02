@@ -15,6 +15,9 @@ import br.comvarejonline.projetoinicial.dtos.ProductUpdateDTO;
 import br.comvarejonline.projetoinicial.entities.Product;
 import br.comvarejonline.projetoinicial.repositories.ProductRepository;
 
+/*
+ * Classe que implementa o contraint validator customizado de alteração da entidade Produto
+ */
 public class ProductUpdateValidator implements ConstraintValidator<ProductUpdateValid, ProductUpdateDTO> {
 
     private ProductRepository productRepository;
@@ -33,14 +36,16 @@ public class ProductUpdateValidator implements ConstraintValidator<ProductUpdate
     @Override
     public boolean isValid(ProductUpdateDTO productDTO, ConstraintValidatorContext context) {
 
+        // Pegando o id que vem na URL
         @SuppressWarnings("unchecked")
         var uriVars = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
         long productId = Long.parseLong(uriVars.get("id"));
 
+        // Criando a lista onde serão adicionados os erros
         List<FieldMessage> list = new ArrayList<>();
 
+        // Valida se o código de barras já existe em outro produto
         Product product = productRepository.findByHexCode(productDTO.getHexCode());
-
         if (product != null && productId != product.getId()) {
             list.add(new FieldMessage("hexCode",
                     "Código de barras já cadastrado para o produto id = " + product.getId() + "!"));
@@ -51,6 +56,8 @@ public class ProductUpdateValidator implements ConstraintValidator<ProductUpdate
             context.buildConstraintViolationWithTemplate(e.getMessage()).addPropertyNode(e.getFieldName())
                     .addConstraintViolation();
         }
+
+        // Retorna se a lista possui erros
         return list.isEmpty();
     }
 }

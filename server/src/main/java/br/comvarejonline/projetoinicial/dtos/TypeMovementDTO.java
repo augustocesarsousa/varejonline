@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 import br.comvarejonline.projetoinicial.entities.TypeMovement;
 
+/*
+ * DTO da entidade Tipo de Movimento
+ */
 public class TypeMovementDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;

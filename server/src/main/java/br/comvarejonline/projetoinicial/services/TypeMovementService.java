@@ -12,6 +12,9 @@ import br.comvarejonline.projetoinicial.entities.TypeMovement;
 import br.comvarejonline.projetoinicial.repositories.TypeMovementRepository;
 import br.comvarejonline.projetoinicial.services.exceptions.ResourceNotFoundException;
 
+/*
+ * Serviço da entidade Tipo de Movimento
+ */
 @Service
 public class TypeMovementService {
 
@@ -21,6 +24,7 @@ public class TypeMovementService {
         this.typeMovementRepository = typeMovementRepository;
     }
 
+    // Consulta tipo de movimento por id
     @Transactional(readOnly = true)
     public TypeMovementDTO findById(Long id) {
         Optional<TypeMovement> typeMovementOptional = typeMovementRepository.findById(id);
@@ -29,6 +33,7 @@ public class TypeMovementService {
         return new TypeMovementDTO(typeMovement);
     }
 
+    // Consulta todos os tipos de movimentos
     @Transactional(readOnly = true)
     public List<TypeMovementDTO> findAll() {
         List<TypeMovement> listTypeMovement = typeMovementRepository.findAll();
@@ -36,6 +41,7 @@ public class TypeMovementService {
                 .collect(Collectors.toList());
     }
 
+    // Consulta tipos de movimento pela descrição
     @Transactional(readOnly = true)
     public List<TypeMovementDTO> findByRoleAuthority(String roleAuthority) {
         List<TypeMovement> listTypeMovement = typeMovementRepository.findByRoleAuthority(roleAuthority);

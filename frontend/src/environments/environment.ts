@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  API_URL: 'http://localhost:8081/server',
+  API_URL: 'http://172.27.114.146:8081/server',
   CLIENT_ID: 'varejonline',
   CLIENT_SECRET: 'varejonline123'
 };

@@ -14,7 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
- * Product
+ * Entidade Produto
  */
 @Entity
 @Table(name = "tb_product")

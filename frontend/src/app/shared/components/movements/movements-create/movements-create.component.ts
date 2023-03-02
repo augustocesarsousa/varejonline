@@ -28,10 +28,10 @@ export class MovementsCreateComponent implements OnInit {
   public listMovements:Array<IMovement> = [];
   public dateMovement:string;
   public typeMovementId:number;
-  public quantityMovement:number = 1;
+  public quantityMovement:number;
   public currentBalanceMovement:number;
-  public reasonMovement:string = 'teste';
-  public documentMovement:number = 1;
+  public reasonMovement:string;
+  public documentMovement:number;
   public situationMovement:string;
   public hasProduct:boolean = false;
   public isQuantityValid:boolean = true;
@@ -211,11 +211,6 @@ export class MovementsCreateComponent implements OnInit {
     }else{
       this.currentBalanceMovement = this.product.currentBalance - this.quantityMovement;
     }
-    // if(this.currentBalanceMovement < this.product.minQuantity){
-    //   this.situationMovement = "Inferior ao mínimo";
-    // }else{
-    //   this.situationMovement = "Ok";
-    // }
     if(this.documentMovement === null){
       this.documentMovement = 999;
     }

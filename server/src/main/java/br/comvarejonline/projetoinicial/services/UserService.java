@@ -23,6 +23,7 @@ public class UserService implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
+    // Consulta usuário por id
     @Transactional
     public UserDTO findById(Long id) {
         Optional<User> userOptional = userRepository.findById(id);
@@ -30,6 +31,7 @@ public class UserService implements UserDetailsService {
         return new UserDTO(user);
     }
 
+    // Sobrescreve o método do UserDetailsService para consultar usuário por email
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(username);

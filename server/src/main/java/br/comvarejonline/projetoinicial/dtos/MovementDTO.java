@@ -5,6 +5,9 @@ import java.time.Instant;
 
 import br.comvarejonline.projetoinicial.entities.Movement;
 
+/*
+ * DTO da entidade Movimento
+ */
 public class MovementDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -114,7 +117,9 @@ public class MovementDTO implements Serializable {
         this.quantity = quantity;
     }
 
-    public Integer getCurrentBalance() {        return currentBalance;    }
+    public Integer getCurrentBalance() {
+        return currentBalance;
+    }
 
     public void setCurrentBalance(Integer currentBalance) {
         this.currentBalance = currentBalance;

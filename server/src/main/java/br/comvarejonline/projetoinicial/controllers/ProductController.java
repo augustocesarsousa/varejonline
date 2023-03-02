@@ -20,10 +20,11 @@ import br.comvarejonline.projetoinicial.dtos.ProductDTO;
 import br.comvarejonline.projetoinicial.dtos.ProductUpdateDTO;
 import br.comvarejonline.projetoinicial.services.ProductService;
 
-/**
- * ProductController
+/*
+ * Controller da entidade Produto
  */
 @RestController
+// Definindo endpoint para /product
 @RequestMapping(value = "/product")
 public class ProductController {
 
@@ -33,18 +34,21 @@ public class ProductController {
         this.productService = productService;
     }
 
+    // Endpoind que retorna todos os produtos
     @GetMapping
     public ResponseEntity<List<ProductDTO>> findAll() {
         List<ProductDTO> productList = productService.findAll();
         return ResponseEntity.ok().body(productList);
     }
 
+    // Endpoind que retorna um produto por id
     @GetMapping(value = "/{id}")
     public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
         ProductDTO product = productService.findById(id);
         return ResponseEntity.ok().body(product);
     }
 
+    // Endpoind para criar um produto
     @PostMapping
     public ResponseEntity<ProductCreateDTO> create(@Valid @RequestBody ProductCreateDTO productDTO) {
         productDTO = productService.create(productDTO);
@@ -53,6 +57,7 @@ public class ProductController {
         return ResponseEntity.created(uri).body(productDTO);
     }
 
+    // Endpoind para atualiza um produto
     @PutMapping(value = "/{id}")
     public ResponseEntity<ProductUpdateDTO> update(@PathVariable Long id,
             @Valid @RequestBody ProductUpdateDTO productDTO) {

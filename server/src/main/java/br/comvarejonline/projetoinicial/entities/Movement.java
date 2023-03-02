@@ -12,6 +12,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+/*
+ * Entidade Movimento
+ */
+
 @Entity
 @Table(name = "tb_movement")
 public class Movement implements Serializable {

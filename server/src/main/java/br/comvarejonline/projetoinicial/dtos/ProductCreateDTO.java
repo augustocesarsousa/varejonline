@@ -3,6 +3,11 @@ package br.comvarejonline.projetoinicial.dtos;
 import br.comvarejonline.projetoinicial.entities.Product;
 import br.comvarejonline.projetoinicial.services.validation.ProductCreateValid;
 
+/*
+ * DTO para criação da entidade Produto adicioando a validator customizada
+ */
+
+// Anotação da constraint validator customizada
 @ProductCreateValid
 public class ProductCreateDTO extends ProductDTO {
 

@@ -11,6 +11,9 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+/*
+ * Entidade do Perfil de Acesso
+ */
 @Entity
 @Table(name = "tb_role")
 public class Role implements Serializable {

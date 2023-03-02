@@ -3,6 +3,9 @@ package br.comvarejonline.projetoinicial.controllers.exceptions;
 import java.util.ArrayList;
 import java.util.List;
 
+/*
+ * Modelo para retorno de erro de validação
+ */
 public class ValidationError extends StandardError {
 
     private static final long serialVersionUID = 1L;

@@ -9,22 +9,30 @@ import javax.validation.constraints.PositiveOrZero;
 
 import br.comvarejonline.projetoinicial.entities.Product;
 
+/*
+ * DTO da entidade Produto adicioando as costraints validations
+ */
 public class ProductDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     protected Long id;
 
+    // Valida que o nome é obrigatório
     @NotBlank(message = "Campo obrigatório!")
     protected String name;
 
+    // Regex que valida a estrutura do código de barras
     @Pattern(regexp = "[0-9]{13}", message = "O código de barras precisa ter 13 dígitos numéricos!")
+    // Valida que o código de barras é obrigatório
     @NotBlank(message = "Campo obrigatório")
     protected String hexCode;
 
+    // Valida valida que a quantidade mínima é positiva
     @PositiveOrZero(message = "Digite um valor positivo!")
     protected Integer minQuantity;
 
+    // Valida valida que o saldo é positivo
     @PositiveOrZero(message = "Digite um valor positivo!")
     protected Integer balance;
 
@@ -99,6 +107,7 @@ public class ProductDTO implements Serializable {
     public Integer getCurrentBalance() {
         return currentBalance;
     }
+
     public void setCurrentBalance(Integer currentBalance) {
         this.currentBalance = currentBalance;
     }

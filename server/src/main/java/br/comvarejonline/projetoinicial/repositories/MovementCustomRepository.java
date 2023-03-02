@@ -12,6 +12,12 @@ import org.springframework.stereotype.Repository;
 
 import br.comvarejonline.projetoinicial.entities.Movement;
 
+/*
+ * Repositório customizado da entidade Movimento
+ * no momento apresentando erro
+ */
+
+//TODO: verificar e corrigir o erro
 @Repository
 public class MovementCustomRepository {
 

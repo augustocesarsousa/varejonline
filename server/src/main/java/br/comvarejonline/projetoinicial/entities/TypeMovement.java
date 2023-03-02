@@ -13,6 +13,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+/*
+ * Entidade Tipo de Movimento
+ */
 @Entity
 @Table(name = "tb_type_movement")
 public class TypeMovement implements Serializable {

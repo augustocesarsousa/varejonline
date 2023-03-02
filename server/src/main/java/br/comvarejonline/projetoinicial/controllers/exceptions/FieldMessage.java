@@ -2,6 +2,9 @@ package br.comvarejonline.projetoinicial.controllers.exceptions;
 
 import java.io.Serializable;
 
+/*
+ * Modelo para retorno do campo do erro
+ */
 public class FieldMessage implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 import br.comvarejonline.projetoinicial.entities.Role;
 
+/*
+ * DTO da entidade Perfil de Acesso
+ */
 public class RoleDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;

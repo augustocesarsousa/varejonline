@@ -8,6 +8,11 @@ import javax.validation.constraints.Pattern;
 import br.comvarejonline.projetoinicial.entities.Product;
 import br.comvarejonline.projetoinicial.services.validation.ProductUpdateValid;
 
+/*
+ * DTO para alteração da entidade Produto adicioando as constraints validations
+ */
+
+// Anotação da constraint validator customizada
 @ProductUpdateValid
 public class ProductUpdateDTO implements Serializable {
 
@@ -15,10 +20,13 @@ public class ProductUpdateDTO implements Serializable {
 
     protected Long id;
 
+    // Valida que o nome é obrigatório
     @NotBlank(message = "Campo obrigatório!")
     protected String name;
 
+    // Regex que valida a estrutura do código de barras
     @Pattern(regexp = "[0-9]{13}", message = "O código de barras precisa ter 13 dígitos numéricos!")
+    // Valida que o código de barras é obrigatório
     @NotBlank(message = "Campo obrigatório")
     protected String hexCode;
 

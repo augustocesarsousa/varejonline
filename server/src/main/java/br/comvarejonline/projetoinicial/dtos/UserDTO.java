@@ -4,6 +4,9 @@ import java.io.Serializable;
 
 import br.comvarejonline.projetoinicial.entities.User;
 
+/*
+ * DTO da entidade Usuário
+ */
 public class UserDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
