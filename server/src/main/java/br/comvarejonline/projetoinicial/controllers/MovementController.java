@@ -92,7 +92,7 @@ public class MovementController {
         Instant startDateInstant = localDateTime.toInstant(zoneOffSet);
         localDate = LocalDate.parse(endDate);
         localDateTime = localDate.atStartOfDay();
-        Instant endDateInstant = localDateTime.toInstant(zoneOffSet);
+        Instant endDateInstant = localDateTime.toInstant(zoneOffSet).plusMillis(86399999);
 
         List<MovementDTO> movementList = movementService.findByDateBetween(
                 startDateInstant,

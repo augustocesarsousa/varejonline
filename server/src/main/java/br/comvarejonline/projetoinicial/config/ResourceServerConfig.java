@@ -18,6 +18,10 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+/*
+ * Classe responsável por implemnetar a autorização de acesso da aplicação analisando o token JWT
+ */
+//TODO refatorar para nova versão
 @Configuration
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {

@@ -22,7 +22,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /*
- * Entidade Usuário
+ * Entidade Usuário implementando a interface UderDetails exigida pelo Spring Security 
  */
 @Entity
 @Table(name = "tb_user")
@@ -98,6 +98,8 @@ public class User implements UserDetails {
         this.role = role;
     }
 
+    // Sobresquevendo método da UserDetails que retorna a lista de Perfis de Acesso
+    // do usuário
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<Role> roles = new ArrayList<>();
@@ -105,27 +107,32 @@ public class User implements UserDetails {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getAuthority())).collect(Collectors.toList());
     }
 
+    // Sobrescrevendo método da User Details para informar qual atributo será o
+    // username do usuário
     @Override
     public String getUsername() {
         return email;
     }
 
+    // Método da UserDetails que verifica se a conta não está expirada
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    // Método da UserDetails que verifica se a conta não está bloqueada
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    // Método da UserDetails que verifica se a senha não está expirada
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
-    @Override
+    // Método da UserDetails que verifica se o usuário está habilitado
     public boolean isEnabled() {
         return true;
     }

@@ -14,6 +14,9 @@ import br.comvarejonline.projetoinicial.entities.User;
 import br.comvarejonline.projetoinicial.repositories.UserRepository;
 import br.comvarejonline.projetoinicial.services.exceptions.ResourceNotFoundException;
 
+/*
+ * Serviço da entidade Usuário implementando a interface UserDetailsService exigida pelo Spring Security
+ */
 @Service
 public class UserService implements UserDetailsService {
 
@@ -36,7 +39,7 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByEmail(username);
         if (user == null) {
-            throw new UsernameNotFoundException("Email não encontrado!");
+            throw new UsernameNotFoundException("Usuário não encontrado!");
         }
         return user;
     }

@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 import br.comvarejonline.projetoinicial.entities.User;
 import br.comvarejonline.projetoinicial.repositories.UserRepository;
 
+// Classe que adiciona informações ao token
+//TODO refatorar para nova versão
 @Component
 public class JwtTokenEnhancer implements TokenEnhancer {
 
@@ -21,18 +23,22 @@ public class JwtTokenEnhancer implements TokenEnhancer {
         this.userRepository = userRepository;
     }
 
+    // Sobrescre o método que captura o token e adiciona as informações
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
 
+        // Busca o usuário por email
         User user = userRepository.findByEmail(authentication.getName());
 
         Map<String, Object> map = new HashMap<>();
-        map.put("userName", user.getName());
-        map.put("userId", user.getId());
+        map.put("userName", user.getName()); // Adiciona o nome do usuário ao token
+        map.put("userId", user.getId()); // Adiciona o id do usuário ao token
 
+        // Acessa o token e adiciona as informações
         DefaultOAuth2AccessToken token = (DefaultOAuth2AccessToken) accessToken;
         token.setAdditionalInformation(map);
 
+        // Retorna o token com as informações adicionais
         return accessToken;
 
     }
