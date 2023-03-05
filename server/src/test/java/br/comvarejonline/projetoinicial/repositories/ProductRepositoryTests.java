@@ -31,4 +31,15 @@ public class ProductRepositoryTests {
 
     }
 
+    @Test
+    public void findByIdShouldNotReturnProductWhenIdNonExists() {
+
+        long productId = 999999999L;
+
+        Optional<Product> result = productRepository.findById(productId);
+
+        Assertions.assertFalse(result.isPresent());
+
+    }
+
 }
