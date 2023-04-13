@@ -1,12 +1,12 @@
 package br.comvarejonline.projetoinicial.services;
 
-import java.time.Instant;
+import java.time.*;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,7 +14,7 @@ import br.comvarejonline.projetoinicial.dtos.MovementCreateDTO;
 import br.comvarejonline.projetoinicial.dtos.MovementDTO;
 import br.comvarejonline.projetoinicial.entities.Movement;
 import br.comvarejonline.projetoinicial.entities.Product;
-// import br.comvarejonline.projetoinicial.repositories.MovementCustomRepository;
+import br.comvarejonline.projetoinicial.repositories.MovementCustomRepository;
 import br.comvarejonline.projetoinicial.repositories.MovementRepository;
 import br.comvarejonline.projetoinicial.repositories.ProductRepository;
 import br.comvarejonline.projetoinicial.services.exceptions.ResourceNotFoundException;
@@ -26,15 +26,20 @@ import br.comvarejonline.projetoinicial.utils.CopyDtoToEntity;
 @Service
 public class MovementService {
 
-    // private static Logger logger =
-    // LoggerFactory.getLogger(MovementService.class);
+    private static Logger logger = LoggerFactory.getLogger(MovementService.class);
     private MovementRepository movementRepository;
-    // private MovementCustomRepository movementCustomRepository;
+    private MovementCustomRepository movementCustomRepository;
     private ProductRepository productRepository;
 
-    public MovementService(MovementRepository movementRepository, ProductRepository productRepository) {
+    // Definindo a zoda da data para America/Sao_Paulo
+    private LocalDateTime now = LocalDateTime.now();
+    private ZoneId zone = ZoneId.of("America/Sao_Paulo");
+    private ZoneOffset zoneOffSet = zone.getRules().getOffset(now);
+
+    public MovementService(MovementRepository movementRepository, ProductRepository productRepository, MovementCustomRepository movementCustomRepository) {
         this.movementRepository = movementRepository;
         this.productRepository = productRepository;
+        this.movementCustomRepository = movementCustomRepository;
     }
 
     // Consulta todos os movimentos
@@ -81,22 +86,38 @@ public class MovementService {
         return movementList.stream().map(movement -> new MovementDTO(movement)).collect(Collectors.toList());
     }
 
-    // TODO pesquisar como fazer query dinâmica
+    @Transactional(readOnly = true)
+    public List<MovementDTO> findByFilter(String productIdSting,String startDateString,String endDateString,String typeMovementIdSting) {
+        Long productId = null;
+        Long typeMovementId = null;
+        LocalDate localDate;
+        LocalDateTime localDateTime;
+        Instant startDate = null;
+        Instant endDate = null;
 
-    // @Transactional(readOnly = true)
-    // public List<MovementDTO> findByFilter(Long productId,Instant
-    // startDate,Instant endDate,Long typeMovementId) {
-    // logger.warn("FILTRO: productId: " + productId + " startDate: " + startDate +
-    // " endDate: " + endDate
-    // + " typeMovementId " + typeMovementId);
-    // List<Movement> movementList = movementCustomRepository.findByFilter(
-    // productId,
-    // startDate,
-    // endDate,
-    // typeMovementId);
-    // return movementList.stream().map(movement -> new
-    // MovementDTO(movement)).collect(Collectors.toList());
-    // }
+        if(productIdSting != null) {
+            productId = Long.parseLong(productIdSting);
+        }
+
+        if(typeMovementIdSting != null) {
+            typeMovementId = Long.parseLong(typeMovementIdSting);
+        }
+
+        if(startDateString != null){
+            localDate = LocalDate.parse(startDateString);
+            localDateTime = localDate.atStartOfDay();
+            startDate = localDateTime.toInstant(zoneOffSet).minusSeconds(10800);
+        }
+
+        if(endDateString != null){
+            localDate = LocalDate.parse(endDateString);
+            localDateTime = localDate.atStartOfDay();
+            endDate = localDateTime.toInstant(zoneOffSet).minusSeconds(10800);;
+        }
+
+        List<Movement> movementList = movementCustomRepository.findByFilter(productId,startDate,endDate,typeMovementId);
+        return movementList.stream().map(movement -> new MovementDTO(movement)).collect(Collectors.toList());
+    }
 
     // Cria um moviemnto
     @Transactional

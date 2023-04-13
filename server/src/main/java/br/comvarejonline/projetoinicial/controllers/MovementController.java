@@ -10,15 +10,11 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
+import br.comvarejonline.projetoinicial.entities.Movement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.comvarejonline.projetoinicial.dtos.MovementCreateDTO;
@@ -34,11 +30,10 @@ import br.comvarejonline.projetoinicial.services.MovementService;
 @RequestMapping(value = "/movement")
 public class MovementController {
 
-    // private static Logger logger =
-    // LoggerFactory.getLogger(MovementController.class);
+    private static Logger logger = LoggerFactory.getLogger(MovementController.class);
 
     private MovementService movementService;
-    // private MovementCustomRepository movementCustomRepository;
+    private MovementCustomRepository movementCustomRepository;
 
     // Definindo a zoda da data para America/Sao_Paulo
     private LocalDateTime now = LocalDateTime.now();
@@ -47,7 +42,7 @@ public class MovementController {
 
     public MovementController(MovementService movementService, MovementCustomRepository movementCustomRepository) {
         this.movementService = movementService;
-        // this.movementCustomRepository = movementCustomRepository;
+        this.movementCustomRepository = movementCustomRepository;
     }
 
     // Endpoind que retorna todos os movimentos
@@ -112,29 +107,17 @@ public class MovementController {
     // Endpoind que retorna movimentos por filtro
     // Erro na query dinâmica
     // TODO pesquisar solução
-    // @GetMapping(value = "/filter")
-    // public ResponseEntity<List<MovementDTO>> findByFilter(
-    // @RequestParam(value = "productId", required = false) Long productId,
-    // @RequestParam(value = "startDate", required = false) String startDate,
-    // @RequestParam(value = "endDate", required = false) String endDate,
-    // @RequestParam(value = "typeMovementId", required = false) Long
-    // typeMovementId) {
+    @GetMapping(value = "/filter")
+    public ResponseEntity<List<MovementDTO>> findByFilter(
+            @RequestParam(value = "productId", required = false) String productId,
+            @RequestParam(value = "startDate", required = false) String startDate,
+            @RequestParam(value = "endDate", required = false) String endDate,
+            @RequestParam(value = "typeMovementId", required = false) String
+                    typeMovementId) {
 
-    // LocalDate localDate = LocalDate.parse(startDate);
-    // LocalDateTime localDateTime = localDate.atStartOfDay();
-    // Instant startDateInstant = localDateTime.toInstant(zoneOffSet);
-
-    // localDate = LocalDate.parse(endDate);
-    // localDateTime = localDate.atStartOfDay();
-    // Instant endDateInstant = localDateTime.toInstant(zoneOffSet);
-
-    // movementCustomRepository.findByFilter(
-    // productId,
-    // startDateInstant,
-    // endDateInstant,
-    // typeMovementId);
-    // return ResponseEntity.ok().body(null);
-    // }
+        List<MovementDTO> movementDTO = movementService.findByFilter(productId, startDate, endDate, typeMovementId);
+        return ResponseEntity.ok().body(movementDTO);
+    }
 
     // Endpoind para criar uma movimentação
     @PostMapping

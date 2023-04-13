@@ -29,29 +29,30 @@ public class MovementCustomRepository {
         this.entityManager = entityManager;
     }
 
-    public List<Movement> findByFilter(Long productId, Instant startDate, Instant endDate,
-            Long typeMovementId) {
+    public List<Movement> findByFilter(Long productId, Instant startDate, Instant endDate, Long typeMovementId) {
 
-        String query = "from tb_movement M where 1=1 ";
+        StringBuilder sql = new StringBuilder();
+
+        sql.append("SELECT m FROM Movement m WHERE 1=1 ");
 
         if (productId != null) {
-            query += "and m.product_id = :productId ";
+            sql.append("AND m.product.id = :productId ");
         }
 
         if (startDate != null && endDate != null) {
-            query += "and m.data between :startDate and :endDate ";
+            sql.append("AND m.date BETWEEN :startDate and :endDate ");
         } else if (startDate != null) {
-            query += "and m.data >= :startDate ";
+            sql.append("AND m.date >= :startDate ");
         } else if (endDate != null) {
-            query += "and m.data <= :endDate ";
+            sql.append("AND m.date <= :endDate ");
         }
 
         if (typeMovementId != null) {
-            query += "and m.type_movement_id = :typeMovementId ";
+            sql.append("AND m.typeMovement.id = :typeMovementId ");
         }
 
-        logger.warn("QUERY: " + query.toString());
-        TypedQuery<Movement> typedQuery = entityManager.createQuery(query, Movement.class);
+//        logger.warn("QUERY: " + sql.toString());
+        TypedQuery<Movement> typedQuery = entityManager.createQuery(sql.toString(), Movement.class);
 
         if (productId != null) {
             typedQuery.setParameter("productId", productId);
