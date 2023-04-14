@@ -1,30 +1,42 @@
-<div class="container">
-  <div class="header-content">
-    <h2>Lista de Movimentações</h2>
-    <button class="btn btn-sm btn-success new-movement" routerLink="create">Nova movimentação</button>
-  </div>
-  <form [formGroup]="form" class="mt-2">
-    <div class="filter-content d-flex align-items-center justify-content-between">
-      <div class="d-flex align-items-center justify-content-start">
-        <div class="">
-          <label class="me-1" for="inputSelectFilter">Filtro:</label>
+<main class="container mb-4">
+  <div class="mt-3 p-3 card shadow">
+    <h2 class="title mb-3">Movimentações</h2>
+    <form [formGroup]="form" class="mb-5">
+      <div class="row">
+        <div class="row col-lg-6">
+          <div class="d-flex flex-column mb-1 col-md-6">
+            <label class="me-1" for="inputIdProduct">Id:</label>
+            <input
+              class="form-control"
+              id="inputIdProduct"
+              type="number"
+              formControlName="productId"
+              [(ngModel)]="productId"
+            />
+          </div>
+          <div class="d-flex flex-column mb-1 col-md-6">
+            <label class="me-1" for="inputSelectTypeMovement">Tipo:</label>
+            <select
+              class="form-select"
+              id="inputSelectTypeMovement"
+              name="typeMovementSelect"
+              type="number"
+              formControlName="typeMovement"
+              [(ngModel)]="typeMovementId"
+            >
+              <option
+                *ngFor="let type of listTypeMovements"
+                [ngValue]="type.id"
+              >
+                {{ type.description }}
+              </option>
+            </select>
+          </div>
         </div>
-        <select 
-          class="form-select form-control" 
-          id="inputSelectFilter"
-          name="filter-input"
-          type="number"
-          formControlName="filterOptions"
-          [(ngModel)]="inputSelected"
-        >
-          <option *ngFor="let filter of filterOptions" [ngValue]="filter.id">{{filter.name}}</option>
-        </select>
-      </div>
-      <div class="inputs-content d-flex flex-start flex-grow-1 ms-1">
-        <div class="input-date-content d-flex" *ngIf="inputSelected == 1">
-          <div class="d-flex align-items-center">
+        <div class="row col-lg-6">
+          <div class="d-flex flex-column mb-1 col-md-6">
             <div class="">
-              <label  class="me-1" for="inputStartDate">De:</label>
+              <label class="me-1" for="inputStartDate">De:</label>
             </div>
             <input
               class="form-control"
@@ -35,9 +47,9 @@
               [(ngModel)]="startDate"
             />
           </div>
-          <div class="d-flex align-items-center ms-1">
+          <div class="d-flex flex-column mb-1 col-md-6">
             <div class="">
-              <label  class="me-1" for="inputEndDate">Até:</label>
+              <label class="me-1" for="inputEndDate">Até:</label>
             </div>
             <input
               class="form-control"
@@ -49,81 +61,47 @@
             />
           </div>
         </div>
-        <div class="d-flex align-items-center" *ngIf="inputSelected == 2">
-          <div class="">
-            <label class="me-1" for="inputIdProduct">Id:</label>
-          </div>
-          <input
-            class="form-control"
-            id="inputIdProduct"
-            type="number"
-            formControlName="productId"
-            [(ngModel)]="productId"
-          />
+      </div>
+      <div class="row mt-2 mt-lg-3 d-lg-flex justify-content-end">
+        <div class="my-2 mt-3 col-lg-2 my-lg-0 d-flex align-items-end">
+          <button class="btn new-movement btn-info">Perquisar</button>
         </div>
-        <div class="d-flex align-items-center"  *ngIf="inputSelected == 3">
-          <div class="">
-            <label class="me-1" for="inputSelectTypeMovement">Tipo:</label>
-          </div>
-          <select
-            class="form-select"
-            id="inputSelectTypeMovement"
-            name="typeMovementSelect"
-            type="number"
-            formControlName="typeMovement"
-            [(ngModel)]="typeMovementId"
+        <div class="my-2 mt-3 col-lg-2 my-lg-0 d-flex align-items-end">
+          <button
+            class="btn btn-sm btn-success new-movement"
+            routerLink="create"
           >
-            <option *ngFor="let type of listTypeMovements" [ngValue]="type.id">{{type.description}}</option>
-          </select>
+            Nova movimentação
+          </button>
         </div>
       </div>
-      <div class="botton-content">
-        <button class="btn new-movement btn-info" (click)="find()">Perquisar</button>
-      </div>
-    </div>
-    <div class="select-sort-content d-flex align-items-center flex-end mt-2">
-      <div class="">
-        <label class="me-1" for="inputSelectSort">Ordenar por:</label>
-      </div>
-      <select
-        id="inputSelectSort"
-        name="inputSelectSort"
-        class="form-select form-control input-select-sort"
-        type="number"
-        formControlName="sortOptions"
-        (change)="sortMovement()"
-        [(ngModel)]="inputSelectedSort"
-      >
-      <option *ngFor="let filter of sortOptions" [ngValue]="filter.id">{{filter.name}}</option>
-      </select>
-    </div>
-  </form>
+    </form>
 
-  <div class="table-responsive mt-2">
-    <table class="table">
-      <thead>
-        <th>Data do Movimento</th>
-        <th>Produto</th>
-        <th>Tipo de Movimento</th>
-        <th>Documento</th>
-        <th>Motivo</th>
-        <th>Quantidade</th>
-        <th>Saldo</th>
-        <th>Situação</th>
-      </thead>
-      <tbody>
-        <tr *ngFor="let movement of listMovements">
-          <td>{{movement.date | date:'dd-MM-yyyy'}}</td>
-          <td>{{movement.product.name}}</td>
-          <td>{{movement.typeMovement.description}}</td>
-          <td>{{movement.document}}</td>
-          <td>{{movement.reason}}</td>
-          <td>{{movement.quantity}}</td>
-          <td>{{movement.currentBalance}}</td>
-          <td>{{movement.situation}}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-responsive mt-2">
+      <table class="table">
+        <thead>
+          <th>Data do Movimento</th>
+          <th>Produto</th>
+          <th>Tipo de Movimento</th>
+          <th>Documento</th>
+          <th>Motivo</th>
+          <th>Quantidade</th>
+          <th>Saldo</th>
+          <th>Situação</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let movement of page.content">
+            <td>{{ movement.date | date : "dd-MM-yyyy" }}</td>
+            <td>{{ movement.product.name }}</td>
+            <td>{{ movement.typeMovement.description }}</td>
+            <td>{{ movement.document }}</td>
+            <td>{{ movement.reason }}</td>
+            <td>{{ movement.quantity }}</td>
+            <td>{{ movement.currentBalance }}</td>
+            <td>{{ movement.situation }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
-
-</div>
+</main>

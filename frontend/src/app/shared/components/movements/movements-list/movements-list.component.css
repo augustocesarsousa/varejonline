@@ -1,4 +1,16 @@
-.form-container{
+.title {
+  font: 18px;
+}
+
+.custom-btn {
+  width: 100%;
+}
+
+.table-title {
+  cursor: pointer;
+}
+
+/* .form-container{
   width: 100%;
 }
 
@@ -30,4 +42,4 @@
 
 .input-select-sort {
   width: 200px;
-}
+} */
