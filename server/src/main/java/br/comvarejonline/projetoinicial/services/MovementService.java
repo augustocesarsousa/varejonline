@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -87,7 +89,7 @@ public class MovementService {
     }
 
     @Transactional(readOnly = true)
-    public List<MovementDTO> findByFilter(String productIdSting,String startDateString,String endDateString,String typeMovementIdSting) {
+    public Page<MovementDTO> findByFilterPaged(String productIdSting, String startDateString, String endDateString, String typeMovementIdSting, Pageable pageable) {
         Long productId = null;
         Long typeMovementId = null;
         LocalDate localDate;
@@ -115,8 +117,9 @@ public class MovementService {
             endDate = localDateTime.toInstant(zoneOffSet).minusSeconds(10800);;
         }
 
-        List<Movement> movementList = movementCustomRepository.findByFilter(productId,startDate,endDate,typeMovementId);
-        return movementList.stream().map(movement -> new MovementDTO(movement)).collect(Collectors.toList());
+        Page<Movement> page = movementCustomRepository.findByFilter(productId, startDate, endDate, typeMovementId, pageable);
+
+        return page.map(movement -> new MovementDTO(movement));
     }
 
     // Cria um moviemnto

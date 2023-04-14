@@ -13,6 +13,9 @@ import javax.validation.Valid;
 import br.comvarejonline.projetoinicial.entities.Movement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -108,14 +111,15 @@ public class MovementController {
     // Erro na query dinâmica
     // TODO pesquisar solução
     @GetMapping(value = "/filter")
-    public ResponseEntity<List<MovementDTO>> findByFilter(
+    public ResponseEntity<Page<MovementDTO>> findByFilterPaged(
             @RequestParam(value = "productId", required = false) String productId,
             @RequestParam(value = "startDate", required = false) String startDate,
             @RequestParam(value = "endDate", required = false) String endDate,
-            @RequestParam(value = "typeMovementId", required = false) String
-                    typeMovementId) {
+            @RequestParam(value = "typeMovementId", required = false) String typeMovementId,
+            @PageableDefault(page = 0, size = 5) Pageable pageable) {
 
-        List<MovementDTO> movementDTO = movementService.findByFilter(productId, startDate, endDate, typeMovementId);
+        Page<MovementDTO> movementDTO = movementService.findByFilterPaged(productId, startDate, endDate, typeMovementId, pageable);
+
         return ResponseEntity.ok().body(movementDTO);
     }
 

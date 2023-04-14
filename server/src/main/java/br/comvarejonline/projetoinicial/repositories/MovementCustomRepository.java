@@ -8,6 +8,10 @@ import javax.persistence.TypedQuery;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
 import br.comvarejonline.projetoinicial.entities.Movement;
@@ -29,7 +33,13 @@ public class MovementCustomRepository {
         this.entityManager = entityManager;
     }
 
-    public List<Movement> findByFilter(Long productId, Instant startDate, Instant endDate, Long typeMovementId) {
+    public Page<Movement> findByFilter(Long productId, Instant startDate, Instant endDate, Long typeMovementId, Pageable pageable) {
+        Sort sort = pageable.getSort();
+
+        String orderBy = sort.stream()
+                .map(order -> order.getProperty() + " " + order.getDirection().name())
+                .reduce((s1, s2) -> s1 + ", " + s2)
+                .orElse("");
 
         StringBuilder sql = new StringBuilder();
 
@@ -71,6 +81,18 @@ public class MovementCustomRepository {
             typedQuery.setParameter("typeMovementId", typeMovementId);
         }
 
-        return typedQuery.getResultList();
+        typedQuery.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
+        typedQuery.setMaxResults(pageable.getPageSize());
+        List<Movement> movements = typedQuery.getResultList();
+        long total = totalMovements();
+        return new PageImpl<>(movements, pageable, total);
+    }
+
+    private long totalMovements() {
+        String sql = "SELECT COUNT(m) FROM Movement m";
+
+        var query = entityManager.createQuery(sql, Long.class);
+
+        return (Long) query.getSingleResult();
     }
 }
