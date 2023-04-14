@@ -2,64 +2,78 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { catchError, map } from "rxjs/operators";
+import { IFilter } from "src/app/shared/models/filter.model";
 import { IMovementCreate } from "src/app/shared/models/movement-create.model";
 import { IMovement } from "src/app/shared/models/movement.model";
+import { IPage } from "src/app/shared/models/page.model";
 import { environment } from "src/environments/environment";
 
 const baseUrl = environment.API_URL + "/movement";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class MovementService {
+  constructor(private http: HttpClient) {}
 
-  constructor(
-    private http: HttpClient
-  ) {}
-
-  public findAll():Observable<IMovement[]>{
-    return this.http.get(baseUrl).pipe(
-      map(this.mapToMovements)
-    );
+  public findAll(): Observable<IMovement[]> {
+    return this.http.get(baseUrl).pipe(map(this.mapToMovements));
   }
 
-  public findByMovementId(movementId:number):Observable<IMovement[]>{
-    return this.http.get(`${baseUrl}/type_movement/${movementId}`).pipe(
-      map(this.mapToMovements)
-    );
+  public findByFilterPaged(filter: IFilter): Observable<any> {
+    let url: string =
+      baseUrl + `/filter?page=${filter.page}&size${filter.size}`;
+
+    if (filter.productId !== 0) url += `&productId=${filter.productId}`;
+    if (filter.startDate !== "") url += `&startDate=${filter.startDate}`;
+    if (filter.endDate !== "") url += `&endDate=${filter.endDate}`;
+    if (filter.typeMovementId !== 0)
+      url += `&typeMovementId=${filter.typeMovementId}`;
+
+    return this.http.get<IPage<IMovement>>(url);
   }
 
-  public findByProductId(productId:number):Observable<IMovement[]>{
-    return this.http.get(`${baseUrl}/product/${productId}`).pipe(
-      map(this.mapToMovements)
-    );
+  public findByMovementId(movementId: number): Observable<IMovement[]> {
+    return this.http
+      .get(`${baseUrl}/type_movement/${movementId}`)
+      .pipe(map(this.mapToMovements));
   }
 
-  public findByDateBetween(startDate:string, endDate:string):Observable<IMovement[]>{
-    return this.http.get(`${baseUrl}/date/${startDate}/${endDate}`).pipe(
-      map(this.mapToMovements)
-    );
+  public findByProductId(productId: number): Observable<IMovement[]> {
+    return this.http
+      .get(`${baseUrl}/product/${productId}`)
+      .pipe(map(this.mapToMovements));
   }
 
-  public findByTypeMovementIdAndProductId(movementId:number, productId:number):Observable<any>{
+  public findByDateBetween(
+    startDate: string,
+    endDate: string
+  ): Observable<IMovement[]> {
+    return this.http
+      .get(`${baseUrl}/date/${startDate}/${endDate}`)
+      .pipe(map(this.mapToMovements));
+  }
+
+  public findByTypeMovementIdAndProductId(
+    movementId: number,
+    productId: number
+  ): Observable<any> {
     return this.http.get(`${baseUrl}/${movementId}/${productId}`);
   }
 
-  private mapToMovements(data: IMovement[]):Array<IMovement>{
+  private mapToMovements(data: IMovement[]): Array<IMovement> {
     const listMovements: IMovement[] = [];
-    data.forEach((product:IMovement) => listMovements.push(product));
+    data.forEach((product: IMovement) => listMovements.push(product));
 
     return listMovements;
   }
 
-  public create(movement:IMovementCreate):Observable<any>{
-    
+  public create(movement: IMovementCreate): Observable<any> {
     const headers = new HttpHeaders({
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     });
-    const options = ({ headers: headers });
+    const options = { headers: headers };
     const body = JSON.stringify(movement);
-    console.log(movement);
-    return this.http.post(baseUrl,body,options);
+    return this.http.post(baseUrl, body, options);
   }
 }
