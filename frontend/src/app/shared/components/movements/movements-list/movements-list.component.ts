@@ -20,13 +20,24 @@ import { IPage } from "src/app/shared/models/page.model";
 export class MovementsListComponent implements OnInit {
   public form: FormGroup;
 
-  public listTypeMovements: Array<ITypeMovement> = [];
+  private firstElementOfListTypeMovements: ITypeMovement = {
+    id: 0,
+    description: "Selecione",
+    type: "",
+    role: {
+      id: 0,
+      authority: "",
+    },
+  };
+
+  public listTypeMovements: Array<ITypeMovement> = [
+    this.firstElementOfListTypeMovements,
+  ];
   private userRoles: string[];
-  public typeMovementSelected: number = 1;
   public startDate: string;
   public endDate: string;
   public productId: number;
-  public typeMovementId: number = 1;
+  public typeMovementId: number = 0;
 
   public filter: IFilter = {
     productId: 0,
@@ -49,22 +60,6 @@ export class MovementsListComponent implements OnInit {
     empty: true,
   };
 
-  public filterOptions: IFilterOptions[] = [
-    { id: 1, name: "Por data" },
-    { id: 2, name: "Por id do Produto" },
-    { id: 3, name: "Por tipo de Movimentação" },
-  ];
-
-  public inputSelected: number = 1;
-  public sortOptions: ISortModel[] = [
-    { id: 1, name: "Selecione" },
-    { id: 2, name: "Data ->" },
-    { id: 3, name: "Data <-" },
-    { id: 4, name: "Produto ->" },
-    { id: 5, name: "Produto <-" },
-  ];
-  public inputSelectedSort: number = 1;
-
   constructor(
     private formBuilder: FormBuilder,
     private movementService: MovementService,
@@ -80,15 +75,13 @@ export class MovementsListComponent implements OnInit {
 
   ngOnInit(): void {
     this.typeMovementService.findAll().subscribe((res) => {
-      this.listTypeMovements = res;
+      res.map((typeMovement) => this.listTypeMovements.push(typeMovement));
     });
     this.getMovements();
   }
 
   private createForm() {
     return this.formBuilder.group({
-      filterOptions: [null],
-      sortOptions: [null],
       startDate: [null],
       endDate: [null],
       productId: [null],
@@ -100,59 +93,46 @@ export class MovementsListComponent implements OnInit {
     return this.userRoles.includes(role);
   }
 
-  public changeSelect(): void {
-    console.info(this.inputSelectedSort);
+  public createFilter(page: number, size: number) {
+    if (this.productId === null || this.productId === undefined) {
+      this.filter.productId = 0;
+    } else {
+      this.filter.productId = this.productId;
+    }
+
+    this.filter.typeMovementId = this.typeMovementId;
+
+    if (this.startDate === null || this.startDate === undefined) {
+      this.filter.startDate = "";
+    } else {
+      this.filter.startDate = this.startDate;
+    }
+
+    if (this.endDate === null || this.endDate === undefined) {
+      this.filter.endDate = "";
+    } else {
+      this.filter.endDate = this.endDate;
+    }
+
+    this.filter.page = page;
+    this.filter.size = size;
+
+    this.getMovements();
   }
 
-  // public sortMovement() {
-  //   if (this.inputSelectedSort === 2) {
-  //     this.listMovements.sort((a: IMovement, b: IMovement) =>
-  //       a.date > b.date ? 1 : -1
-  //     );
-  //   }
-  //   if (this.inputSelectedSort === 3) {
-  //     this.listMovements.sort((a: IMovement, b: IMovement) =>
-  //       a.date < b.date ? 1 : -1
-  //     );
-  //   }
-  //   if (this.inputSelectedSort === 4) {
-  //     this.listMovements.sort((a: IMovement, b: IMovement) =>
-  //       a.product.name > b.product.name ? 1 : -1
-  //     );
-  //   }
-  //   if (this.inputSelectedSort === 5) {
-  //     this.listMovements.sort((a: IMovement, b: IMovement) =>
-  //       a.product.name < b.product.name ? 1 : -1
-  //     );
-  //   }
-  // }
+  public clear(): void {
+    this.filter.productId = 0;
+    this.filter.startDate = "";
+    this.filter.endDate = "";
+    this.filter.typeMovementId = 0;
 
-  // public find(): void {
-  //   if (this.inputSelected === 1) {
-  //     this.movementService
-  //       .findByDateBetween(this.startDate, this.endDate)
-  //       .subscribe((res) => {
-  //         this.listMovements = res;
-  //       });
-  //     console.log("startDate: " + this.startDate);
-  //     console.log("endDate: " + this.endDate);
-  //   }
-  //   if (this.inputSelected === 2) {
-  //     this.movementService.findByProductId(this.productId).subscribe((res) => {
-  //       this.listMovements = res;
-  //     });
-  //     console.log(this.listMovements);
-  //   }
-  //   if (this.inputSelected === 3) {
-  //     this.movementService
-  //       .findByMovementId(this.typeMovementId)
-  //       .subscribe((res) => {
-  //         this.listMovements = res;
-  //       });
-  //     console.log(this.listMovements);
-  //   }
-  //   this.inputSelectedSort = 1;
-  // }
+    this.productId = null;
+    this.typeMovementId = 0;
+    this.startDate = this.datepipe.transform(new Date(), "yyyy-MM-dd");
+    this.endDate = this.datepipe.transform(new Date(), "yyyy-MM-dd");
+
+    this.getMovements();
+  }
 
   public getMovements(): void {
     this.movementService.findByFilterPaged(this.filter).subscribe((res) => {
