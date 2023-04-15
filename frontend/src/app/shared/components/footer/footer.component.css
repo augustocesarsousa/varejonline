@@ -1,0 +1,17 @@
+.footer-container {
+  position: absolute;
+  top: 100%;
+}
+
+.footer-container .col-md-4 {
+  margin-bottom: 2em !important;
+}
+
+.footer-link {
+  text-decoration: none;
+}
+
+#footer-bottom p {
+  font-size: 12px;
+  margin-bottom: 2em !important;
+}

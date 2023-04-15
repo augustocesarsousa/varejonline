@@ -23,6 +23,7 @@ import { DatePipe } from "@angular/common";
 import { MovementsCreateComponent } from "./shared/components/movements/movements-create/movements-create.component";
 import { NavbarComponent } from "./shared/components/navbar/navbar.component";
 import { ProductsListComponent } from "./shared/components/products/products-list/products-list.component";
+import { FooterComponent } from './shared/components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { ProductsListComponent } from "./shared/components/products/products-lis
     MovementsListComponent,
     MovementsCreateComponent,
     NavbarComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
