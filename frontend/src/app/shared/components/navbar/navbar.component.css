@@ -1,0 +1,12 @@
+.navbar-brand {
+  margin: 0;
+}
+
+.logo img {
+  width: 170px;
+  height: 52px;
+}
+
+.active {
+  border-bottom: 2px solid black;
+}
