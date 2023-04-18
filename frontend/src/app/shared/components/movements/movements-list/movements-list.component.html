@@ -1,7 +1,7 @@
 <app-navbar [activeLink]="'movements'"></app-navbar>
 
-<main class="container mb-4">
-  <div class="mt-3 p-3 card shadow">
+<main class="container p-1">
+  <div class="p-3 card shadow">
     <h2 class="title mb-3">Movimentações</h2>
     <form [formGroup]="form" class="mb-5">
       <div class="row d-flex align-items-center justify-content-center">
@@ -67,16 +67,19 @@
       <div class="row mt-2 mt-lg-3 d-lg-flex justify-content-end">
         <div class="my-2 mt-3 col-md-4 col-lg-2 my-lg-0 d-flex align-items-end">
           <button class="btn custom-btn btn-info" (click)="createFilter(0, 5)">
+            <i class="bi bi-search text-black"></i>
             Pesquisar
           </button>
         </div>
         <div class="my-2 mt-3 col-md-4 col-lg-2 my-lg-0 d-flex align-items-end">
           <button class="btn custom-btn btn-secondary" (click)="clear()">
+            <i class="bi bi-file-earmark-fill text-white"></i>
             Limpar
           </button>
         </div>
         <div class="my-2 mt-3 col-md-4 col-lg-2 my-lg-0 d-flex align-items-end">
           <button class="btn custom-btn btn-primary" routerLink="create">
+            <i class="bi bi-plus-lg text-white"></i>
             Adicionar
           </button>
         </div>

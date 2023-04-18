@@ -1,7 +1,7 @@
 <app-navbar [activeLink]="'products'"></app-navbar>
 
-<main class="container mb-4">
-  <div class="mt-3 p-3 card shadow">
+<main class="container p-1">
+  <div class="p-3 card shadow">
     <h2 class="title">Edição de produto</h2>
     <form [formGroup]="form">
       <div class="row g-2 my-1">
@@ -18,7 +18,7 @@
             >Infome o nome do produto</small
           >
         </div>
-        <div class="col-md-8 form-group">
+        <div class="col-md-10 form-group">
           <label for="name">Nome</label>
           <input
             class="form-control"
@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="row g-2 my-1">
-        <div class="col-md-2">
+        <div class="col-md-3">
           <label for="hexCode">Código de barras</label>
           <input
             class="form-control"
@@ -44,7 +44,7 @@
             >Informe um código de barras válido (13 dígitos)</small
           >
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
           <label for="minQuantity">Quantidade mínima</label>
           <input
             class="form-control"
@@ -58,7 +58,7 @@
             >Informe uma quantidade válida</small
           >
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
           <label for="balance">Saldo inicial</label>
           <input
             class="form-control"
@@ -73,18 +73,24 @@
           >
         </div>
       </div>
-      <div class="my-2">
-        <button
-          [disabled]="form.invalid"
-          class="btn buttons btn-primary"
-          type="submit"
-          (click)="save()"
-        >
-          Salvar
-        </button>
-        <button routerLink="/products" class="btn buttons btn-danger">
-          Cancelar
-        </button>
+      <div class="row my-2">
+        <div class="col-md-3 col-lg-2">
+          <button
+            [disabled]="form.invalid"
+            class="btn mb-2 custom-btn btn-primary"
+            type="submit"
+            (click)="save()"
+          >
+            <i class="bi bi-sd-card text-white"></i>
+            Salvar
+          </button>
+        </div>
+        <div class="col-md-3 col-lg-2">
+          <button routerLink="/products" class="btn custom-btn btn-danger">
+            <i class="bi bi-x-lg text-white"></i>
+            Cancelar
+          </button>
+        </div>
       </div>
     </form>
   </div>

@@ -9,37 +9,3 @@
 .table-title {
   cursor: pointer;
 }
-
-/* .form-container{
-  width: 100%;
-}
-
-.header-content {
-  width: 100%;
-  margin: 0;
-  display:flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.new-movement{
-  height: 40px;
-  width: 200px;
-}
-
-.custom-form{
-  height: 40px;
-  width: 180px;
-}
-
-.select-sort-content{
-  height: 35px;
-  margin-top: 10px;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-}
-
-.input-select-sort {
-  width: 200px;
-} */
