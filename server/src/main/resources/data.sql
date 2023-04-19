@@ -16,3 +16,7 @@ INSERT INTO tb_type_movement (description, type, role_id) VALUES ('AJUSTE_SAÍDA
 
 INSERT INTO tb_movement (product_id, type_movement_id, user_id, date, reason, document, quantity, current_balance, situation) VALUES (1, 1, 2, TIMESTAMP WITH TIME ZONE '2023-01-10T03:00:00.00000Z', 'Teste', 999, 1, 1, 'Ok');
 INSERT INTO tb_movement (product_id, type_movement_id, user_id, date, reason, document, quantity, current_balance, situation) VALUES (2, 1, 2, TIMESTAMP WITH TIME ZONE '2023-01-15T03:00:00.00000Z', 'Teste', 999, 1, 1, 'Ok');
+INSERT INTO tb_movement (product_id, type_movement_id, user_id, date, reason, document, quantity, current_balance, situation) VALUES (1, 2, 2, TIMESTAMP WITH TIME ZONE '2023-02-04T03:00:00.00000Z', 'Entrada de nota', 100, 100, 101, 'Ok');
+INSERT INTO tb_movement (product_id, type_movement_id, user_id, date, reason, document, quantity, current_balance, situation) VALUES (1, 3, 2, TIMESTAMP WITH TIME ZONE '2023-02-10T03:00:00.00000Z', 'Venda', 105, 5, 96, 'Ok');
+INSERT INTO tb_movement (product_id, type_movement_id, user_id, date, reason, document, quantity, current_balance, situation) VALUES (2, 4, 2, TIMESTAMP WITH TIME ZONE '2023-03-11T03:00:00.00000Z', 'Iventario', 999, 23, 24, 'Ok');
+INSERT INTO tb_movement (product_id, type_movement_id, user_id, date, reason, document, quantity, current_balance, situation) VALUES (2, 5, 2, TIMESTAMP WITH TIME ZONE '2023-03-11T03:00:00.00000Z', 'Defeito', 999, 2, 22, 'Ok');

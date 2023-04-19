@@ -45,7 +45,7 @@ export class MovementsListComponent implements OnInit {
     endDate: "",
     typeMovementId: 0,
     page: 0,
-    size: 5,
+    size: 10,
   };
 
   public page: IPage<IMovement> = {

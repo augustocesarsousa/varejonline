@@ -1,6 +1,10 @@
 package br.comvarejonline.projetoinicial.services;
 
-import java.time.*;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -38,7 +42,8 @@ public class MovementService {
     private ZoneId zone = ZoneId.of("America/Sao_Paulo");
     private ZoneOffset zoneOffSet = zone.getRules().getOffset(now);
 
-    public MovementService(MovementRepository movementRepository, ProductRepository productRepository, MovementCustomRepository movementCustomRepository) {
+    public MovementService(MovementRepository movementRepository, ProductRepository productRepository,
+            MovementCustomRepository movementCustomRepository) {
         this.movementRepository = movementRepository;
         this.productRepository = productRepository;
         this.movementCustomRepository = movementCustomRepository;
@@ -89,7 +94,8 @@ public class MovementService {
     }
 
     @Transactional(readOnly = true)
-    public Page<MovementDTO> findByFilterPaged(String productIdSting, String startDateString, String endDateString, String typeMovementIdSting, Pageable pageable) {
+    public Page<MovementDTO> findByFilterPaged(String productIdSting, String startDateString, String endDateString,
+            String typeMovementIdSting, Pageable pageable) {
         Long productId = null;
         Long typeMovementId = null;
         LocalDate localDate;
@@ -97,27 +103,29 @@ public class MovementService {
         Instant startDate = null;
         Instant endDate = null;
 
-        if(productIdSting != null) {
+        if (productIdSting != null) {
             productId = Long.parseLong(productIdSting);
         }
 
-        if(typeMovementIdSting != null) {
+        if (typeMovementIdSting != null) {
             typeMovementId = Long.parseLong(typeMovementIdSting);
         }
 
-        if(startDateString != null){
+        if (startDateString != null) {
             localDate = LocalDate.parse(startDateString);
             localDateTime = localDate.atStartOfDay();
             startDate = localDateTime.toInstant(zoneOffSet).minusSeconds(10800);
         }
 
-        if(endDateString != null){
+        if (endDateString != null) {
             localDate = LocalDate.parse(endDateString);
             localDateTime = localDate.atStartOfDay();
-            endDate = localDateTime.toInstant(zoneOffSet).minusSeconds(10800);;
+            endDate = localDateTime.toInstant(zoneOffSet).plusSeconds(75599);
         }
 
-        Page<Movement> page = movementCustomRepository.findByFilter(productId, startDate, endDate, typeMovementId, pageable);
+        logger.warn("Startdate: " + startDate + " EndDate: " + endDate);
+        Page<Movement> page = movementCustomRepository.findByFilter(productId, startDate, endDate, typeMovementId,
+                pageable);
 
         return page.map(movement -> new MovementDTO(movement));
     }

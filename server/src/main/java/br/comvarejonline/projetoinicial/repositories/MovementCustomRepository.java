@@ -33,7 +33,8 @@ public class MovementCustomRepository {
         this.entityManager = entityManager;
     }
 
-    public Page<Movement> findByFilter(Long productId, Instant startDate, Instant endDate, Long typeMovementId, Pageable pageable) {
+    public Page<Movement> findByFilter(Long productId, Instant startDate, Instant endDate, Long typeMovementId,
+            Pageable pageable) {
         Sort sort = pageable.getSort();
 
         String orderBy = sort.stream()
@@ -61,7 +62,11 @@ public class MovementCustomRepository {
             sql.append("AND m.typeMovement.id = :typeMovementId ");
         }
 
-//        logger.warn("QUERY: " + sql.toString());
+        if (!"".equals(orderBy)) {
+            sql.append("ORDER BY f." + orderBy);
+        }
+
+        logger.warn("QUERY: " + sql.toString());
         TypedQuery<Movement> typedQuery = entityManager.createQuery(sql.toString(), Movement.class);
 
         if (productId != null) {
@@ -81,6 +86,7 @@ public class MovementCustomRepository {
             typedQuery.setParameter("typeMovementId", typeMovementId);
         }
 
+        // logger.warn("TYPED QUERY: " + typedQuery.toString());
         typedQuery.setFirstResult(pageable.getPageNumber() * pageable.getPageSize());
         typedQuery.setMaxResults(pageable.getPageSize());
         List<Movement> movements = typedQuery.getResultList();
