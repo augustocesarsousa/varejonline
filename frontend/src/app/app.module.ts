@@ -23,6 +23,7 @@ import { MovementsCreateComponent } from "./shared/components/movements/movement
 import { NavbarComponent } from "./shared/components/navbar/navbar.component";
 import { ProductsListComponent } from "./shared/components/products/products-list/products-list.component";
 import { FooterComponent } from "./shared/components/footer/footer.component";
+import { OrderModule } from "ngx-order-pipe";
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { FooterComponent } from "./shared/components/footer/footer.component";
     ReactiveFormsModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
+    OrderModule,
   ],
   providers: [
     AuthGuard,

@@ -16,13 +16,9 @@ const baseUrl = environment.API_URL + "/movement";
 export class MovementService {
   constructor(private http: HttpClient) {}
 
-  public findAll(): Observable<IMovement[]> {
-    return this.http.get(baseUrl).pipe(map(this.mapToMovements));
-  }
-
   public findByFilterPaged(filter: IFilter): Observable<any> {
     let url: string =
-      baseUrl + `/filter?page=${filter.page}&size${filter.size}`;
+      baseUrl + `/filter?page=${filter.page}&size=${filter.size}`;
 
     if (filter.productId !== 0) url += `&productId=${filter.productId}`;
     if (filter.startDate !== "") url += `&startDate=${filter.startDate}`;
@@ -33,39 +29,11 @@ export class MovementService {
     return this.http.get<IPage<IMovement>>(url);
   }
 
-  public findByMovementId(movementId: number): Observable<IMovement[]> {
-    return this.http
-      .get(`${baseUrl}/type_movement/${movementId}`)
-      .pipe(map(this.mapToMovements));
-  }
-
-  public findByProductId(productId: number): Observable<IMovement[]> {
-    return this.http
-      .get(`${baseUrl}/product/${productId}`)
-      .pipe(map(this.mapToMovements));
-  }
-
-  public findByDateBetween(
-    startDate: string,
-    endDate: string
-  ): Observable<IMovement[]> {
-    return this.http
-      .get(`${baseUrl}/date/${startDate}/${endDate}`)
-      .pipe(map(this.mapToMovements));
-  }
-
   public findByTypeMovementIdAndProductId(
     movementId: number,
     productId: number
   ): Observable<any> {
     return this.http.get(`${baseUrl}/${movementId}/${productId}`);
-  }
-
-  private mapToMovements(data: IMovement[]): Array<IMovement> {
-    const listMovements: IMovement[] = [];
-    data.forEach((product: IMovement) => listMovements.push(product));
-
-    return listMovements;
   }
 
   public create(movement: IMovementCreate): Observable<any> {

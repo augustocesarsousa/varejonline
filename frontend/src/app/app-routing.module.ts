@@ -4,6 +4,7 @@ import { HomeComponent } from "./pages/home/home.component";
 import { LoginComponent } from "./shared/components/login/login.component";
 import { AuthGuard } from "./core/guard/auth.guard";
 import { AppComponent } from "./app.component";
+import { OrderModule } from "ngx-order-pipe";
 
 const routes: Routes = [
   { path: "login", component: LoginComponent },

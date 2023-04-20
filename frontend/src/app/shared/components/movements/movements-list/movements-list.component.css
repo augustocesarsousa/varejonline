@@ -9,3 +9,11 @@
 .table-title {
   cursor: pointer;
 }
+
+.table-title i {
+  font-size: 1em;
+}
+
+.pagination li button {
+  height: 38px;
+}

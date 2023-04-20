@@ -66,7 +66,7 @@
       </div>
       <div class="row mt-2 mt-lg-3 d-lg-flex justify-content-end">
         <div class="my-2 mt-3 col-md-4 col-lg-2 my-lg-0 d-flex align-items-end">
-          <button class="btn custom-btn btn-info" (click)="createFilter(0, 10)">
+          <button class="btn custom-btn btn-info" (click)="createFilter(0, 5)">
             <i class="bi bi-search text-black"></i>
             Pesquisar
           </button>
@@ -86,19 +86,55 @@
       </div>
     </form>
     <div class="table-responsive mt-2">
-      <table class="table">
+      <table class="table table-striped">
         <thead>
-          <th>Data do Movimento</th>
-          <th>Produto</th>
-          <th>Tipo de Movimento</th>
-          <th>Documento</th>
-          <th>Motivo</th>
-          <th>Quantidade</th>
-          <th>Saldo</th>
-          <th>Situação</th>
+          <th (click)="sort('date')" class="table-title">
+            <div class="d-flex align-items-center">
+              Data do Movimento&nbsp;<i
+                class="bi bi-arrow-down-up text-black"
+              ></i>
+            </div>
+          </th>
+          <th (click)="sort('name')" class="table-title">
+            <div class="d-flex align-items-center">
+              Produto&nbsp;&nbsp;<i class="bi bi-arrow-down-up text-black"></i>
+            </div>
+          </th>
+          <th (click)="sort('description')" class="table-title">
+            <div class="d-flex align-items-center">
+              Tipo de Movimento&nbsp;<i
+                class="bi bi-arrow-down-up text-black"
+              ></i>
+            </div>
+          </th>
+          <th (click)="sort('document')" class="table-title">
+            <div class="d-flex align-items-center">
+              Documento&nbsp;<i class="bi bi-arrow-down-up text-black"></i>
+            </div>
+          </th>
+          <th (click)="sort('reason')" class="table-title">
+            <div class="d-flex align-items-center">
+              Motivo&nbsp;<i class="bi bi-arrow-down-up text-black"></i>
+            </div>
+          </th>
+          <th (click)="sort('quantity')" class="table-title">
+            <div class="d-flex align-items-center">
+              Quantidade&nbsp;<i class="bi bi-arrow-down-up text-black"></i>
+            </div>
+          </th>
+          <th (click)="sort('currentBalance')" class="table-title">
+            <div class="d-flex align-items-center">
+              Saldo&nbsp;<i class="bi bi-arrow-down-up text-black"></i>
+            </div>
+          </th>
+          <th (click)="sort('situation')" class="table-title">
+            <div class="d-flex align-items-center">
+              Situação&nbsp;<i class="bi bi-arrow-down-up text-black"></i>
+            </div>
+          </th>
         </thead>
         <tbody>
-          <tr *ngFor="let movement of page.content">
+          <tr *ngFor="let movement of page.content | orderBy : key : reverse">
             <td>{{ movement.date | date : "dd-MM-yyyy" }}</td>
             <td>{{ movement.product.name }}</td>
             <td>{{ movement.typeMovement.description }}</td>
@@ -110,6 +146,38 @@
           </tr>
         </tbody>
       </table>
+    </div>
+    <div class="d-flex justify-content-center pagination-container mt-3">
+      <nav>
+        <ul class="pagination pagination-content">
+          <li class="page-item" [ngClass]="page.first ? 'disabled' : ''">
+            <button
+              class="page-link"
+              (click)="createFilter(page.number - 1, 5)"
+            >
+              Anterior
+            </button>
+          </li>
+          <li class="page-item disabled">
+            <span class="page-link numeration">
+              {{ page.number + 1 }}/{{ page.totalPages }}
+            </span>
+          </li>
+          <li
+            class="page-item"
+            [ngClass]="
+              page.last || page.numberOfElements < page.size ? 'disabled' : ''
+            "
+          >
+            <button
+              class="page-link"
+              (click)="createFilter(page.number + 1, 5)"
+            >
+              Próxima
+            </button>
+          </li>
+        </ul>
+      </nav>
     </div>
   </div>
 </main>

@@ -10,8 +10,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
+ import org.slf4j.Logger;
+ import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -37,8 +37,8 @@ import br.comvarejonline.projetoinicial.services.MovementService;
 @RequestMapping(value = "/movement")
 public class MovementController {
 
-    // private static Logger logger =
-    // LoggerFactory.getLogger(MovementController.class);
+     private static Logger logger =
+     LoggerFactory.getLogger(MovementController.class);
 
     private MovementService movementService;
 
@@ -118,7 +118,7 @@ public class MovementController {
             @RequestParam(value = "endDate", required = false) String endDate,
             @RequestParam(value = "typeMovementId", required = false) String typeMovementId,
             @PageableDefault Pageable pageable) {
-
+        logger.warn("PAGEABLE: " + pageable.toString());
         Page<MovementDTO> movementDTO = movementService.findByFilterPaged(productId, startDate, endDate, typeMovementId,
                 pageable);
 

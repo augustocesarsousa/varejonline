@@ -33,11 +33,14 @@ export class MovementsListComponent implements OnInit {
   public listTypeMovements: Array<ITypeMovement> = [
     this.firstElementOfListTypeMovements,
   ];
+
   private userRoles: string[];
   public startDate: string;
   public endDate: string;
   public productId: number;
   public typeMovementId: number = 0;
+  public key: string = "date";
+  public reverse: boolean = false;
 
   public filter: IFilter = {
     productId: 0,
@@ -45,7 +48,7 @@ export class MovementsListComponent implements OnInit {
     endDate: "",
     typeMovementId: 0,
     page: 0,
-    size: 10,
+    size: 5,
   };
 
   public page: IPage<IMovement> = {
@@ -69,8 +72,6 @@ export class MovementsListComponent implements OnInit {
   ) {
     this.form = this.createForm();
     this.userRoles = tokenService.getTokenDecoded().authorities;
-    this.startDate = this.datepipe.transform(new Date(), "yyyy-MM-dd");
-    this.endDate = this.datepipe.transform(new Date(), "yyyy-MM-dd");
   }
 
   ngOnInit(): void {
@@ -91,6 +92,11 @@ export class MovementsListComponent implements OnInit {
 
   public hasRole(role: string): boolean {
     return this.userRoles.includes(role);
+  }
+
+  public sort(key: string) {
+    this.key = key;
+    this.reverse = !this.reverse;
   }
 
   public createFilter(page: number, size: number) {
@@ -128,8 +134,6 @@ export class MovementsListComponent implements OnInit {
 
     this.productId = null;
     this.typeMovementId = 0;
-    this.startDate = this.datepipe.transform(new Date(), "yyyy-MM-dd");
-    this.endDate = this.datepipe.transform(new Date(), "yyyy-MM-dd");
 
     this.getMovements();
   }

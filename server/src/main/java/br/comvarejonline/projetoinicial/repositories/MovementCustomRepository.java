@@ -6,8 +6,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -25,7 +25,7 @@ import br.comvarejonline.projetoinicial.entities.Movement;
 @Repository
 public class MovementCustomRepository {
 
-    private static Logger logger = LoggerFactory.getLogger(MovementCustomRepository.class);
+//    private static Logger logger = LoggerFactory.getLogger(MovementCustomRepository.class);
 
     private final EntityManager entityManager;
 
@@ -66,7 +66,7 @@ public class MovementCustomRepository {
             sql.append("ORDER BY f." + orderBy);
         }
 
-        logger.warn("QUERY: " + sql.toString());
+//        logger.warn("QUERY: " + sql.toString());
         TypedQuery<Movement> typedQuery = entityManager.createQuery(sql.toString(), Movement.class);
 
         if (productId != null) {
