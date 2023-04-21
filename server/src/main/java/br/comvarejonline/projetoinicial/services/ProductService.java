@@ -1,21 +1,21 @@
 package br.comvarejonline.projetoinicial.services;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.persistence.EntityNotFoundException;
 
+import br.comvarejonline.projetoinicial.dtos.*;
+import br.comvarejonline.projetoinicial.repositories.ProductCustomRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.comvarejonline.projetoinicial.dtos.MovementCreateDTO;
-import br.comvarejonline.projetoinicial.dtos.ProductCreateDTO;
-import br.comvarejonline.projetoinicial.dtos.ProductDTO;
-import br.comvarejonline.projetoinicial.dtos.ProductUpdateDTO;
-import br.comvarejonline.projetoinicial.dtos.TypeMovementDTO;
-import br.comvarejonline.projetoinicial.dtos.UserDTO;
 import br.comvarejonline.projetoinicial.entities.Movement;
 import br.comvarejonline.projetoinicial.entities.Product;
 import br.comvarejonline.projetoinicial.entities.TypeMovement;
@@ -31,13 +31,15 @@ import br.comvarejonline.projetoinicial.utils.CopyDtoToEntity;
 public class ProductService {
 
     private ProductRepository productRepository;
+    private ProductCustomRepository productCustomRepository;
     private MovementService movementService;
     private TypeMovementService typeMovementService;
     private UserService userService;
 
-    public ProductService(ProductRepository productRepository, MovementService movementService,
+    public ProductService(ProductRepository productRepository, ProductCustomRepository productCustomRepository, MovementService movementService,
             TypeMovementService typeMovementService, UserService userService) {
         this.productRepository = productRepository;
+        this.productCustomRepository = productCustomRepository;
         this.movementService = movementService;
         this.typeMovementService = typeMovementService;
         this.userService = userService;
@@ -48,6 +50,20 @@ public class ProductService {
     public List<ProductDTO> findAll() {
         List<Product> productList = productRepository.findAll();
         return productList.stream().map(product -> new ProductDTO(product)).collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ProductDTO> findByFilterPaged(String productIdSting, String productName, String productHexCode,
+                                                Pageable pageable) {
+        Long productId = null;
+
+        if (productIdSting != null) {
+            productId = Long.parseLong(productIdSting);
+        }
+
+        Page<Product> page = productCustomRepository.findByFilter(productId, productName, productHexCode, pageable);
+
+        return page.map(product -> new ProductDTO(product));
     }
 
     // Consulta um produto por id

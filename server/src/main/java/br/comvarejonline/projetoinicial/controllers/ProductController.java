@@ -5,14 +5,12 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import br.comvarejonline.projetoinicial.dtos.MovementDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.comvarejonline.projetoinicial.dtos.ProductCreateDTO;
@@ -39,6 +37,19 @@ public class ProductController {
     public ResponseEntity<List<ProductDTO>> findAll() {
         List<ProductDTO> productList = productService.findAll();
         return ResponseEntity.ok().body(productList);
+    }
+
+    @GetMapping(value = "/filter")
+    public ResponseEntity<Page<ProductDTO>> findByFilterPaged(
+            @RequestParam(value = "productId", required = false) String productId,
+            @RequestParam(value = "productName", required = false) String productName,
+            @RequestParam(value = "productHexCode", required = false) String productHexCode,
+            @PageableDefault Pageable pageable) {
+//        logger.warn("PAGEABLE: " + pageable.toString());
+        Page<ProductDTO> productDTO = productService.findByFilterPaged(productId, productName, productHexCode,
+                pageable);
+
+        return ResponseEntity.ok().body(productDTO);
     }
 
     // Endpoind que retorna um produto por id

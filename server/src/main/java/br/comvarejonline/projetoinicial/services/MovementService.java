@@ -9,8 +9,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ import br.comvarejonline.projetoinicial.utils.CopyDtoToEntity;
 @Service
 public class MovementService {
 
-    private static Logger logger = LoggerFactory.getLogger(MovementService.class);
+//    private static Logger logger = LoggerFactory.getLogger(MovementService.class);
     private MovementRepository movementRepository;
     private MovementCustomRepository movementCustomRepository;
     private ProductRepository productRepository;
@@ -123,7 +123,7 @@ public class MovementService {
             endDate = localDateTime.toInstant(zoneOffSet).plusSeconds(75599);
         }
 
-        logger.warn("Startdate: " + startDate + " EndDate: " + endDate);
+//        logger.warn("Startdate: " + startDate + " EndDate: " + endDate);
         Page<Movement> page = movementCustomRepository.findByFilter(productId, startDate, endDate, typeMovementId,
                 pageable);
 
