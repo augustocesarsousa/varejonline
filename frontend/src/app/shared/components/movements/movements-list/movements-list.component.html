@@ -30,7 +30,7 @@
                 *ngFor="let type of listTypeMovements"
                 [ngValue]="type.id"
               >
-                {{ type.description }}
+                {{ type.name }}
               </option>
             </select>
           </div>
@@ -90,46 +90,126 @@
         <thead>
           <th (click)="sort('date')" class="table-title">
             <div class="d-flex align-items-center">
-              Data do Movimento&nbsp;<i
+              Data&nbsp;<i
+                *ngIf="key === 'date' && reverse"
+                class="bi bi-arrow-down text-black"
+              ></i>
+              <i
+                *ngIf="key === 'date' && !reverse"
+                class="bi bi-arrow-up text-black"
+              ></i>
+              <i
+                *ngIf="key !== 'date'"
                 class="bi bi-arrow-down-up text-black"
               ></i>
             </div>
           </th>
-          <th (click)="sort('name')" class="table-title">
+          <th (click)="sort('product.name')" class="table-title">
             <div class="d-flex align-items-center">
-              Produto&nbsp;&nbsp;<i class="bi bi-arrow-down-up text-black"></i>
+              <span>Produto&nbsp;</span
+              ><i
+                *ngIf="key === 'product.name' && reverse"
+                class="bi bi-arrow-down text-black"
+              ></i>
+              <i
+                *ngIf="key === 'product.name' && !reverse"
+                class="bi bi-arrow-up text-black"
+              ></i>
+              <i
+                *ngIf="key !== 'product.name'"
+                class="bi bi-arrow-down-up text-black"
+              ></i>
             </div>
           </th>
-          <th (click)="sort('description')" class="table-title">
+          <th (click)="sort('typeMovement.name')" class="table-title">
             <div class="d-flex align-items-center">
-              Tipo de Movimento&nbsp;<i
+              <span>Tipo&nbsp;</span
+              ><i
+                *ngIf="key === 'typeMovement.name' && reverse"
+                class="bi bi-arrow-down text-black"
+              ></i>
+              <i
+                *ngIf="key === 'typeMovement.name' && !reverse"
+                class="bi bi-arrow-up text-black"
+              ></i>
+              <i
+                *ngIf="key !== 'typeMovement.name'"
                 class="bi bi-arrow-down-up text-black"
               ></i>
             </div>
           </th>
           <th (click)="sort('document')" class="table-title">
             <div class="d-flex align-items-center">
-              Documento&nbsp;<i class="bi bi-arrow-down-up text-black"></i>
+              <span>Documento&nbsp;</span
+              ><i class="bi bi-arrow-down-up text-black"></i>
             </div>
           </th>
           <th (click)="sort('reason')" class="table-title">
             <div class="d-flex align-items-center">
-              Motivo&nbsp;<i class="bi bi-arrow-down-up text-black"></i>
+              <span>Motivo&nbsp;</span
+              ><i
+                *ngIf="key === 'reason' && reverse"
+                class="bi bi-arrow-down text-black"
+              ></i>
+              <i
+                *ngIf="key === 'reason' && !reverse"
+                class="bi bi-arrow-up text-black"
+              ></i>
+              <i
+                *ngIf="key !== 'reason'"
+                class="bi bi-arrow-down-up text-black"
+              ></i>
             </div>
           </th>
           <th (click)="sort('quantity')" class="table-title">
             <div class="d-flex align-items-center">
-              Quantidade&nbsp;<i class="bi bi-arrow-down-up text-black"></i>
+              <span>Quantidade&nbsp;</span
+              ><i
+                *ngIf="key === 'quantity' && reverse"
+                class="bi bi-arrow-down text-black"
+              ></i>
+              <i
+                *ngIf="key === 'quantity' && !reverse"
+                class="bi bi-arrow-up text-black"
+              ></i>
+              <i
+                *ngIf="key !== 'quantity'"
+                class="bi bi-arrow-down-up text-black"
+              ></i>
             </div>
           </th>
           <th (click)="sort('currentBalance')" class="table-title">
             <div class="d-flex align-items-center">
-              Saldo&nbsp;<i class="bi bi-arrow-down-up text-black"></i>
+              <span>Saldo&nbsp;</span
+              ><i
+                *ngIf="key === 'currentBalance' && reverse"
+                class="bi bi-arrow-down text-black"
+              ></i>
+              <i
+                *ngIf="key === 'currentBalance' && !reverse"
+                class="bi bi-arrow-up text-black"
+              ></i>
+              <i
+                *ngIf="key !== 'currentBalance'"
+                class="bi bi-arrow-down-up text-black"
+              ></i>
             </div>
           </th>
           <th (click)="sort('situation')" class="table-title">
             <div class="d-flex align-items-center">
-              Situação&nbsp;<i class="bi bi-arrow-down-up text-black"></i>
+              <span>Situação&nbsp;</span
+              ><i
+                *ngIf="key === 'situation' && reverse"
+                class="bi bi-arrow-down text-black"
+              ></i>
+              <i
+                *ngIf="key === 'situation' && !reverse"
+                class="bi bi-arrow-up text-black"
+              ></i>
+              <i
+                *ngIf="key !== 'situation'"
+                class="bi bi-arrow-down-up text-black"
+              ></i>
             </div>
           </th>
         </thead>
@@ -137,7 +217,7 @@
           <tr *ngFor="let movement of page.content | orderBy : key : reverse">
             <td>{{ movement.date | date : "dd-MM-yyyy" }}</td>
             <td>{{ movement.product.name }}</td>
-            <td>{{ movement.typeMovement.description }}</td>
+            <td>{{ movement.typeMovement.name }}</td>
             <td>{{ movement.document }}</td>
             <td>{{ movement.reason }}</td>
             <td>{{ movement.quantity }}</td>

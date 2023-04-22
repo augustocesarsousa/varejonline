@@ -50,6 +50,7 @@ public abstract class CopyDtoToEntity {
         copyRoleDtoToRole(typeMovementDTO.getRole(), role);
 
         typeMovement.setId(typeMovementDTO.getId());
+        typeMovement.setName(typeMovementDTO.getName());
         typeMovement.setDescription(typeMovementDTO.getDescription());
         typeMovement.setRole(role);
         typeMovement.setType(typeMovementDTO.getType());

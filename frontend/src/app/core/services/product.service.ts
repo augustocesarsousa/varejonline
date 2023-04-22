@@ -17,7 +17,7 @@ export class ProductsService {
 
   public findByFilterPaged(filter: IFilter): Observable<any> {
     let url: string =
-      baseUrl + `/filter?page=${filter.page}&size=${filter.size}`;
+      baseUrl + `/filter?page=${filter.page}&size=${filter.size}&sort=id,asc`;
 
     if (filter.productId !== 0) url += `&productId=${filter.productId}`;
     if (filter.productHexCode !== "")

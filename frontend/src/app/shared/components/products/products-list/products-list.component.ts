@@ -18,6 +18,8 @@ export class ProductsListComponent implements OnInit {
   public productHexCode: string;
   public productName: string;
   private userRoles: string[];
+  public key: string;
+  public reverse: boolean = true;
 
   public filter: IFilter = {
     productId: 0,
@@ -64,10 +66,6 @@ export class ProductsListComponent implements OnInit {
     });
   }
 
-  public hasRole(role: string): boolean {
-    return this.userRoles.includes(role);
-  }
-
   public createFilter(page: number, size: number) {
     if (this.productId === null || this.productId === undefined) {
       this.filter.productId = 0;
@@ -112,5 +110,14 @@ export class ProductsListComponent implements OnInit {
     this.productName = "";
 
     this.getByFilter();
+  }
+
+  public hasRole(role: string): boolean {
+    return this.userRoles.includes(role);
+  }
+
+  public sort(key: string) {
+    this.key = key;
+    this.reverse = !this.reverse;
   }
 }

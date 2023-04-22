@@ -23,7 +23,8 @@ export class MovementsListComponent implements OnInit {
 
   private firstElementOfListTypeMovements: ITypeMovement = {
     id: 0,
-    description: "Selecione",
+    name: "Selecione",
+    description: "",
     type: "",
     role: {
       id: 0,
@@ -40,8 +41,8 @@ export class MovementsListComponent implements OnInit {
   public endDate: string;
   public productId: number;
   public typeMovementId: number = 0;
-  public key: string = "date";
-  public reverse: boolean = false;
+  public key: string;
+  public reverse: boolean = true;
 
   public filter: IFilter = {
     productId: 0,

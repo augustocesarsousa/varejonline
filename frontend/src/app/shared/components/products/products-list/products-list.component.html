@@ -64,15 +64,95 @@
     <div class="table-responsive">
       <table class="table table-striped">
         <thead>
-          <th>ID</th>
-          <th>Nome</th>
-          <th>Código de barras</th>
-          <th>Qtd. mínima</th>
-          <th>Saldo</th>
+          <th (click)="sort('id')" class="table-title">
+            <div class="d-flex align-items-center">
+              <span>ID&nbsp;</span
+              ><i
+                *ngIf="key === 'id' && reverse"
+                class="bi bi-arrow-down text-black"
+              ></i>
+              <i
+                *ngIf="key === 'id' && !reverse"
+                class="bi bi-arrow-up text-black"
+              ></i>
+              <i
+                *ngIf="key !== 'id'"
+                class="bi bi-arrow-down-up text-black"
+              ></i>
+            </div>
+          </th>
+          <th (click)="sort('name')" class="table-title">
+            <div class="d-flex align-items-center">
+              <span>Nome&nbsp;</span>
+              <i
+                *ngIf="key === 'name' && reverse"
+                class="bi bi-arrow-down text-black"
+              ></i>
+              <i
+                *ngIf="key === 'name' && !reverse"
+                class="bi bi-arrow-up text-black"
+              ></i>
+              <i
+                *ngIf="key !== 'name'"
+                class="bi bi-arrow-down-up text-black"
+              ></i>
+            </div>
+          </th>
+          <th (click)="sort('hexCode')" class="table-title">
+            <div class="d-flex align-items-center">
+              <span>Código de Barras&nbsp;</span>
+              <i
+                *ngIf="key === 'hexCode' && reverse"
+                class="bi bi-arrow-down text-black"
+              ></i>
+              <i
+                *ngIf="key === 'hexCode' && !reverse"
+                class="bi bi-arrow-up text-black"
+              ></i>
+              <i
+                *ngIf="key !== 'hexCode'"
+                class="bi bi-arrow-down-up text-black"
+              ></i>
+            </div>
+          </th>
+          <th (click)="sort('minQuantity')" class="table-title">
+            <div class="d-flex align-items-center">
+              <span>Qtd. Mínima&nbsp;</span>
+              <i
+                *ngIf="key === 'minQuantity' && reverse"
+                class="bi bi-arrow-down text-black"
+              ></i>
+              <i
+                *ngIf="key === 'minQuantity' && !reverse"
+                class="bi bi-arrow-up text-black"
+              ></i>
+              <i
+                *ngIf="key !== 'minQuantity'"
+                class="bi bi-arrow-down-up text-black"
+              ></i>
+            </div>
+          </th>
+          <th (click)="sort('balance')" class="table-title">
+            <div class="d-flex align-items-center">
+              <span>Saldo&nbsp;</span>
+              <i
+                *ngIf="key === 'balance' && reverse"
+                class="bi bi-arrow-down text-black"
+              ></i>
+              <i
+                *ngIf="key === 'balance' && !reverse"
+                class="bi bi-arrow-up text-black"
+              ></i>
+              <i
+                *ngIf="key !== 'balance'"
+                class="bi bi-arrow-down-up text-black"
+              ></i>
+            </div>
+          </th>
           <th></th>
         </thead>
         <tbody>
-          <tr *ngFor="let product of page.content">
+          <tr *ngFor="let product of page.content | orderBy : key : reverse">
             <td>{{ product.id }}</td>
             <td>{{ product.name }}</td>
             <td>{{ product.hexCode }}</td>

@@ -23,7 +23,8 @@ import br.comvarejonline.projetoinicial.entities.Movement;
 @Repository
 public class MovementCustomRepository {
 
-//    private static Logger logger = LoggerFactory.getLogger(MovementCustomRepository.class);
+    // private static Logger logger =
+    // LoggerFactory.getLogger(MovementCustomRepository.class);
 
     private final EntityManager entityManager;
 
@@ -61,10 +62,10 @@ public class MovementCustomRepository {
         }
 
         if (!"".equals(orderBy)) {
-            sql.append("ORDER BY f." + orderBy);
+            sql.append("ORDER BY m." + orderBy);
         }
 
-//        logger.warn("QUERY: " + sql.toString());
+        // logger.warn("QUERY: " + sql.toString());
         TypedQuery<Movement> typedQuery = entityManager.createQuery(sql.toString(), Movement.class);
 
         if (productId != null) {
