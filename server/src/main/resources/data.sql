@@ -1,6 +1,9 @@
-INSERT INTO tb_product (name, hex_code, min_quantity, balance, current_balance, created_at) VALUES ('Product test 1', '0000000000001', 1, 1, 1, TIMESTAMP WITH TIME ZONE '2023-01-10T00:00:00.00000Z');
-INSERT INTO tb_product (name, hex_code, min_quantity, balance, current_balance, created_at) VALUES ('Product test 2', '0000000000002', 1, 1, 1, TIMESTAMP WITH TIME ZONE '2023-01-15T00:00:00.00000Z');
-INSERT INTO tb_product (name, hex_code, min_quantity, balance, current_balance, created_at) VALUES ('Product test 3', '0000000000003', 1, 1, 1, TIMESTAMP WITH TIME ZONE '2023-02-05T00:00:00.00000Z');
+INSERT INTO tb_product (name, hex_code, min_quantity, balance, current_balance, created_at) VALUES ('Smartphone Galaxy S20 Samsung', '0000000000001', 1, 1, 1, TIMESTAMP WITH TIME ZONE '2023-01-10T00:00:00.00000Z');
+INSERT INTO tb_product (name, hex_code, min_quantity, balance, current_balance, created_at) VALUES ('SmartTV 50" 4K 50PUG7406/78 Philips', '0000000000002', 1, 1, 1, TIMESTAMP WITH TIME ZONE '2023-01-15T00:00:00.00000Z');
+INSERT INTO tb_product (name, hex_code, min_quantity, balance, current_balance, created_at) VALUES ('Refrigerador 384L RT38K5530S8/AZ Samsung', '0000000000003', 1, 1, 1, TIMESTAMP WITH TIME ZONE '2023-02-05T00:00:00.00000Z');
+INSERT INTO tb_product (name, hex_code, min_quantity, balance, current_balance, created_at) VALUES ('Sofa 3/2 Lugares Marrocos Master 2077 Primor', '0000000000004', 1, 1, 1, TIMESTAMP WITH TIME ZONE '2023-03-07T00:00:00.00000Z');
+INSERT INTO tb_product (name, hex_code, min_quantity, balance, current_balance, created_at) VALUES ('Fogão 5B Supreme Glass 570 Dako', '0000000000005', 1, 1, 1, TIMESTAMP WITH TIME ZONE '2023-03-12T00:00:00.00000Z');
+INSERT INTO tb_product (name, hex_code, min_quantity, balance, current_balance, created_at) VALUES ('Sofa 3/2 Lugares Marrocos Master 2077 Primor', '0000000000006', 1, 1, 1, TIMESTAMP WITH TIME ZONE '2023-03-17T00:00:00.00000Z');
 
 INSERT INTO tb_role (authority) VALUES ('ROLE_OPERATOR');
 INSERT INTO tb_role (authority) VALUES ('ROLE_MANAGER');

@@ -91,6 +91,38 @@
         </tbody>
       </table>
     </div>
+    <div class="d-flex justify-content-center pagination-container mt-3">
+      <nav>
+        <ul class="pagination pagination-content">
+          <li class="page-item" [ngClass]="page.first ? 'disabled' : ''">
+            <button
+              class="page-link"
+              (click)="createFilter(page.number - 1, 5)"
+            >
+              Anterior
+            </button>
+          </li>
+          <li class="page-item disabled">
+            <span class="page-link numeration">
+              {{ page.number + 1 }}/{{ page.totalPages }}
+            </span>
+          </li>
+          <li
+            class="page-item"
+            [ngClass]="
+              page.last || page.numberOfElements < page.size ? 'disabled' : ''
+            "
+          >
+            <button
+              class="page-link"
+              (click)="createFilter(page.number + 1, 5)"
+            >
+              Próxima
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
   </div>
 </main>
 
