@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { catchError, map } from "rxjs/operators";
 import { IFilter } from "src/app/shared/models/filter.model";
 import { IMovementCreate } from "src/app/shared/models/movement-create.model";
 import { IMovement } from "src/app/shared/models/movement.model";

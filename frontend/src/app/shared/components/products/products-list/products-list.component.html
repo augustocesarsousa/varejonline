@@ -2,18 +2,65 @@
 
 <main class="container p-1">
   <div class="p-3 card shadow">
-    <div class="mb-3 d-flex justify-content-between">
-      <h2 class="d-flex align-items-center justify-content-center">Produtos</h2>
-      <button
-        class="btn btn-primary d-flex align-items-center justify-content-center"
-        *ngIf="hasRole('ROLE_MANAGER')"
-        routerLink="create"
-      >
-        <i class="bi bi-plus-lg text-white"></i>
-        &nbsp;Adicionar
-      </button>
-    </div>
-
+    <h2 class="title mb-3">Produtos</h2>
+    <form [formGroup]="form" class="mb-5">
+      <div class="row d-flex align-items-center justify-content-center">
+        <div class="d-flex flex-column mb-1 col-md-4 col-lg-2">
+          <label class="me-1" for="inputProductId">Id do Produto:</label>
+          <input
+            class="form-control me-1"
+            id="inputProductId"
+            type="number"
+            formControlName="productId"
+            [(ngModel)]="productId"
+          />
+        </div>
+        <div class="d-flex flex-column mb-1 col-md-8 col-lg-3">
+          <label class="me-1" for="inputProductHexCode">Cod. Barra:</label>
+          <input
+            class="form-control me-1"
+            id="inputProductHexCode"
+            type="number"
+            formControlName="productHexCode"
+            [(ngModel)]="productHexCode"
+          />
+        </div>
+        <div class="d-flex flex-column mb-1 col-md-12 col-lg-7">
+          <label class="me-1" for="inputProductName">Nome:</label>
+          <input
+            class="form-control me-1"
+            id="inputProductName"
+            type="text"
+            formControlName="productName"
+            [(ngModel)]="productName"
+          />
+        </div>
+      </div>
+      <div class="row mt-2 mt-lg-3 d-lg-flex justify-content-end">
+        <div class="my-2 mt-3 col-md-4 col-lg-2 my-lg-0 d-flex align-items-end">
+          <button class="btn custom-btn btn-info" (click)="createFilter(0, 5)">
+            <i class="bi bi-search text-black"></i>
+            Pesquisar
+          </button>
+        </div>
+        <div class="my-2 mt-3 col-md-4 col-lg-2 my-lg-0 d-flex align-items-end">
+          <button class="btn custom-btn btn-secondary" (click)="clearFilter()">
+            <i class="bi bi-file-earmark-fill text-white"></i>
+            Limpar
+          </button>
+        </div>
+        <div class="my-2 mt-3 col-md-4 col-lg-2 my-lg-0 d-flex align-items-end">
+          <button
+            class="btn custom-btn btn-primary"
+            *ngIf="hasRole('ROLE_MANAGER')"
+            routerLink="create"
+          >
+            <i class="bi bi-plus-lg text-white"></i>
+            Adicionar
+          </button>
+        </div>
+      </div>
+    </form>
     <div class="table-responsive">
       <table class="table table-striped">
         <thead>
@@ -24,9 +71,8 @@
           <th>Saldo</th>
           <th></th>
         </thead>
-
         <tbody>
-          <tr *ngFor="let product of listProducts">
+          <tr *ngFor="let product of page.content">
             <td>{{ product.id }}</td>
             <td>{{ product.name }}</td>
             <td>{{ product.hexCode }}</td>

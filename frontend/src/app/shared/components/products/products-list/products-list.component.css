@@ -1,8 +1,19 @@
-.header {
+.title {
+  font: 18px;
+}
+
+.custom-btn {
   width: 100%;
 }
 
-.title, .new-product{
-  height: 40px;
-  width: 200px;
+.table-title {
+  cursor: pointer;
+}
+
+.table-title i {
+  font-size: 1em;
+}
+
+.pagination li button {
+  height: 38px;
 }

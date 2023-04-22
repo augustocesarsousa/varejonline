@@ -11,6 +11,7 @@ import { SortMovementEnum } from "../../enums/sort-movement.enum";
 import { ISortModel } from "src/app/shared/models/sort-options.model";
 import { IFilter } from "src/app/shared/models/filter.model";
 import { IPage } from "src/app/shared/models/page.model";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-movements-list",
@@ -44,6 +45,8 @@ export class MovementsListComponent implements OnInit {
 
   public filter: IFilter = {
     productId: 0,
+    productHexCode: "",
+    productName: "",
     startDate: "",
     endDate: "",
     typeMovementId: 0,
@@ -67,6 +70,7 @@ export class MovementsListComponent implements OnInit {
     private formBuilder: FormBuilder,
     private movementService: MovementService,
     private typeMovementService: TypeMovementService,
+    private toast: ToastrService,
     private tokenService: TokenService,
     public datepipe: DatePipe
   ) {
@@ -78,7 +82,7 @@ export class MovementsListComponent implements OnInit {
     this.typeMovementService.findAll().subscribe((res) => {
       res.map((typeMovement) => this.listTypeMovements.push(typeMovement));
     });
-    this.getMovements();
+    this.getByFilter();
   }
 
   private createForm() {
@@ -123,10 +127,10 @@ export class MovementsListComponent implements OnInit {
     this.filter.page = page;
     this.filter.size = size;
 
-    this.getMovements();
+    this.getByFilter();
   }
 
-  public clear(): void {
+  public clearFilter(): void {
     this.filter.productId = 0;
     this.filter.startDate = "";
     this.filter.endDate = "";
@@ -135,12 +139,15 @@ export class MovementsListComponent implements OnInit {
     this.productId = null;
     this.typeMovementId = 0;
 
-    this.getMovements();
+    this.getByFilter();
   }
 
-  public getMovements(): void {
+  public getByFilter(): void {
     this.movementService.findByFilterPaged(this.filter).subscribe((res) => {
       this.page = res;
+      if (this.page.content.length === 0) {
+        this.toast.warning("Nenhum movimento encontrado!");
+      }
     });
   }
 }
