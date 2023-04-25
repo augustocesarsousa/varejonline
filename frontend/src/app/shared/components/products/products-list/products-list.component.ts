@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { TokenService } from "src/app/core/services/token.service";
 import { ProductsService } from "src/app/core/services/product.service";
 import { IProduct } from "src/app/shared/models/product.model";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { IFilter } from "src/app/shared/models/filter.model";
 import { IPage } from "src/app/shared/models/page.model";
 import { ToastrService } from "ngx-toastr";
@@ -61,7 +61,7 @@ export class ProductsListComponent implements OnInit {
   private createForm() {
     return this.formBuilder.group({
       productId: [null],
-      productHexCode: [null],
+      productHexCode: [null, Validators.pattern(/^[0-9]\d*$/)],
       productName: [null],
     });
   }
