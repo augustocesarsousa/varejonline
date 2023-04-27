@@ -14,7 +14,7 @@ import br.comvarejonline.projetoinicial.services.validation.ProductUpdateValid;
 
 // Anotação da constraint validator customizada
 @ProductUpdateValid
-public class ProductUpdateDTO implements Serializable {
+public class ProductUpdateDTO extends ProductDTO {
 
     private static final long serialVersionUID = 1L;
 

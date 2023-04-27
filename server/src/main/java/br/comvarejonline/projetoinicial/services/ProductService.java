@@ -100,19 +100,16 @@ public class ProductService {
 
     // Atualiza um produto por id
     @Transactional
-    public ProductUpdateDTO update(Long id, ProductUpdateDTO productDTO) {
-        try {
-            // Consulta se o produto existe
-            Product product = productRepository.getById(id);
-            product.setName(productDTO.getName());
-            product.setHexCode(productDTO.getHexCode());
-            product = productRepository.save(product);
-            return new ProductUpdateDTO(product);
+    public ProductUpdateDTO update(Long id, ProductUpdateDTO productUpdateDTO) {
+        Optional<Product> productOptional = productRepository.findById(id);
 
-            // Caso não exista lança um excesão
-        } catch (EntityNotFoundException e) {
-            throw new ResourceNotFoundException("Produto não encontrado = " + id);
-        }
+        Product product = productOptional.orElseThrow(() -> new ResourceNotFoundException("Produto não encontrado = " + id));
+
+        CopyDtoToEntity.copyProductDtoToProduct(productUpdateDTO, product);
+
+        product = productRepository.save(product);
+
+        return new ProductUpdateDTO(product);
     }
 
     // Método que cria uma movimentação de SALDO_INICAL
