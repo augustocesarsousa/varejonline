@@ -30,8 +30,7 @@ public class ProductUpdateDTO extends ProductDTO {
     @NotBlank(message = "Campo obrigatório")
     protected String hexCode;
 
-    public ProductUpdateDTO() {
-    }
+    public ProductUpdateDTO() {super();}
 
     public ProductUpdateDTO(Product product) {
         this.id = product.getId();
