@@ -35,10 +35,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
     }
 
-    // Sobrescreve método que libera o endpoit do Actuator
+    // Sobrescreve método que libera os endpoits do Actuator e Swagger
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/actuator/**");
+
+        web.ignoring()
+                .antMatchers(
+                        "/v2/api-docs",
+                        "/configuration/ui",
+                        "/swagger-resources/**",
+                        "/configuration/**",
+                        "/swagger-ui.html",
+                        "/webjars/**"
+                );
     }
 
     // Bean que o Spring Security usa para efetuar a autenticação

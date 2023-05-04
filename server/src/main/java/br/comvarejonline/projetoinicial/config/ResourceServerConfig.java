@@ -42,7 +42,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     private static final String[] OPERATOR_OR_MANAGER = {
             "/user/**",
             "/product/**",
-            "/movement/**"
+            "/movement/**",
+            "/swagger-ui/**"
     };
 
     private static final String[] MANAGER = {

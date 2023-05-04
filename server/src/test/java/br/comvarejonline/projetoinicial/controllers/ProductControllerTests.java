@@ -1,4 +1,4 @@
-package br.comvarejonline.projetoinicial;
+package br.comvarejonline.projetoinicial.controllers;
 
 import br.comvarejonline.projetoinicial.controllers.ProductController;
 import br.comvarejonline.projetoinicial.dtos.ProductCreateDTO;
