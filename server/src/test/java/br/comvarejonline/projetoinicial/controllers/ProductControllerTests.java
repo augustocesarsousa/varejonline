@@ -116,4 +116,30 @@ public class ProductControllerTests {
                 .andExpect(status().isUnprocessableEntity())
                 .andExpect(jsonPath("$.errors[0].message").value("Saldo inicial não pode ser menor que a quantidade mínima!"));
     }
+
+    @Test
+    public void updateShouldReturnProductDtoWhenIdExists() throws Exception {
+        String jsonBody = objectMapper.writeValueAsString(productCreateDTO);
+
+        mockMvc.perform(put("/product/{id}", existingId)
+                        .header("Authorization", "Bearer " + accessToken)
+                        .content(jsonBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").exists())
+                .andExpect(jsonPath("$.name").exists());
+    }
+
+    @Test
+    public void updateShouldReturnNotFoundWhenIdDoesNotExists() throws Exception {
+        String jsonBody = objectMapper.writeValueAsString(productCreateDTO);
+
+        mockMvc.perform(put("/product/{id}", noExistingId)
+                        .header("Authorization", "Bearer " + accessToken)
+                        .content(jsonBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
+    }
 }
