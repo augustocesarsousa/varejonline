@@ -1,17 +1,17 @@
 package br.comvarejonline.projetoinicial.repositories;
 
-import br.comvarejonline.projetoinicial.entities.Movement;
-import br.comvarejonline.projetoinicial.entities.Product;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import java.time.Instant;
-import java.util.List;
+import br.comvarejonline.projetoinicial.entities.Product;
 
 /*
  * Repositório customizado da entidade Movimento
@@ -20,7 +20,8 @@ import java.util.List;
 @Repository
 public class ProductCustomRepository {
 
-//    private static Logger logger = LoggerFactory.getLogger(MovementCustomRepository.class);
+    // private static Logger logger =
+    // LoggerFactory.getLogger(MovementCustomRepository.class);
 
     private final EntityManager entityManager;
 
@@ -28,7 +29,7 @@ public class ProductCustomRepository {
         this.entityManager = entityManager;
     }
 
-    public Page<Product> findByFilter(Long productId,  String productName, String productHexCode,
+    public Page<Product> findByFilter(Long productId, String productName, String productHexCode,
             Pageable pageable) {
         Sort sort = pageable.getSort();
 
@@ -57,7 +58,7 @@ public class ProductCustomRepository {
             sql.append("ORDER BY p." + orderBy);
         }
 
-//        logger.warn("QUERY: " + sql.toString());
+        // logger.warn("QUERY: " + sql.toString());
         TypedQuery<Product> typedQuery = entityManager.createQuery(sql.toString(), Product.class);
 
         if (productId != null) {
@@ -83,8 +84,8 @@ public class ProductCustomRepository {
     private long totalMovements() {
         String sql = "SELECT COUNT(m) FROM Movement m";
 
-        var query = entityManager.createQuery(sql, Long.class);
+        TypedQuery<Long> query = entityManager.createQuery(sql, Long.class);
 
-        return (Long) query.getSingleResult();
+        return query.getSingleResult();
     }
 }

@@ -96,8 +96,8 @@ public class MovementCustomRepository {
     private long totalMovements() {
         String sql = "SELECT COUNT(m) FROM Movement m";
 
-        var query = entityManager.createQuery(sql, Long.class);
+        TypedQuery<Long> query = entityManager.createQuery(sql, Long.class);
 
-        return (Long) query.getSingleResult();
+        return query.getSingleResult();
     }
 }

@@ -38,7 +38,8 @@ public class ProductUpdateValidator implements ConstraintValidator<ProductUpdate
 
         // Pegando o id que vem na URL
         @SuppressWarnings("unchecked")
-        var uriVars = (Map<String, String>) request.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+        Map<String, String> uriVars = (Map<String, String>) request
+                .getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
         long productId = Long.parseLong(uriVars.get("id"));
 
         // Criando a lista onde serão adicionados os erros

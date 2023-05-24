@@ -1,0 +1,16 @@
+version: '3.5'
+
+services:
+  server:
+    container_name: varejonline-mov-product-back
+    build: ./server
+    ports:
+      - "8081:8081"
+  frontend:
+    container_name: varejonline-mov-product-front
+    build: ./frontend
+    ports:
+      - "4201:4201"
+    depends_on:
+      - server
+

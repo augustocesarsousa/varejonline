@@ -1,14 +1,16 @@
 package br.comvarejonline.projetoinicial.controllers;
 
-import br.comvarejonline.projetoinicial.controllers.ProductController;
-import br.comvarejonline.projetoinicial.dtos.ProductCreateDTO;
-import br.comvarejonline.projetoinicial.dtos.ProductDTO;
-import br.comvarejonline.projetoinicial.dtos.ProductUpdateDTO;
-import br.comvarejonline.projetoinicial.services.ProductService;
-import br.comvarejonline.projetoinicial.services.exceptions.ResourceNotFoundException;
-import br.comvarejonline.projetoinicial.tests.Factory;
-import br.comvarejonline.projetoinicial.tests.TokenUtil;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +21,15 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.List;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import br.comvarejonline.projetoinicial.dtos.ProductCreateDTO;
+import br.comvarejonline.projetoinicial.dtos.ProductDTO;
+import br.comvarejonline.projetoinicial.dtos.ProductUpdateDTO;
+import br.comvarejonline.projetoinicial.services.ProductService;
+import br.comvarejonline.projetoinicial.services.exceptions.ResourceNotFoundException;
+import br.comvarejonline.projetoinicial.tests.Factory;
+import br.comvarejonline.projetoinicial.tests.TokenUtil;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -67,23 +70,23 @@ public class ProductControllerTests {
         when(productService.findById(existingId)).thenReturn(productDTO);
         when(productService.findById(noExistingId)).thenThrow(ResourceNotFoundException.class);
         when(productService.create(any())).thenReturn(productCreateDTO);
-        when(productService.update(eq(existingId),any())).thenReturn(productUpdateDTO);
-        when(productService.update(eq(noExistingId),any())).thenThrow(ResourceNotFoundException.class);
+        when(productService.update(eq(existingId), any())).thenReturn(productUpdateDTO);
+        when(productService.update(eq(noExistingId), any())).thenThrow(ResourceNotFoundException.class);
     }
 
     @Test
     public void findByFilterPagedShouldReturnPage() throws Exception {
         mockMvc.perform(get("/product/filter")
-                        .header("Authorization", "Bearer " + accessToken))
+                .header("Authorization", "Bearer " + accessToken))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").exists())
                 .andExpect(jsonPath("$.pageable").exists());
     }
 
     @Test
-    public void findByIdShouldReturnProductWhenIdExists() throws Exception{
+    public void findByIdShouldReturnProductWhenIdExists() throws Exception {
         mockMvc.perform(get("/product/{id}", existingId)
-                        .header("Authorization", "Bearer " + accessToken))
+                .header("Authorization", "Bearer " + accessToken))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").exists())
                 .andExpect(jsonPath("$.name").exists());
@@ -95,10 +98,10 @@ public class ProductControllerTests {
         String jsonBody = objectMapper.writeValueAsString(productCreateDTO);
 
         mockMvc.perform(post("/product")
-                        .header("Authorization", "Bearer " + accessToken)
-                        .content(jsonBody)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
+                .header("Authorization", "Bearer " + accessToken)
+                .content(jsonBody)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id").exists())
                 .andExpect(jsonPath("$.name").exists());
@@ -109,12 +112,13 @@ public class ProductControllerTests {
         String jsonBody = objectMapper.writeValueAsString(productCreateDTO);
 
         mockMvc.perform(post("/product")
-                        .header("Authorization", "Bearer " + accessToken)
-                        .content(jsonBody)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
+                .header("Authorization", "Bearer " + accessToken)
+                .content(jsonBody)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isUnprocessableEntity())
-                .andExpect(jsonPath("$.errors[0].message").value("Saldo inicial não pode ser menor que a quantidade mínima!"));
+                .andExpect(jsonPath("$.errors[0].message")
+                        .value("Saldo inicial não pode ser menor que a quantidade mínima!"));
     }
 
     @Test
@@ -122,10 +126,10 @@ public class ProductControllerTests {
         String jsonBody = objectMapper.writeValueAsString(productCreateDTO);
 
         mockMvc.perform(put("/product/{id}", existingId)
-                        .header("Authorization", "Bearer " + accessToken)
-                        .content(jsonBody)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
+                .header("Authorization", "Bearer " + accessToken)
+                .content(jsonBody)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").exists())
                 .andExpect(jsonPath("$.name").exists());
@@ -136,10 +140,10 @@ public class ProductControllerTests {
         String jsonBody = objectMapper.writeValueAsString(productCreateDTO);
 
         mockMvc.perform(put("/product/{id}", noExistingId)
-                        .header("Authorization", "Bearer " + accessToken)
-                        .content(jsonBody)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
+                .header("Authorization", "Bearer " + accessToken)
+                .content(jsonBody)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound());
     }
 }
